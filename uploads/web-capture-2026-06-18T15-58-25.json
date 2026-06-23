@@ -1,0 +1,51 @@
+[
+  {
+    "id": "cap_mqjopcsz_rvnfo6",
+    "selector": "span.case-tag",
+    "label": "e-Customs",
+    "tag": "span",
+    "url": "https://www.codebailey.com/cases/index.html",
+    "title": "Case Studies — CODEBAILEY",
+    "timestamp": "2026-06-18T15:58:21.971Z",
+    "innerText": "e-Customs",
+    "outerHTML": "<span class=\"case-tag\">e-Customs</span>",
+    "rect": {
+      "x": 654,
+      "y": 393,
+      "width": 78,
+      "height": 26
+    },
+    "computedStyles": {
+      "display": "block",
+      "width": "77.8125px",
+      "height": "25.5px",
+      "padding": "4px 10px",
+      "border": "1px solid rgb(226, 220, 196)",
+      "border-radius": "6px",
+      "box-sizing": "border-box",
+      "background": "rgb(252, 248, 235) none repeat scroll 0% 0% / auto padding-box border-box",
+      "color": "rgb(46, 46, 46)",
+      "font-family": "\"JetBrains Mono\", monospace",
+      "font-size": "10px",
+      "font-weight": "600",
+      "line-height": "15.5px",
+      "letter-spacing": "0.2px",
+      "text-decoration": "none",
+      "transition": "all"
+    },
+    "cssRules": [
+      {
+        "selector": "*, ::before, ::after",
+        "css": "box-sizing: border-box; margin: 0px; padding: 0px;"
+      },
+      {
+        "selector": ".case-tag",
+        "css": "font-family: \"JetBrains Mono\", monospace; font-size: 10px; font-weight: 600; color: var(--body-strong); background: var(--surface-soft); border: 1px solid var(--hairline); padding: 3px 8px; border-radius: var(--r-sm); letter-spacing: 0.2px;"
+      },
+      {
+        "selector": ".case-highlight-tags .case-tag",
+        "css": "padding: 4px 10px;"
+      }
+    ]
+  }
+]

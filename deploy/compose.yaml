@@ -1,0 +1,12 @@
+name: jaehun-portfolio
+
+services:
+  web:
+    image: ghcr.io/sksqlrlek/jaehun-portfolio-web:latest
+    container_name: jaehun-portfolio-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8781:80"
+    mem_limit: 128m
+    security_opt:
+      - no-new-privileges:true

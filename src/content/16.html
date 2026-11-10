@@ -1,0 +1,42 @@
+<p class="content-note"><strong>설계 포인트</strong>3NF 정규화 · 1:N 관계 · ID 인덱스</p>
+<table class="content-table data-table">
+<caption>주요 테이블</caption>
+<thead><tr>
+<th scope="col">테이블</th>
+<th scope="col">설명</th>
+</tr></thead>
+<tbody>
+<tr>
+<th scope="row"><code>TB_<wbr>MTNG</code></th>
+<td>통합 회의 관리(오프라인/온라인)</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>MTNG_<wbr>PTCPT</code></th>
+<td>회의 참여자 관리</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>MTNG_<wbr>MOM</code></th>
+<td>회의록 관리(결재 테이블 논리FK)</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>MTNG_<wbr>MOM_<wbr>HIST</code></th>
+<td>회의록 수정 이력</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>VIDEO_<wbr>CONF</code></th>
+<td>화상회의 관리</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>VIDEO_<wbr>PTCPT_<wbr>LOG</code></th>
+<td>화상회의 참여 이력</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>VIDEO_<wbr>RCRDG</code></th>
+<td>화상회의 녹취록</td>
+</tr>
+<tr>
+<th scope="row"><code>TB_<wbr>VIDEO_<wbr>CHAT_<wbr>LOG</code></th>
+<td>화상회의 대화 로그</td>
+</tr>
+</tbody>
+</table>

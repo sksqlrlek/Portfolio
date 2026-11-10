@@ -1,0 +1,29 @@
+<div class="content-grid ">
+<div class="content-point">
+<h4>무엇을 하는 코드인가</h4>
+<p class="">WebSocket STOMP 연결(CONNECT) 시점에 Authorization 헤더에서 JWT를 추출해 검증하고, 사원 ID를 <code>Principal</code>로 등록합니다. 이후 SEND·SUBSCRIBE 메시지에서도 별도 인증 없이 사원 ID를 그대로 사용할 수 있습니다.</p>
+</div>
+<div class="content-point">
+<h4>핵심 포인트</h4>
+<p class="">HTTP 기반 Spring Security 필터는 WebSocket 환경에서 동작하지 않아 <code>ChannelInterceptor</code>를 직접 구현했습니다. <code>StompHeaderAccessor.wrap()</code> 대신 <code>MessageHeaderAccessor.getAccessor()</code>를 사용한 이유는, wrap은 새 객체를 만들어 헤더 수정이 원본 메시지에 반영되지 않지만 getAccessor는 기존 객체를 그대로 반환해 <code>setUser()</code> 결과가 실제 메시지에 적용되기 때문입니다.</p>
+</div>
+</div>
+<p class="content-note">POINT —HTTP 보안 필터가 닿지 않는 WebSocket 영역에별도 인증 흐름을 설계했습니다.</p>
+<figure class="content-code"><figcaption>StompChannelInterceptor.java</figcaption><pre tabindex="0" aria-label="StompChannelInterceptor.java 코드"><code>@Override
+public Message&lt;?&gt; preSend(Message&lt;?&gt; message, MessageChannel channel) {
+    StompHeaderAccessor accessor =
+            MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+               // 최초 WebSocket 연결(CONNECT) 요청에서만 JWT 인증 수행
+    if (accessor != null &amp;&amp; StompCommand.CONNECT.equals(accessor.getCommand())) {
+        String authHeader = accessor.getFirstNativeHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new CustomException(ErrorCode.WS_UNAUTHORIZED);
+        }
+        String token = authHeader.substring(7);
+        jwtTokenProvider.validateToken(token);
+                          // 검증된 토큰에서 사원 ID를 추출해 WebSocket 사용자 정보로 등록
+        Long empId = jwtTokenProvider.getEmpId(token);
+        accessor.setUser(() -&gt; String.valueOf(empId));
+    }
+    return message;
+}</code></pre></figure>

@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="660" viewBox="0 0 1040 660" preserveAspectRatio="xMidYMid meet"  font-family="'Plus Jakarta Sans','Pretendard',sans-serif">
+          <defs>
+            <marker id="aR" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#A99F8C"/></marker>
+            <marker id="aL" markerWidth="9" markerHeight="9" refX="2" refY="4" orient="auto"><path d="M8,0 L8,8 L0,4 z" fill="#A99F8C"/></marker>
+          </defs>
+
+          <!-- CLIENT -->
+          <rect x="16" y="20" width="232" height="624" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"/>
+          <text x="132" y="50" text-anchor="middle" fill="#7A6E5E" font-size="17" font-weight="800" letter-spacing="3" font-family="'JetBrains Mono',monospace">CLIENT</text>
+
+          <rect x="32" y="66" width="200" height="122" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M32 75 a9 9 0 0 1 9 -9 h182 a9 9 0 0 1 9 9 v27 h-200 z" fill="#2E7D52"/>
+          <text x="132" y="92" text-anchor="middle" fill="#fff" font-size="15.5" font-weight="700" font-family="'JetBrains Mono',monospace">Browser SPA</text>
+          <text x="132" y="126" text-anchor="middle" fill="#3A352C" font-size="14" font-family="'JetBrains Mono',monospace">React + TypeScript</text>
+          <text x="132" y="148" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">Tailwind CSS · Vite</text>
+          <text x="132" y="172" text-anchor="middle" fill="#5B564E" font-size="13.5">상태관리 · 라우팅</text>
+
+          <rect x="32" y="204" width="200" height="92" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M32 213 a9 9 0 0 1 9 -9 h182 a9 9 0 0 1 9 9 v23 h-200 z" fill="#EC7E7C"/>
+          <text x="132" y="226" text-anchor="middle" fill="#fff" font-size="14.5" font-weight="700" font-family="'JetBrains Mono',monospace">LiveKit Client SDK</text>
+          <text x="132" y="258" text-anchor="middle" fill="#5B564E" font-size="13.5">WebRTC 화상회의</text>
+          <text x="132" y="280" text-anchor="middle" fill="#5B564E" font-size="13.5">실시간 스트리밍</text>
+
+          <rect x="32" y="312" width="200" height="92" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M32 321 a9 9 0 0 1 9 -9 h182 a9 9 0 0 1 9 9 v23 h-200 z" fill="#E5B23B"/>
+          <text x="132" y="334" text-anchor="middle" fill="#fff" font-size="14.5" font-weight="700" font-family="'JetBrains Mono',monospace">EventSource · Axios</text>
+          <text x="132" y="366" text-anchor="middle" fill="#5B564E" font-size="13.5">SSE 실시간 알림 수신</text>
+          <text x="132" y="388" text-anchor="middle" fill="#5B564E" font-size="13.5">JWT 자동 갱신</text>
+
+          <rect x="32" y="420" width="200" height="206" rx="9" fill="#F7F0E0" stroke="#D8CBAE" stroke-dasharray="4 4"/>
+          <text x="132" y="448" text-anchor="middle" fill="#7A6E5E" font-size="14" font-weight="700">통신 프로토콜</text>
+          <text x="132" y="486" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600" font-family="'JetBrains Mono',monospace">HTTP / REST</text>
+          <text x="132" y="522" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600" font-family="'JetBrains Mono',monospace">WebSocket (STOMP)</text>
+          <text x="132" y="558" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600" font-family="'JetBrains Mono',monospace">Server-Sent Events</text>
+          <text x="132" y="594" text-anchor="middle" fill="#5B564E" font-size="13" font-family="'JetBrains Mono',monospace" style="font-weight: 600; font-size: 14px">OAuth2 · CORS</text>
+
+          <!-- SERVER -->
+          <rect x="292" y="20" width="456" height="624" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"/>
+          <text x="520" y="50" text-anchor="middle" fill="#7A6E5E" font-size="16" font-weight="800" letter-spacing="1" font-family="'JetBrains Mono',monospace">SPRING BOOT SERVER · Java 21</text>
+
+          <rect x="308" y="66" width="424" height="64" rx="9" fill="#fff" stroke="#C17F4A" stroke-width="1.5" style="height: 72px"/>
+          <text x="324" y="90" fill="#C17F4A" font-size="15" font-weight="800" font-family="'JetBrains Mono',monospace">Security Layer</text>
+          <text x="324" y="110" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">JwtAuthenticationFilter · StompChannelInterceptor</text>
+          <text x="324" y="126" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">Spring Security · BCrypt · RBAC · Redis Refresh Token</text>
+
+          <rect x="308" y="146" width="136" height="78" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M308 155 a9 9 0 0 1 9 -9 h118 a9 9 0 0 1 9 9 v17 h-136 z" fill="#9C8CE0" style="width: 100%"/>
+          <text x="376" y="167" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700" font-family="'JetBrains Mono',monospace">Controller</text>
+          <text x="376" y="193" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">REST API</text>
+          <text x="376" y="211" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">@Validated</text>
+
+          <rect x="452" y="146" width="136" height="78" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M452 155 a9 9 0 0 1 9 -9 h118 a9 9 0 0 1 9 9 v17 h-136 z" fill="#3E9C6B"/>
+          <text x="520" y="167" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700" font-family="'JetBrains Mono',monospace">Service</text>
+          <text x="520" y="193" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">Business Logic</text>
+          <text x="520" y="211" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">@Transactional</text>
+
+          <rect x="596" y="146" width="136" height="78" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M596 155 a9 9 0 0 1 9 -9 h118 a9 9 0 0 1 9 9 v17 h-136 z" fill="#6A8AAA"/>
+          <text x="664" y="167" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700" font-family="'JetBrains Mono',monospace">Mapper</text>
+          <text x="664" y="193" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">MyBatis</text>
+          <text x="664" y="211" text-anchor="middle" fill="#5B564E" font-size="13">동적 SQL</text>
+
+          <line x1="444" y1="185" x2="452" y2="185" stroke="#A99F8C" stroke-width="1.6" marker-end="url(#aR)" style="transform: translate(0px, 6px)"/>
+          <line x1="588" y1="185" x2="596" y2="185" stroke="#A99F8C" stroke-width="1.6" marker-end="url(#aR)" style="transform: translate(0px, 6px)"/>
+
+          <rect x="308" y="240" width="424" height="150" rx="9" fill="#F7F0E0" stroke="#D8CBAE" style="width: 429px"/>
+          <text x="324" y="264" fill="#7A6E5E" font-size="14" font-weight="800">Domain Services</text>
+          <g font-size="13" font-weight="600" text-anchor="middle">
+            <rect x="324" y="276" width="76" height="28" rx="6" fill="#C17F4A"/><text x="362" y="295" fill="#fff">화상회의</text>
+            <rect x="406" y="276" width="76" height="28" rx="6" fill="#3E9C6B"/><text x="444" y="295" fill="#fff">SSE 알림</text>
+            <rect x="488" y="276" width="68" height="28" rx="6" fill="#6A8AAA"/><text x="522" y="295" fill="#fff">메신저</text>
+            <rect x="562" y="276" width="76" height="28" rx="6" fill="#9C8CE0"/><text x="600" y="295" fill="#fff">대시보드</text>
+            <rect x="644" y="276" width="76" height="28" rx="6" fill="#AA6A6A"/><text x="682" y="295" fill="#fff">통합검색</text>
+            <rect x="324" y="312" width="80" height="28" rx="6" fill="#6AAA8A"/><text x="364" y="331" fill="#fff">일정·업무</text>
+            <rect x="410" y="312" width="92" height="28" rx="6" fill="#AA8A4A"/><text x="456" y="331" fill="#fff">회의실 예약</text>
+            <rect x="508" y="312" width="84" height="28" rx="6" fill="#6A6AAA"/><text x="550" y="331" fill="#fff">공휴일 API</text><rect x="682" y="312" width="50" height="28" rx="6" fill="#AA6AAA"/>
+            <rect x="598" y="312" width="78" height="28" rx="6" fill="#8AAA6A"/><text x="637" y="331" fill="#fff">LLM 챗봇</text>
+            <text x="707" y="331" fill="#fff">관리자</text>
+          </g>
+          <rect x="324" y="352" width="392" height="28" rx="5" fill="#fff" stroke="#D8CBAE"/>
+          <text x="520" y="370" text-anchor="middle" fill="#5B564E" font-size="12" font-family="'JetBrains Mono',monospace">CustomException · ErrorCode · GlobalExceptionHandler</text>
+
+          <rect x="308" y="406" width="424" height="52" rx="9" fill="#fff" stroke="#C17F4A" stroke-width="1.5"/>
+          <text x="324" y="428" fill="#C17F4A" font-size="14" font-weight="800" font-family="'JetBrains Mono',monospace">Event System</text>
+          <text x="324" y="448" fill="#5B564E" font-size="12" font-family="'JetBrains Mono',monospace">Spring Event · @TransactionalEventListener · @Async</text>
+
+          <rect x="308" y="474" width="208" height="84" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M308 483 a9 9 0 0 1 9 -9 h190 a9 9 0 0 1 9 9 v17 h-208 z" fill="#6A8AAA"/>
+          <text x="412" y="495" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700" font-family="'JetBrains Mono',monospace">WebSocket / SSE</text>
+          <text x="412" y="521" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">WebSocket / STOMP</text>
+          <text x="412" y="542" text-anchor="middle" fill="#5B564E" font-size="13">SSE 알림 스트림</text>
+
+          <rect x="524" y="474" width="208" height="84" rx="9" fill="#fff" stroke="#D8CBAE"/>
+          <path d="M524 483 a9 9 0 0 1 9 -9 h190 a9 9 0 0 1 9 9 v17 h-208 z" fill="#8AAA6A"/>
+          <text x="628" y="495" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700" font-family="'JetBrains Mono',monospace">Scheduler</text>
+          <text x="628" y="521" text-anchor="middle" fill="#5B564E" font-size="13">마감일 알림</text>
+          <text x="628" y="542" text-anchor="middle" fill="#5B564E" font-size="13">공휴일 연간 동기화</text>
+
+          <rect x="308" y="574" width="424" height="56" rx="9" fill="#F7F0E0" stroke="#D8CBAE"/>
+          <text x="324" y="596" fill="#7A6E5E" font-size="14" font-weight="800">Common</text>
+          <text x="324" y="615" fill="#5B564E" font-size="11.5" font-family="'JetBrains Mono',monospace">ApiResponse · LoggingInterceptor · Swagger(OpenAPI)</text>
+
+          <!-- DATA STORE -->
+          <rect x="788" y="20" width="236" height="340" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"/>
+          <text x="906" y="50" text-anchor="middle" fill="#7A6E5E" font-size="16" font-weight="800" letter-spacing="2" font-family="'JetBrains Mono',monospace">DATA STORE</text>
+
+          <rect x="804" y="66" width="204" height="112" rx="9" fill="#fff" stroke="#C08A2A" stroke-width="1.5"/>
+          <path d="M804 75 a9 9 0 0 1 9 -9 h186 a9 9 0 0 1 9 9 v21 h-204 z" fill="#C08A2A"/>
+          <text x="906" y="90" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="'JetBrains Mono',monospace" style="transform: translate(0px, -4px)">Oracle DB</text>
+          <text x="906" y="118" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">HikariCP · Sequence PK</text>
+          <text x="906" y="140" text-anchor="middle" fill="#5B564E" font-size="13">ROWNUM 페이지네이션</text>
+          <text x="906" y="162" text-anchor="middle" fill="#5B564E" font-size="12.5" font-family="'JetBrains Mono',monospace">JSON CLOB · MERGE</text>
+
+          <rect x="804" y="194" width="204" height="80" rx="9" fill="#fff" stroke="#C2554F" stroke-width="1.5"/>
+          <path d="M804 203 a9 9 0 0 1 9 -9 h186 a9 9 0 0 1 9 9 v19 h-204 z" fill="#C2554F"/>
+          <text x="906" y="216" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="'JetBrains Mono',monospace" style="transform: translate(0px, -2px)">Redis</text>
+          <text x="906" y="244" text-anchor="middle" fill="#5B564E" font-size="13">Refresh Token · 세션</text>
+          <text x="906" y="266" text-anchor="middle" fill="#5B564E" font-size="13">TTL 자동 만료</text>
+
+          <rect x="804" y="290" width="204" height="60" rx="9" fill="#fff" stroke="#8A8276" stroke-width="1.2"/>
+          <path d="M804 299 a9 9 0 0 1 9 -9 h186 a9 9 0 0 1 9 9 v19 h-204 z" fill="#8A8276"/>
+          <text x="906" y="312" text-anchor="middle" fill="#fff" font-size="14" font-weight="700" font-family="'JetBrains Mono',monospace"/><text x="906" y="216" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="'JetBrains Mono',monospace" style="transform: translate(0px, 94px)"/>
+          <text x="906" y="338" text-anchor="middle" fill="#5B564E" font-size="13">파일 업로드 · 녹취 오디오</text>
+
+          <!-- EXTERNAL API -->
+          <rect x="788" y="376" width="236" height="268" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"/>
+          <text x="906" y="406" text-anchor="middle" fill="#7A6E5E" font-size="16" font-weight="800" letter-spacing="2" font-family="'JetBrains Mono',monospace">EXTERNAL API</text>
+
+          <rect x="804" y="422" width="204" height="48" rx="8" fill="#fff" stroke="#3E9C6B" stroke-width="1.3"/>
+          <text x="906" y="442" text-anchor="middle" fill="#2E7D52" font-size="14" font-weight="700" font-family="'JetBrains Mono',monospace">LiveKit Cloud</text>
+          <text x="906" y="460" text-anchor="middle" fill="#5B564E" font-size="12.5">화상회의 룸 · 녹취</text>
+
+          <rect x="804" y="480" width="204" height="48" rx="8" fill="#fff" stroke="#9C8CE0" stroke-width="1.3"/>
+          <text x="906" y="500" text-anchor="middle" fill="#6A4AAA" font-size="14" font-weight="700" font-family="'JetBrains Mono',monospace">OpenAI Whisper</text>
+          <text x="906" y="518" text-anchor="middle" fill="#5B564E" font-size="12.5">STT · 대화 로그 변환</text>
+
+          <rect x="804" y="538" width="204" height="48" rx="8" fill="#fff" stroke="#C17F4A" stroke-width="1.3"/>
+          <text x="906" y="558" text-anchor="middle" fill="#C17F4A" font-size="14" font-weight="700" font-family="'JetBrains Mono',monospace">LLM (Spring AI)</text>
+          <text x="906" y="576" text-anchor="middle" fill="#5B564E" font-size="12.5">회의록 초안 자동 생성</text>
+
+          <rect x="804" y="596" width="204" height="34" rx="8" fill="#fff" stroke="#6A8AAA" stroke-width="1.2"/>
+          <text x="906" y="617" text-anchor="middle" fill="#4A6A8A" font-size="13" font-weight="600">공공 API · Google OAuth</text>
+
+          <!-- tier arrows -->
+          
+          <line x1="248" y1="156" x2="292" y2="156" stroke="#A99F8C" stroke-width="2" marker-end="url(#aR)" style="transform: translate(0px, 121px)"/><line x1="248" y1="156" x2="292" y2="156" stroke="#A99F8C" stroke-width="2" marker-end="url(#aR)" style="transform: translate(539px, 500px) rotate(180deg)"/>
+          
+          
+          
+
+          <line x1="748" y1="200" x2="788" y2="200" stroke="#A99F8C" stroke-width="2" marker-end="url(#aR)"/><line x1="748" y1="200" x2="788" y2="200" stroke="#A99F8C" stroke-width="2" marker-end="url(#aR)" style="transform: translate(1536px, 447px) rotate(180deg)"/><line x1="748" y1="200" x2="788" y2="200" stroke="#A99F8C" stroke-width="2" marker-end="url(#aR)" style="transform: translate(1536px, 720px) rotate(180deg)"/>
+          
+          <line x1="748" y1="512" x2="788" y2="512" stroke="#A99F8C" stroke-width="2" marker-end="url(#aR)" style="transform: translate(0px, -29px)"/>
+        </svg>

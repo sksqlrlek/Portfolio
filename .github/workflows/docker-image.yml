@@ -45,11 +45,11 @@ jobs:
       - name: Smoke test built website in Nginx
         run: |
           set -euo pipefail
-          docker run --detach --name portfolio-ci-test -p 127.0.0.1:18781:80 "${IMAGE}:${GITHUB_SHA}"
+          docker run --detach --name portfolio-ci-test "${IMAGE}:${GITHUB_SHA}"
           trap 'docker rm --force portfolio-ci-test >/dev/null 2>&1 || true' EXIT
           ready=false
           for attempt in $(seq 1 20); do
-            if curl --fail --silent --output "$RUNNER_TEMP/index.html" http://127.0.0.1:18781/; then
+            if docker exec portfolio-ci-test wget --quiet --output-document=- http://127.0.0.1/ > "$RUNNER_TEMP/index.html"; then
               ready=true
               break
             fi

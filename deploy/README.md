@@ -55,17 +55,21 @@ curl --version
 
 Docker가 없다면 [Docker 공식 Ubuntu 설치 가이드](https://docs.docker.com/engine/install/ubuntu/)에 따라 설치합니다. `ubuntu` 사용자가 sudo 없이 `docker ps`와 `docker compose`를 실행할 수 있어야 합니다. **docker 그룹은 호스트의 root급 권한이므로 배포 키와 계정을 별도로 보호하세요.**
 
-자동 배포 시 서버에는 `/home/ubuntu/portfolio` 폴더가 생깁니다. Docker Compose의 웹 서비스명은 `web`, 컨테이너 이름은 `jaehun-portfolio-web`, 바인딩은 **127.0.0.1:8781 → 컨테이너 80**입니다. 서버 외부에서 8781로 직접 접근하지 못하게 설계했습니다.
+자동 배포 시 서버에는 `/home/ubuntu/portfolio` 폴더가 생깁니다. Docker Compose의 웹 서비스명은 `web`, 기존 컨테이너 이름은 **`jaehun-portfolio-web-1`**, 바인딩은 **127.0.0.1:8780 → 컨테이너 80**입니다. 서버 외부에서 8780로 직접 접근하지 못하게 설계했습니다. **신규 컨테이너를 추가하지 않으며, 기존 Compose 서비스 web을 재생성해 이미지를 교체합니다.**
 
 확인 명령:
 
 ~~~bash
 docker ps --filter name=jaehun-portfolio-web
-curl -f http://127.0.0.1:8781/
+curl -f http://127.0.0.1:8780/
 cd ~/portfolio && docker compose --env-file .env -f compose.yaml ps
 ~~~
 
-HTTP 체크에 실패하면 `remote-deploy.sh`가 이전 이미지로 롤백을 시도하고 Actions 배포 Job을 실패 처리합니다. 이전 배포 이미지가 없으면 최초 배포 실패를 알리고 컨테이너를 제거합니다.
+**기존 서비스 전환:** 이전 실행 중 컨테이너는 `jaehun-portfolio-web-1`, Compose 프로젝트 `jaehun-portfolio`, 서비스 `web`, 설정 파일은 `/home/ubuntu/jaehun-portfolio-releases/release-mQOob3/compose.yaml`입니다. 새 배포는 이 프로젝트·서비스 정체성을 유지하고 포트 `127.0.0.1:8780`을 재사용합니다. 8781 포트의 별도 컨테이너는 만들지 않습니다.
+
+자동 배포는 새 Compose 파일을 `~/portfolio/compose.yaml.next`로 전송하여 기존 파일을 백업한 뒤 적용합니다. **최초 이전 작업이 실패하면 기존 릴리스 폴더의 Compose 설정으로 롤백을 시도**하며, 이전 릴리스 폴더는 자동 삭제하지 않습니다. 기존 서비스로의 완전 복구 여부는 서버에서 확인해야 합니다.
+
+`my-web` 기본 Nginx 컨테이너는 사용자가 수동으로 중지한 상태이며, 이 CI/CD는 해당 컨테이너에 명령을 보내지 않습니다.
 
 ## HTTPS 연결 (도메인/방화벽 준비 후)
 
@@ -101,7 +105,7 @@ docker compose --env-file .env --env-file .env.https \
 2. main Push의 빌드 Job과 Docker 아카이브 Artifact 업로드 성공.
 3. GHCR 선택 게시: 별도 publishing token이 설정된 경우 이미지 태그 및 push 로그 확인.
 4. `OCI_DEPLOY_ENABLED=true` (또는 `PORTFOLIO_OCI_DEPLOY_ENABLED=true`) 후 `Deploy to my-free-server` Job 성공.
-5. OCI 컨테이너와 포트 8781 확인.
+5. OCI 컨테이너와 포트 8780 확인.
 6. DNS/TLS 준비 후 브라우저 및 GitHub Actions의 HTTPS 검사 성공.
 
 GitHub Pages는 OCI와 독립적인 기존 별도 배포 경로입니다.

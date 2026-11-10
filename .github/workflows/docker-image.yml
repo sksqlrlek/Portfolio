@@ -1,4 +1,4 @@
-name: Portfolio Docker Image CI
+name: Portfolio Docker CI/CD (my-free-server)
 
 on:
   pull_request:
@@ -12,51 +12,121 @@ permissions:
   packages: write
 
 concurrency:
-  group: portfolio-image-${{ github.ref }}
+  group: portfolio-oci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  docker-image:
-    name: Build, smoke test and publish
+  build:
+    name: Build, smoke test, package image
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       IMAGE: ghcr.io/sksqlrlek/jaehun-portfolio-web
     steps:
       - name: Check out Portfolio
         uses: actions/checkout@v4
-
-      - name: Build Docker image on GitHub runner
-        run: docker build --platform linux/amd64 --tag "portfolio-ci:${GITHUB_SHA}" .
-
-      - name: Check website from inside container
-        shell: bash
-        run: |
-          set -euo pipefail
-          docker run --detach --name portfolio-ci-test "portfolio-ci:${GITHUB_SHA}"
-          trap 'docker rm --force portfolio-ci-test >/dev/null 2>&1 || true' EXIT
-          for attempt in 1 2 3 4 5; do
-            if docker exec portfolio-ci-test wget --quiet --output-document=- http://127.0.0.1/ | grep -q 'Han Jaehun'; then
-              break
-            fi
-            sleep 2
-          done
-          docker exec portfolio-ci-test wget --quiet --output-document=- http://127.0.0.1/ | grep -q 'Han Jaehun'
-          docker exec portfolio-ci-test test -d /usr/share/nginx/html/assets
-
-      - name: Log in to GitHub Container Registry
-        if: github.event_name != 'pull_request' && vars.GHCR_PUBLISH_ENABLED == 'true'
-        uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+          persist-credentials: false
 
-      - name: Publish tested image to GHCR
-        if: github.event_name != 'pull_request' && vars.GHCR_PUBLISH_ENABLED == 'true'
-        shell: bash
+      - name: Validate remote deployment script
+        run: bash -n deploy/remote-deploy.sh
+
+      - name: Build production Docker image
         run: |
           set -euo pipefail
-          docker tag "portfolio-ci:${GITHUB_SHA}" "${IMAGE}:${GITHUB_SHA}"
-          docker tag "portfolio-ci:${GITHUB_SHA}" "${IMAGE}:latest"
+          docker build --platform linux/amd64 --tag "${IMAGE}:${GITHUB_SHA}" .
+
+      - name: Smoke test built website in Nginx
+        run: |
+          set -euo pipefail
+          docker run --detach --name portfolio-ci-test -p 127.0.0.1:18781:80 "${IMAGE}:${GITHUB_SHA}"
+          trap 'docker rm --force portfolio-ci-test >/dev/null 2>&1 || true' EXIT
+          curl --fail --silent --show-error --retry 8 --retry-connrefused --retry-delay 2 http://127.0.0.1:18781/ -o "$RUNNER_TEMP/index.html"
+          grep -q 'Han Jaehun' "$RUNNER_TEMP/index.html"
+          docker exec portfolio-ci-test sh -c 'find /usr/share/nginx/html/assets -name "*.js" | grep -q ".js"'
+          docker exec portfolio-ci-test wget -q -O /dev/null http://127.0.0.1/
+
+      - name: Archive the tested image for direct OCI delivery
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          docker save "${IMAGE}:${GITHUB_SHA}" | gzip -1 > "$RUNNER_TEMP/portfolio-image.tar.gz"
+
+      - name: Upload deployment artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-docker-image
+          path: ${{ runner.temp }}/portfolio-image.tar.gz
+          retention-days: 3
+          if-no-files-found: error
+
+      - name: Publish to GHCR when a publishing token is configured
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GHCR_PUBLISH_TOKEN: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${GHCR_PUBLISH_TOKEN:-}" ]]; then
+            echo '::notice::GHCR_PUBLISH_TOKEN is not configured; direct OCI artifact deployment remains available.'
+            exit 0
+          fi
+          printf '%s' "$GHCR_PUBLISH_TOKEN" | docker login ghcr.io -u "${GITHUB_ACTOR}" --password-stdin
+          docker tag "${IMAGE}:${GITHUB_SHA}" "${IMAGE}:latest"
           docker push "${IMAGE}:${GITHUB_SHA}"
           docker push "${IMAGE}:latest"
+          docker logout ghcr.io
+
+  deploy:
+    name: Deploy to my-free-server (158.180.71.120)
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.OCI_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: portfolio-production
+    env:
+      OCI_HOST: 158.180.71.120
+      OCI_USER: ubuntu
+      OCI_SSH_PRIVATE_KEY: ${{ secrets.OCI_SSH_PRIVATE_KEY }}
+      OCI_SSH_KNOWN_HOSTS: ${{ secrets.OCI_SSH_KNOWN_HOSTS }}
+    steps:
+      - name: Check out deployment scripts
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Download the tested image
+        uses: actions/download-artifact@v4
+        with:
+          name: portfolio-docker-image
+          path: ${{ runner.temp }}/portfolio-image
+
+      - name: Verify SSH secrets and prepare pinned host key
+        run: |
+          set -euo pipefail
+          [[ -n "${OCI_SSH_PRIVATE_KEY:-}" ]] || { echo '::error::Missing OCI_SSH_PRIVATE_KEY repository secret'; exit 1; }
+          [[ -n "${OCI_SSH_KNOWN_HOSTS:-}" ]] || { echo '::error::Missing OCI_SSH_KNOWN_HOSTS repository secret'; exit 1; }
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          printf '%s\n' "$OCI_SSH_PRIVATE_KEY" > "$HOME/.ssh/portfolio-deploy-key"
+          printf '%s\n' "$OCI_SSH_KNOWN_HOSTS" > "$HOME/.ssh/portfolio-known-hosts"
+          chmod 600 "$HOME/.ssh/portfolio-deploy-key" "$HOME/.ssh/portfolio-known-hosts"
+
+      - name: Transfer image and deployment files ONLY to my-free-server
+        run: |
+          set -euo pipefail
+          options=(-i "$HOME/.ssh/portfolio-deploy-key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$HOME/.ssh/portfolio-known-hosts" -o ConnectTimeout=15)
+          target="${OCI_USER}@${OCI_HOST}"
+          ssh "${options[@]}" "$target" 'mkdir -p "$HOME/portfolio/releases"'
+          scp "${options[@]}" "$RUNNER_TEMP/portfolio-image/portfolio-image.tar.gz" "$target:portfolio/releases/${GITHUB_SHA}.tar.gz"
+          scp "${options[@]}" deploy/compose.yaml deploy/compose.https.yaml deploy/Caddyfile "$target:portfolio/"
+          ssh "${options[@]}" "$target" "bash -s -- '${GITHUB_SHA}'" < deploy/remote-deploy.sh
+
+      - name: Verify HTTPS if a public URL is configured
+        if: vars.PORTFOLIO_PUBLIC_URL != ''
+        env:
+          PORTFOLIO_PUBLIC_URL: ${{ vars.PORTFOLIO_PUBLIC_URL }}
+        run: |
+          set -euo pipefail
+          [[ "$PORTFOLIO_PUBLIC_URL" == https://* ]] || { echo "::error::PORTFOLIO_PUBLIC_URL must be an HTTPS URL"; exit 1; }
+          curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --retry-connrefused "$PORTFOLIO_PUBLIC_URL" | grep -q 'Han Jaehun'

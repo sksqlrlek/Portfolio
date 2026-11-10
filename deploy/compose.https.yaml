@@ -1,0 +1,26 @@
+# Optional HTTPS proxy. Start only after a domain resolves to 158.180.71.120,
+# and OCI security list plus Ubuntu firewall allow ports 80 and 443.
+services:
+  https:
+    image: caddy:2.10-alpine
+    container_name: jaehun-portfolio-https
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      PORTFOLIO_DOMAIN: ${PORTFOLIO_DOMAIN:?Set PORTFOLIO_DOMAIN in .env.https}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - portfolio_caddy_data:/data
+      - portfolio_caddy_config:/config
+    mem_limit: 160m
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  portfolio_caddy_data:
+  portfolio_caddy_config:

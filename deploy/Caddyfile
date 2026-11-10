@@ -1,0 +1,5 @@
+# The hostname must resolve to the PUBLIC IP of my-free-server: 158.180.71.120
+{$PORTFOLIO_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy web:80
+}

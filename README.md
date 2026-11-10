@@ -27,6 +27,10 @@ Vite 빌드 결과물은 dist 폴더에 생성됩니다.
 ## GitHub Pages
 main 브랜치 push 시 .github/workflows/pages.yml이 빌드·배포됩니다. 처음에는 GitHub 저장소 Settings > Pages > Build and deployment > Source를 GitHub Actions로 바꿔야 합니다.
 
+## OCI Docker CI/CD
+
+Docker 빌드, SSH 기반 `my-free-server` 자동 배포, GitHub Container Registry 게시 및 HTTPS 준비 방법은 [OCI 배포 문서](deploy/README.md)에 정리했습니다. OCI 공개 사이트 검증 전까지는 GitHub Pages와 구분합니다.
+
 ## Docker
     docker build -t jaehun-portfolio .
     docker run --rm -p 8781:80 --name jaehun-portfolio jaehun-portfolio

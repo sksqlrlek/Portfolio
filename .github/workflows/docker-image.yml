@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: portfolio-oci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -30,6 +30,12 @@ jobs:
 
       - name: Validate remote deployment script
         run: bash -n deploy/remote-deploy.sh
+
+      - name: Validate Docker Compose and optional Caddy config
+        env:
+          PORTFOLIO_IMAGE: ghcr.io/sksqlrlek/jaehun-portfolio-web:test
+          PORTFOLIO_DOMAIN: portfolio.example.com
+        run: docker compose -f deploy/compose.yaml -f deploy/compose.https.yaml config --quiet
 
       - name: Build production Docker image
         run: |
@@ -80,7 +86,7 @@ jobs:
   deploy:
     name: Deploy to my-free-server (158.180.71.120)
     needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.OCI_DEPLOY_ENABLED == 'true'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && (vars.OCI_DEPLOY_ENABLED == 'true' || vars.PORTFOLIO_OCI_DEPLOY_ENABLED == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: portfolio-production
@@ -88,7 +94,7 @@ jobs:
       OCI_HOST: 158.180.71.120
       OCI_USER: ubuntu
       OCI_SSH_PRIVATE_KEY: ${{ secrets.OCI_SSH_PRIVATE_KEY }}
-      OCI_SSH_KNOWN_HOSTS: ${{ secrets.OCI_SSH_KNOWN_HOSTS }}
+      OCI_SSH_KNOWN_HOSTS: ${{ secrets.OCI_SSH_KNOWN_HOSTS || secrets.OCI_KNOWN_HOSTS }}
     steps:
       - name: Check out deployment scripts
         uses: actions/checkout@v4
@@ -112,7 +118,20 @@ jobs:
           printf '%s\n' "$OCI_SSH_KNOWN_HOSTS" > "$HOME/.ssh/portfolio-known-hosts"
           chmod 600 "$HOME/.ssh/portfolio-deploy-key" "$HOME/.ssh/portfolio-known-hosts"
 
+      - name: Skip an obsolete deployment if main has advanced
+        id: current
+        run: |
+          set -euo pipefail
+          latest="$(git ls-remote https://github.com/sksqlrlek/Portfolio.git refs/heads/main | cut -f1)"
+          if [[ "$latest" == "$GITHUB_SHA" ]]; then
+            echo 'deploy=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::A newer commit is already on main, skipping obsolete deployment."
+            echo 'deploy=false' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Transfer image and deployment files ONLY to my-free-server
+        if: steps.current.outputs.deploy == 'true'
         run: |
           set -euo pipefail
           options=(-i "$HOME/.ssh/portfolio-deploy-key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$HOME/.ssh/portfolio-known-hosts" -o ConnectTimeout=15)
@@ -123,7 +142,7 @@ jobs:
           ssh "${options[@]}" "$target" "bash -s -- '${GITHUB_SHA}'" < deploy/remote-deploy.sh
 
       - name: Verify HTTPS if a public URL is configured
-        if: vars.PORTFOLIO_PUBLIC_URL != ''
+        if: steps.current.outputs.deploy == 'true' && vars.PORTFOLIO_PUBLIC_URL != ''
         env:
           PORTFOLIO_PUBLIC_URL: ${{ vars.PORTFOLIO_PUBLIC_URL }}
         run: |

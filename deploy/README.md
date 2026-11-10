@@ -26,8 +26,8 @@ Repository → **Settings → Secrets and variables → Actions**:
 | 종류 | 키 | 값 / 역할 |
 | --- | --- | --- |
 | Secret | `OCI_SSH_PRIVATE_KEY` | ubuntu 계정의 authorized_keys에 등록한 배포 키의 **개인키** (이 채팅에 보내지 마세요) |
-| Secret | `OCI_SSH_KNOWN_HOSTS` | **검증한** 158.180.71.120 SSH 서버 공개 호스트키의 known_hosts 한 줄 |
-| Variable | `OCI_DEPLOY_ENABLED` | 모든 연결·권한 준비 후 `true` |
+| Secret | `OCI_SSH_KNOWN_HOSTS` (또는 기존 `OCI_KNOWN_HOSTS`) | **검증한** 158.180.71.120 SSH 서버 공개 호스트키의 known_hosts 한 줄 |
+| Variable | `OCI_DEPLOY_ENABLED` (또는 기존 `PORTFOLIO_OCI_DEPLOY_ENABLED`) | 모든 연결·권한 준비 후 `true` |
 | Secret (선택) | `GHCR_PUBLISH_TOKEN` | GHCR 패키지 쓰기 권한을 갖는 별도 GitHub 토큰 (없어도 OCI의 직접 배포는 가능) |
 | Variable (선택) | `PORTFOLIO_PUBLIC_URL` | 인증서 발급 후 확인할 `https://...` 실제 포트폴리오 주소 |
 
@@ -39,7 +39,7 @@ SSH의 사용자명은 `ubuntu`로 고정, 대상 공인 IP는 워크플로에�
 
 호스트키는 이미 신뢰할 수 있게 접속한 서버에서 `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub`의 지문을 확인하고, 내 PC에서 `ssh-keyscan -t ed25519 158.180.71.120` 결과가 그 키와 일치하는지 대조한 뒤 Secret `OCI_SSH_KNOWN_HOSTS`에 저장합니다. **검증 없이 ssh-keyscan 결과를 신뢰하거나 StrictHostKeyChecking을 해제하지 마세요.**
 
-`OCI_DEPLOY_ENABLED`를 지정하지 않으면 Docker CI는 통과해도 OCI 배포 Job은 건너뜁니다. 이것은 서버에 배포가 완료되었다는 의미가 아닙니다.
+`OCI_DEPLOY_ENABLED` 또는 `PORTFOLIO_OCI_DEPLOY_ENABLED`를 지정하지 않으면 Docker CI는 통과해도 OCI 배포 Job은 건너뜁니다. 이것은 서버에 배포가 완료되었다는 의미가 아닙니다.
 
 ## 서버 최초 준비 (my-free-server만)
 
@@ -100,7 +100,7 @@ docker compose --env-file .env --env-file .env.https \
 1. PR의 `Build, smoke test, package image` Job 성공.
 2. main Push의 빌드 Job과 Docker 아카이브 Artifact 업로드 성공.
 3. GHCR 선택 게시: 별도 publishing token이 설정된 경우 이미지 태그 및 push 로그 확인.
-4. `OCI_DEPLOY_ENABLED=true` 후 `Deploy to my-free-server` Job 성공.
+4. `OCI_DEPLOY_ENABLED=true` (또는 `PORTFOLIO_OCI_DEPLOY_ENABLED=true`) 후 `Deploy to my-free-server` Job 성공.
 5. OCI 컨테이너와 포트 8781 확인.
 6. DNS/TLS 준비 후 브라우저 및 GitHub Actions의 HTTPS 검사 성공.
 

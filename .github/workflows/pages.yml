@@ -27,8 +27,10 @@ jobs:
           node-version: '22'
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Build Vite app
-        run: npm run build
+      - name: Build Vite app for the GitHub Pages subpath
+        run: npm run build -- --base /Portfolio/
+      - name: Rewrite absolute public asset URLs only in Pages build
+        run: node scripts/rewrite-pages-dist.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

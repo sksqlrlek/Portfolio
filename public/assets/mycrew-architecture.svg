@@ -1,0 +1,168 @@
+<svg viewBox="0 0 1044 680" xmlns="http://www.w3.org/2000/svg" font-family="&#39;Plus Jakarta Sans&#39;,&#39;Pretendard&#39;,Arial,sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#A99F8C"></path></marker>
+    <marker id="arL" markerWidth="9" markerHeight="9" refX="2" refY="4" orient="auto"><path d="M8,0 L8,8 L0,4 z" fill="#A99F8C"></path></marker>
+  </defs>
+
+  <rect width="1044" height="680" rx="10" fill="#FAF4E6"></rect>
+  <text x="32" y="38" fill="#1E1C18" font-size="22" font-weight="800" letter-spacing="-0.5">MyCrewSoft <tspan fill="#2E7D52">System Architecture</tspan></text>
+  <text x="1012" y="38" text-anchor="end" fill="#928A7C" font-size="13" font-weight="600" letter-spacing="2" font-family="&#39;JetBrains Mono&#39;,monospace">3-TIER · EVENT-DRIVEN</text>
+  <line x1="32" y1="52" x2="1012" y2="52" stroke="#E4DAC4" stroke-width="1.5"></line>
+
+  
+  <rect x="32" y="70" width="236" height="556" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"></rect>
+  <text x="150" y="98" text-anchor="middle" fill="#7A6E5E" font-size="15" font-weight="800" letter-spacing="3">CLIENT</text>
+
+  <rect x="48" y="114" width="204" height="118" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="48" y="114" width="204" height="34" rx="9" fill="#2E7D52"></rect><rect x="48" y="131" width="204" height="17" fill="#2E7D52"></rect>
+  <text x="150" y="137" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">Browser SPA</text>
+  <text x="150" y="172" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600">React + TypeScript</text>
+  <text x="150" y="196" text-anchor="middle" fill="#5B564E" font-size="13">Tailwind CSS · Vite</text>
+  <text x="150" y="218" text-anchor="middle" fill="#5B564E" font-size="13">상태관리 · 라우팅</text>
+
+  <rect x="48" y="248" width="204" height="78" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="48" y="248" width="204" height="30" rx="9" fill="#EC7E7C"></rect><rect x="48" y="263" width="204" height="15" fill="#EC7E7C"></rect>
+  <text x="150" y="269" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">LiveKit Client SDK</text>
+  <text x="150" y="298" text-anchor="middle" fill="#5B564E" font-size="13">WebRTC 화상회의</text>
+  <text x="150" y="317" text-anchor="middle" fill="#5B564E" font-size="13">실시간 스트리밍</text>
+
+  <rect x="48" y="342" width="204" height="78" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="48" y="342" width="204" height="30" rx="9" fill="#E5B23B"></rect><rect x="48" y="357" width="204" height="15" fill="#E5B23B"></rect>
+  <text x="150" y="363" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">EventSource · Axios</text>
+  <text x="150" y="392" text-anchor="middle" fill="#5B564E" font-size="13">SSE 실시간 알림 수신</text>
+  <text x="150" y="411" text-anchor="middle" fill="#5B564E" font-size="13">JWT 자동 갱신 인터셉터</text>
+
+  <rect x="48" y="436" width="204" height="174" rx="9" fill="#F7F0E0" stroke="#D8CBAE" stroke-dasharray="4 4"></rect>
+  <text x="150" y="462" text-anchor="middle" fill="#7A6E5E" font-size="13" font-weight="700" letter-spacing="1">통신 프로토콜</text>
+  <text x="150" y="494" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600">HTTP / REST</text>
+  <text x="150" y="524" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600">WebSocket (STOMP)</text>
+  <text x="150" y="554" text-anchor="middle" fill="#3A352C" font-size="14" font-weight="600">Server-Sent Events</text>
+  <text x="150" y="586" text-anchor="middle" fill="#5B564E" font-size="13">OAuth2 · CORS</text>
+
+  
+  <rect x="300" y="70" width="478" height="556" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"></rect>
+  <text x="539" y="98" text-anchor="middle" fill="#7A6E5E" font-size="15" font-weight="800" letter-spacing="2">SPRING BOOT SERVER · Java 21</text>
+
+  <rect x="316" y="112" width="446" height="58" rx="9" fill="#fff" stroke="#C17F4A" stroke-width="1.5"></rect>
+  <text x="332" y="134" fill="#C17F4A" font-size="14" font-weight="800">Security Layer</text>
+  <text x="332" y="153" fill="#5B564E" font-size="12.5" font-family="&#39;JetBrains Mono&#39;,monospace">JwtAuthenticationFilter · StompChannelInterceptor · RBAC</text>
+  <text x="332" y="170" fill="#5B564E" font-size="12.5" font-family="&#39;JetBrains Mono&#39;,monospace">Spring Security · BCrypt · Redis(Refresh Token)</text>
+
+  
+  <rect x="316" y="186" width="138" height="66" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="316" y="186" width="138" height="26" rx="9" fill="#9C8CE0"></rect><rect x="316" y="199" width="138" height="13" fill="#9C8CE0"></rect>
+  <text x="385" y="204" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700">Controller</text>
+  <text x="385" y="227" text-anchor="middle" fill="#5B564E" font-size="12.5">REST API · @Valid</text>
+  <text x="385" y="244" text-anchor="middle" fill="#5B564E" font-size="12.5">ApiResponse</text>
+
+  <rect x="470" y="186" width="138" height="66" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="470" y="186" width="138" height="26" rx="9" fill="#3E9C6B"></rect><rect x="470" y="199" width="138" height="13" fill="#3E9C6B"></rect>
+  <text x="539" y="204" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700">Service</text>
+  <text x="539" y="227" text-anchor="middle" fill="#5B564E" font-size="12.5">Business Logic</text>
+  <text x="539" y="244" text-anchor="middle" fill="#5B564E" font-size="12.5">@Transactional</text>
+
+  <rect x="624" y="186" width="138" height="66" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="624" y="186" width="138" height="26" rx="9" fill="#6A8AAA"></rect><rect x="624" y="199" width="138" height="13" fill="#6A8AAA"></rect>
+  <text x="693" y="204" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700">Mapper</text>
+  <text x="693" y="227" text-anchor="middle" fill="#5B564E" font-size="12.5">MyBatis · 동적 SQL</text>
+  <text x="693" y="244" text-anchor="middle" fill="#5B564E" font-size="12.5">MapStruct</text>
+
+  <line x1="454" y1="219" x2="470" y2="219" stroke="#A99F8C" stroke-width="1.5" marker-end="url(#ar)"></line>
+  <line x1="608" y1="219" x2="624" y2="219" stroke="#A99F8C" stroke-width="1.5" marker-end="url(#ar)"></line>
+
+  
+  <rect x="316" y="268" width="446" height="120" rx="9" fill="#F7F0E0" stroke="#D8CBAE"></rect>
+  <text x="332" y="290" fill="#7A6E5E" font-size="13" font-weight="800" letter-spacing="1">Domain Services</text>
+  <g font-size="12.5" font-weight="600" text-anchor="middle">
+    <rect x="332" y="300" width="80" height="26" rx="6" fill="#C17F4A"></rect><text x="372" y="317" fill="#fff">화상회의</text>
+    <rect x="418" y="300" width="80" height="26" rx="6" fill="#3E9C6B"></rect><text x="458" y="317" fill="#fff">SSE 알림</text>
+    <rect x="504" y="300" width="80" height="26" rx="6" fill="#6A8AAA"></rect><text x="544" y="317" fill="#fff">메신저</text>
+    <rect x="590" y="300" width="80" height="26" rx="6" fill="#9C8CE0"></rect><text x="630" y="317" fill="#fff">대시보드</text>
+    <rect x="676" y="300" width="70" height="26" rx="6" fill="#AA6A6A"></rect><text x="711" y="317" fill="#fff">통합검색</text>
+    <rect x="332" y="332" width="80" height="26" rx="6" fill="#6AAA8A"></rect><text x="372" y="349" fill="#fff">일정·업무</text>
+    <rect x="418" y="332" width="92" height="26" rx="6" fill="#AA8A4A"></rect><text x="464" y="349" fill="#fff">회의실 예약</text>
+    <rect x="516" y="332" width="80" height="26" rx="6" fill="#6A6AAA"></rect><text x="556" y="349" fill="#fff">공휴일 API</text>
+    <rect x="602" y="332" width="80" height="26" rx="6" fill="#8AAA6A"></rect><text x="642" y="349" fill="#fff">LLM 챗봇</text>
+    <rect x="688" y="332" width="58" height="26" rx="6" fill="#AA6AAA"></rect><text x="717" y="349" fill="#fff">관리자</text>
+  </g>
+  <rect x="332" y="364" width="414" height="16" rx="4" fill="#fff" stroke="#D8CBAE"></rect>
+  <text x="539" y="376" text-anchor="middle" fill="#5B564E" font-size="11.5" font-family="&#39;JetBrains Mono&#39;,monospace">CustomException · ErrorCode · GlobalExceptionHandler</text>
+
+  
+  <rect x="316" y="404" width="446" height="46" rx="9" fill="#fff" stroke="#C17F4A" stroke-width="1.5"></rect>
+  <text x="332" y="424" fill="#C17F4A" font-size="13.5" font-weight="800">Event System</text>
+  <text x="332" y="441" fill="#5B564E" font-size="12" font-family="&#39;JetBrains Mono&#39;,monospace">ApplicationEventPublisher · @TransactionalEventListener · @Async</text>
+
+  
+  <rect x="316" y="466" width="218" height="72" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="316" y="466" width="218" height="26" rx="9" fill="#6A8AAA"></rect><rect x="316" y="479" width="218" height="13" fill="#6A8AAA"></rect>
+  <text x="425" y="484" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700">WebSocket / SSE</text>
+  <text x="425" y="508" text-anchor="middle" fill="#5B564E" font-size="12.5">STOMP · SseEmitterService</text>
+  <text x="425" y="527" text-anchor="middle" fill="#5B564E" font-size="12.5">ConcurrentHashMap 관리</text>
+
+  <rect x="544" y="466" width="218" height="72" rx="9" fill="#fff" stroke="#D8CBAE"></rect>
+  <rect x="544" y="466" width="218" height="26" rx="9" fill="#8AAA6A"></rect><rect x="544" y="479" width="218" height="13" fill="#8AAA6A"></rect>
+  <text x="653" y="484" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="700">Scheduler</text>
+  <text x="653" y="508" text-anchor="middle" fill="#5B564E" font-size="12.5">@Scheduled · 마감일 알림</text>
+  <text x="653" y="527" text-anchor="middle" fill="#5B564E" font-size="12.5">공휴일 연간 동기화</text>
+
+  <rect x="316" y="552" width="446" height="58" rx="9" fill="#F7F0E0" stroke="#D8CBAE"></rect>
+  <text x="332" y="574" fill="#7A6E5E" font-size="13" font-weight="800" letter-spacing="1">Common</text>
+  <text x="332" y="593" fill="#5B564E" font-size="12" font-family="&#39;JetBrains Mono&#39;,monospace">ApiResponse · LoggingInterceptor · StringUtil / DateUtil / FileUtil</text>
+  <text x="332" y="608" fill="#5B564E" font-size="12" font-family="&#39;JetBrains Mono&#39;,monospace">Springdoc OpenAPI (Swagger) · HikariCP</text>
+
+  
+  <rect x="810" y="70" width="202" height="296" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"></rect>
+  <text x="911" y="98" text-anchor="middle" fill="#7A6E5E" font-size="15" font-weight="800" letter-spacing="2">DATA STORE</text>
+
+  <rect x="826" y="112" width="170" height="98" rx="9" fill="#fff" stroke="#C08A2A" stroke-width="1.5"></rect>
+  <rect x="826" y="112" width="170" height="28" rx="9" fill="#C08A2A"></rect><rect x="826" y="126" width="170" height="14" fill="#C08A2A"></rect>
+  <text x="911" y="132" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Oracle DB</text>
+  <text x="911" y="158" text-anchor="middle" fill="#5B564E" font-size="12.5">HikariCP · Sequence PK</text>
+  <text x="911" y="178" text-anchor="middle" fill="#5B564E" font-size="12.5">ROWNUM 페이지네이션</text>
+  <text x="911" y="198" text-anchor="middle" fill="#5B564E" font-size="12.5">JSON CLOB · MERGE INTO</text>
+
+  <rect x="826" y="222" width="170" height="62" rx="9" fill="#fff" stroke="#C2554F" stroke-width="1.5"></rect>
+  <rect x="826" y="222" width="170" height="26" rx="9" fill="#C2554F"></rect><rect x="826" y="235" width="170" height="13" fill="#C2554F"></rect>
+  <text x="911" y="240" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Redis</text>
+  <text x="911" y="264" text-anchor="middle" fill="#5B564E" font-size="12.5">Refresh Token · 세션</text>
+  <text x="911" y="280" text-anchor="middle" fill="#5B564E" font-size="12.5">TTL 자동 만료</text>
+
+  <rect x="826" y="296" width="170" height="56" rx="9" fill="#fff" stroke="#8A8276" stroke-width="1.2"></rect>
+  <rect x="826" y="296" width="170" height="26" rx="9" fill="#8A8276"></rect><rect x="826" y="309" width="170" height="13" fill="#8A8276"></rect>
+  <text x="911" y="314" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Local Storage</text>
+  <text x="911" y="340" text-anchor="middle" fill="#5B564E" font-size="12.5">파일 업로드 · 녹취 오디오</text>
+
+  
+  <rect x="810" y="382" width="202" height="228" rx="12" fill="#F1EAD9" stroke="#D8CBAE" stroke-width="1.5"></rect>
+  <text x="911" y="410" text-anchor="middle" fill="#7A6E5E" font-size="15" font-weight="800" letter-spacing="2">EXTERNAL API</text>
+
+  <rect x="826" y="424" width="170" height="40" rx="8" fill="#fff" stroke="#3E9C6B" stroke-width="1.3"></rect>
+  <text x="911" y="442" text-anchor="middle" fill="#2E7D52" font-size="13.5" font-weight="700">LiveKit Cloud</text>
+  <text x="911" y="458" text-anchor="middle" fill="#5B564E" font-size="12">화상회의 룸 · 녹취</text>
+
+  <rect x="826" y="472" width="170" height="40" rx="8" fill="#fff" stroke="#9C8CE0" stroke-width="1.3"></rect>
+  <text x="911" y="490" text-anchor="middle" fill="#6A4AAA" font-size="13.5" font-weight="700">OpenAI Whisper</text>
+  <text x="911" y="506" text-anchor="middle" fill="#5B564E" font-size="12">STT · 대화 로그 변환</text>
+
+  <rect x="826" y="520" width="170" height="40" rx="8" fill="#fff" stroke="#C17F4A" stroke-width="1.3"></rect>
+  <text x="911" y="538" text-anchor="middle" fill="#C17F4A" font-size="13.5" font-weight="700">LLM (Spring AI)</text>
+  <text x="911" y="554" text-anchor="middle" fill="#5B564E" font-size="12">회의록 초안 자동 생성</text>
+
+  <rect x="826" y="568" width="170" height="30" rx="8" fill="#fff" stroke="#6A8AAA" stroke-width="1.2"></rect>
+  <text x="911" y="588" text-anchor="middle" fill="#4A6A8A" font-size="12.5" font-weight="600">공공 API · Google OAuth</text>
+
+  
+  <text x="284" y="150" text-anchor="middle" fill="#928A7C" font-size="11" font-weight="600" font-family="&#39;JetBrains Mono&#39;,monospace">REST</text>
+  <line x1="268" y1="158" x2="300" y2="158" stroke="#A99F8C" stroke-width="2" marker-end="url(#ar)"></line>
+  <line x1="300" y1="182" x2="268" y2="182" stroke="#A99F8C" stroke-width="2" marker-end="url(#arL)"></line>
+  <text x="284" y="356" text-anchor="middle" fill="#928A7C" font-size="11" font-weight="600" font-family="&#39;JetBrains Mono&#39;,monospace">WS·SSE</text>
+  <line x1="300" y1="364" x2="268" y2="364" stroke="#A99F8C" stroke-width="2" marker-end="url(#arL)"></line>
+
+  <line x1="778" y1="200" x2="810" y2="200" stroke="#A99F8C" stroke-width="2" marker-end="url(#ar)"></line>
+  <line x1="810" y1="224" x2="778" y2="224" stroke="#A99F8C" stroke-width="2" marker-end="url(#arL)"></line>
+  <line x1="778" y1="470" x2="810" y2="470" stroke="#A99F8C" stroke-width="2" marker-end="url(#ar)"></line>
+
+  <line x1="32" y1="640" x2="1012" y2="640" stroke="#E4DAC4" stroke-width="1.5"></line>
+  <text x="32" y="664" fill="#7A6E5E" font-size="12.5" font-family="&#39;JetBrains Mono&#39;,monospace">React · TS · Spring Boot 3.3 · Java 21 · MyBatis · Oracle · Redis · LiveKit · Whisper · Spring AI · STOMP · SSE</text>
+</svg>

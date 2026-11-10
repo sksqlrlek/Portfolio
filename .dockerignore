@@ -1,0 +1,14 @@
+.git
+node_modules
+dist
+*.log
+.env
+.env.*
+portfolio.pdf
+portfolio.dc.html
+deck-stage.js
+support.js
+--*.png
+--*.jpg
+-*.png
+README_backup.md

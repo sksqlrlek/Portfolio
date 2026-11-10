@@ -1,0 +1,62 @@
+name: Portfolio Docker Image CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: portfolio-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-image:
+    name: Build, smoke test and publish
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/sksqlrlek/portfolio
+    steps:
+      - name: Check out Portfolio
+        uses: actions/checkout@v4
+
+      - name: Build Docker image on GitHub runner
+        run: docker build --platform linux/amd64 --tag "portfolio-ci:${GITHUB_SHA}" .
+
+      - name: Check website from inside container
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --detach --name portfolio-ci-test "portfolio-ci:${GITHUB_SHA}"
+          trap 'docker rm --force portfolio-ci-test >/dev/null 2>&1 || true' EXIT
+          for attempt in 1 2 3 4 5; do
+            if docker exec portfolio-ci-test wget --quiet --output-document=- http://127.0.0.1/ | grep -q 'Han Jaehun'; then
+              break
+            fi
+            sleep 2
+          done
+          docker exec portfolio-ci-test wget --quiet --output-document=- http://127.0.0.1/ | grep -q 'Han Jaehun'
+          docker exec portfolio-ci-test test -d /usr/share/nginx/html/assets
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish tested image to GHCR
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker tag "portfolio-ci:${GITHUB_SHA}" "${IMAGE}:${GITHUB_SHA}"
+          docker tag "portfolio-ci:${GITHUB_SHA}" "${IMAGE}:latest"
+          docker push "${IMAGE}:${GITHUB_SHA}"
+          docker push "${IMAGE}:latest"

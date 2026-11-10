@@ -20,7 +20,7 @@ jobs:
     name: Build, smoke test and publish
     runs-on: ubuntu-latest
     env:
-      IMAGE: ghcr.io/sksqlrlek/portfolio
+      IMAGE: ghcr.io/sksqlrlek/jaehun-portfolio-web
     steps:
       - name: Check out Portfolio
         uses: actions/checkout@v4

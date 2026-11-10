@@ -1,0 +1,111 @@
+name: Portfolio OCI CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-oci-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and verify portfolio image
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.publish.outputs.image }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Build
+        run: |
+          set -euo pipefail
+          image="ghcr.io/${GITHUB_REPOSITORY,,}:$GITHUB_SHA"
+          docker build --platform linux/amd64 --tag "$image" site
+          printf 'IMAGE=%s\n' "$image" >> "$GITHUB_ENV"
+
+      - name: Check HTML and assets over HTTP
+        run: |
+          set -euo pipefail
+          trap 'docker rm -f portfolio-smoke >/dev/null 2>&1 || true' EXIT
+          docker run -d --name portfolio-smoke -p 127.0.0.1:18781:80 "$IMAGE"
+          base=http://127.0.0.1:18781
+          curl -fsS --retry 5 --retry-connrefused "$base/" -o "$RUNNER_TEMP/portfolio.html"
+          asset=$(grep -oE '/assets/[^" ]+\.js' "$RUNNER_TEMP/portfolio.html" | head -n 1)
+          curl -fsS "$base$asset" -o /dev/null
+          curl -fsSI "$base/assets/portfolio.pdf" | grep -qi '^Content-Type: application/pdf'
+
+      - name: Publish to GHCR
+        id: publish
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          docker push "$IMAGE"
+          digest=$(docker image inspect --format '{{index .RepoDigests 0}}' "$IMAGE")
+          printf 'image=%s\n' "$digest" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy to OCI
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.PORTFOLIO_OCI_DEPLOY_ENABLED == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: portfolio-production
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Confirm main still points at this image
+        id: current
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          current_sha=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)
+          if [[ "$current_sha" == "$GITHUB_SHA" ]]; then
+            echo 'deploy=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'A newer commit is on main. Skipping this deployment.'
+          fi
+
+      - name: Pull and start on OCI over SSH
+        if: steps.current.outputs.deploy == 'true'
+        env:
+          OCI_HOST: ${{ secrets.OCI_HOST }}
+          OCI_SSH_PRIVATE_KEY: ${{ secrets.OCI_SSH_PRIVATE_KEY }}
+          OCI_KNOWN_HOSTS: ${{ secrets.OCI_KNOWN_HOSTS }}
+          PORTFOLIO_IMAGE: ${{ needs.build.outputs.image }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          : "${OCI_HOST:?Set OCI_HOST in portfolio-production}"
+          : "${OCI_SSH_PRIVATE_KEY:?Set OCI_SSH_PRIVATE_KEY in portfolio-production}"
+          : "${OCI_KNOWN_HOSTS:?Set OCI_KNOWN_HOSTS in portfolio-production}"
+          : "${PORTFOLIO_IMAGE:?GHCR did not return an image digest}"
+
+          umask 077
+          ssh_dir=$(mktemp -d)
+          trap 'rm -rf -- "$ssh_dir"' EXIT
+          printf '%s\n' "$OCI_SSH_PRIVATE_KEY" | tr -d '\r' > "$ssh_dir/id"
+          printf '%s\n' "$OCI_KNOWN_HOSTS" | tr -d '\r' > "$ssh_dir/known_hosts"
+
+          printf '%s\n%s\n' "$PORTFOLIO_IMAGE" "$GHCR_TOKEN" |
+            ssh -T -i "$ssh_dir/id" -o IdentitiesOnly=yes -o BatchMode=yes \
+              -o ConnectTimeout=15 -o StrictHostKeyChecking=yes \
+              -o UserKnownHostsFile="$ssh_dir/known_hosts" "ubuntu@$OCI_HOST" \
+              'bash "$HOME/portfolio-oci/deploy.sh"'

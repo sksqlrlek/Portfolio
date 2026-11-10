@@ -150,7 +150,8 @@ jobs:
           target="${OCI_USER}@${OCI_HOST}"
           ssh "${options[@]}" "$target" 'mkdir -p "$HOME/portfolio/releases"'
           scp "${options[@]}" "$RUNNER_TEMP/portfolio-image/portfolio-image.tar.gz" "$target:portfolio/releases/${GITHUB_SHA}.tar.gz"
-          scp "${options[@]}" deploy/compose.yaml deploy/compose.https.yaml deploy/Caddyfile "$target:portfolio/"
+          scp "${options[@]}" deploy/compose.yaml "$target:portfolio/compose.yaml.next"
+          scp "${options[@]}" deploy/compose.https.yaml deploy/Caddyfile "$target:portfolio/"
           ssh "${options[@]}" "$target" "bash -s -- '${GITHUB_SHA}'" < deploy/remote-deploy.sh
 
       - name: Verify HTTPS if a public URL is configured

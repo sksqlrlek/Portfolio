@@ -2,11 +2,12 @@ name: jaehun-portfolio
 
 services:
   web:
+    # Keep the existing Compose identity: jaehun-portfolio / web.
+    # Do NOT set container_name: Compose keeps jaehun-portfolio-web-1.
     image: ${PORTFOLIO_IMAGE:?PORTFOLIO_IMAGE must contain a tested commit SHA}
-    container_name: jaehun-portfolio-web
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8781:80"
+      - "127.0.0.1:8780:80"
     mem_limit: 128m
     security_opt:
       - no-new-privileges:true

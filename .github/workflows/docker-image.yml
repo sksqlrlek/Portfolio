@@ -18,7 +18,7 @@ concurrency:
 jobs:
   build:
     name: Build, smoke test, package image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       IMAGE: ghcr.io/sksqlrlek/jaehun-portfolio-web

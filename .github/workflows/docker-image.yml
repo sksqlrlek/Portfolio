@@ -126,9 +126,12 @@ jobs:
           [[ -n "${OCI_SSH_KNOWN_HOSTS:-}" ]] || { echo '::error::Missing OCI_SSH_KNOWN_HOSTS repository secret'; exit 1; }
           umask 077
           mkdir -p "$HOME/.ssh"
-          printf '%s\n' "$OCI_SSH_PRIVATE_KEY" > "$HOME/.ssh/portfolio-deploy-key"
-          printf '%s\n' "$OCI_SSH_KNOWN_HOSTS" > "$HOME/.ssh/portfolio-known-hosts"
+          printf '%s\n' "$OCI_SSH_PRIVATE_KEY" | tr -d '\r' > "$HOME/.ssh/portfolio-deploy-key"
+          printf '%s\n' "$OCI_SSH_KNOWN_HOSTS" | tr -d '\r' > "$HOME/.ssh/portfolio-known-hosts"
           chmod 600 "$HOME/.ssh/portfolio-deploy-key" "$HOME/.ssh/portfolio-known-hosts"
+          # Print only a public-key fingerprint, never the private key.
+          ssh-keygen -y -P '' -f "$HOME/.ssh/portfolio-deploy-key" > "$RUNNER_TEMP/portfolio-deploy.pub"
+          ssh-keygen -lf "$RUNNER_TEMP/portfolio-deploy.pub" -E sha256
 
       - name: Skip an obsolete deployment if main has advanced
         id: current
@@ -146,7 +149,7 @@ jobs:
         if: steps.current.outputs.deploy == 'true'
         run: |
           set -euo pipefail
-          options=(-i "$HOME/.ssh/portfolio-deploy-key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$HOME/.ssh/portfolio-known-hosts" -o ConnectTimeout=15)
+          options=(-i "$HOME/.ssh/portfolio-deploy-key" -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$HOME/.ssh/portfolio-known-hosts" -o ConnectTimeout=15)
           target="${OCI_USER}@${OCI_HOST}"
           ssh "${options[@]}" "$target" 'mkdir -p "$HOME/portfolio/releases"'
           scp "${options[@]}" "$RUNNER_TEMP/portfolio-image/portfolio-image.tar.gz" "$target:portfolio/releases/${GITHUB_SHA}.tar.gz"

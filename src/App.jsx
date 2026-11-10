@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 // public/assets 아래의 실제 프로젝트 자료를 Vite base 경로에 맞춰 불러옵니다.
 const asset = (filename) => import.meta.env.BASE_URL + 'assets/' + filename;

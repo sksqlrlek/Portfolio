@@ -18,7 +18,7 @@ concurrency:
 jobs:
   build:
     name: Build, smoke test, package image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       IMAGE: ghcr.io/sksqlrlek/jaehun-portfolio-web
@@ -27,6 +27,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: Set up Node.js for browser smoke test
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Validate remote deployment script
         run: bash -n deploy/remote-deploy.sh
@@ -63,6 +68,15 @@ jobs:
           grep -q 'Han Jaehun' "$RUNNER_TEMP/index.html"
           docker exec portfolio-ci-test sh -c 'find /usr/share/nginx/html/assets -name "*.js" | grep -q ".js"'
           docker exec portfolio-ci-test wget -q -O /dev/null http://127.0.0.1/
+
+      - name: Browser smoke test (React actually renders)
+        run: |
+          set -euo pipefail
+          npm install --no-audit --no-fund --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          docker run --detach --name portfolio-browser-test -p 127.0.0.1:18080:80 "${IMAGE}:${GITHUB_SHA}"
+          trap 'docker rm --force portfolio-browser-test >/dev/null 2>&1 || true' EXIT
+          node scripts/smoke-portfolio-ui.mjs
 
       - name: Archive the tested image for direct OCI delivery
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

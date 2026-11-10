@@ -1,0 +1,14 @@
+<div class="content-grid architecture-notes">
+<div class="content-point">
+<h4>구성 요소</h4>
+<p class="">React SPA → Spring Boot → Oracle DB / Redis 3계층 구조. 실시간 통신은 WebSocket(STOMP)·SSE, 화상회의는 LiveKit, AI 처리는 Whisper·LLM으로 분리했습니다.</p>
+</div>
+<div class="content-point">
+<h4>설계 의도</h4>
+<p class="">도메인 간 강결합을 막기 위해 Spring Event 기반 비동기 구조를 채택했습니다. HTTP와 WebSocket 각각에 JWT 인증을 적용해 보안 일관성을 확보했습니다.</p>
+</div>
+<div class="content-point">
+<h4>팀 협업 방식</h4>
+<p class="">· GitHub(feature 브랜치 전략) · Redmine(WBS·회의록) · AA 협업 가이드</p>
+</div>
+</div>

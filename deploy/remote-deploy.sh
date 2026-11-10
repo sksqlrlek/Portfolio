@@ -107,7 +107,7 @@ fi
 
 healthy=false
 for attempt in $(seq 1 20); do
-  if curl --fail --silent http://127.0.0.1:8780/ 2>/dev/null | grep -q 'Han Jaehun'; then
+  if curl --fail --silent http://127.0.0.1:8780/ 2>/dev/null | grep -q 'id="root"'; then
     healthy=true
     break
   fi

@@ -1,39 +1,46 @@
 import { chromium } from 'playwright';
 
-// An Nginx 200 + valid HTML is not enough: the React bundle must mount and render.
-// This catches browser-only errors such as "React is not defined".
+// Assert the exact ChatGPT Sites v10 UI is rendered, not just an HTTP 200 page.
+const url = 'http://127.0.0.1:18080';
 const browser = await chromium.launch({ headless: true });
 const errors = [];
 try {
   const page = await browser.newPage();
   page.on('pageerror', (error) => errors.push(error.message));
 
-  const response = await page.goto('http://127.0.0.1:18080/', {
-    waitUntil: 'domcontentloaded',
-    timeout: 30000,
-  });
+  const home = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  if (!home?.ok()) throw new Error('Homepage returned HTTP ' + home?.status());
 
-  if (!response?.ok()) {
-    throw new Error(`HTTP response was ${response?.status() ?? 'missing'}`);
+  await page.locator('.site-rail').waitFor({ state: 'visible' });
+  await page.locator('#name').waitFor({ state: 'visible', timeout: 15000 });
+  await page.locator('#work-title').waitFor({ state: 'visible' });
+  await page.locator('#noblack-title').waitFor({ state: 'visible' });
+  const heading = await page.locator('#name').innerText();
+  if (!heading.includes('Jaehun')) throw new Error('Missing original hero headline');
+
+  const profile = await page.request.get(url + '/assets/profile.png');
+  if (!profile.ok()) throw new Error('Original profile image missing: ' + profile.status());
+  const noblackAsset = await page.request.get(url + '/assets/noblack-room.webp');
+  if (!noblackAsset.ok()) throw new Error('NO.BLACK image missing: ' + noblackAsset.status());
+
+  await page.goto(url + '/#project/crew/16', { waitUntil: 'domcontentloaded' });
+  await page.locator('#reader-title').waitFor({ state: 'visible' });
+  await page.locator('#portfolio-page-16').waitFor({ state: 'attached' });
+  if (!(await page.locator('#reader-title').innerText()).includes('MyCrewSoft')) {
+    throw new Error('MyCrewSoft detail did not render');
   }
 
-  await page.locator('#hero-title').waitFor({ state: 'visible', timeout: 15000 });
-  const heroTitle = await page.locator('#hero-title').innerText();
-  if (!heroTitle.includes('Jaehun')) {
-    throw new Error(`Expected a visible hero heading, received: ${heroTitle}`);
+  await page.goto(url + '/#project/noblack', { waitUntil: 'domcontentloaded' });
+  await page.locator('#reader-title').waitFor({ state: 'visible' });
+  if (!(await page.locator('#reader-title').innerText()).includes('NO.BLACK')) {
+    throw new Error('NO.BLACK detail did not render');
   }
 
-  await page.locator('#noblack-title').waitFor({ state: 'visible', timeout: 15000 });
-  const projectTitle = await page.locator('#noblack-title').innerText();
-  if (!projectTitle.includes('BLACK')) {
-    throw new Error(`NO.BLACK project section did not render: ${projectTitle}`);
-  }
+  const resume = await page.goto(url + '/resume.html', { waitUntil: 'domcontentloaded' });
+  if (!resume?.ok()) throw new Error('Resume returned HTTP ' + resume?.status());
 
-  if (errors.length) {
-    throw new Error(`Browser JavaScript error(s): ${errors.join(' | ')}`);
-  }
-
-  console.log('Browser smoke passed: React hero + NO.BLACK project rendered.');
+  if (errors.length) throw new Error('Browser JS error(s): ' + errors.join(' | '));
+  console.log('Sites v10 browser smoke passed: sidebar, hero, projects, details, assets, resume');
 } finally {
   await browser.close();
 }

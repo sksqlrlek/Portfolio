@@ -1,7 +1,9 @@
+# Preserve the original ChatGPT Sites React/Vite source and assets.
+# Build only on GitHub Actions, then run the static site on OCI Nginx.
 FROM node:22-alpine AS build
 WORKDIR /app
-COPY package.json ./
-RUN npm install --no-audit --no-fund
+COPY package.json package-lock.json ./
+RUN npm ci --no-audit --no-fund
 COPY index.html vite.config.js ./
 COPY src ./src
 COPY public ./public

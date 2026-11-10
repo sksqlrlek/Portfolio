@@ -109,3 +109,17 @@ docker compose --env-file .env --env-file .env.https \
 6. DNS/TLS 준비 후 브라우저 및 GitHub Actions의 HTTPS 검사 성공.
 
 GitHub Pages는 OCI와 독립적인 기존 별도 배포 경로입니다.
+
+
+## ChatGPT Sites v10 원본 이전 (Portfolio PR #6)
+
+- 사용자 제공 원본: \`jaehun-portfolio-sites-v10.zip\`. 전체 소스/정적 자산은 ZIP 안의 \`jaehun-portfolio/\` 폴더를 기준으로 합니다.
+- React 19 + Vite 6 소스: \`src/main.jsx\`, \`src/portfolio-reader.jsx\`, \`src/portfolio-content.jsx\`, \`src/style.css\`, \`src/content/\`.
+- 정적 파일: \`public/assets/\`, \`public/resume.html\`, \`public/downloads/\`. 원본 절대 URL \`/assets/\`, \`/resume.html\`, \`/downloads/\`는 OCI 루트에서 그대로 사용합니다.
+- 원본 ZIP의 \`Dockerfile\`과 \`compose.yaml\`은 로컬 테스트용입니다. **OCI 운영에서는 저장소의 기존 \`Dockerfile\`, \`deploy/compose.yaml\`, \`deploy/compose.https.yaml\`을 유지**합니다.
+- CI에서 \`npm ci\` 및 \`npm run build\` 후 Docker 이미지를 만들고, Chromium으로 사이드바·Hero·프로젝트 상세·이력서·이미지를 검사합니다.
+- 기존 \`jaehun-portfolio-web-1\`(127.0.0.1:8780)과 \`jaehun-portfolio-https\`(Caddy, 80/443)는 그대로 사용합니다. **\`docker compose --remove-orphans\`는 실행하지 마세요.** 운영 Caddy 컨테이너가 웹 전용 Compose 명령에서 orphan으로 표시될 수 있습니다.
+- GitHub Pages는 별도 빌드에서만 \`/Portfolio/\` 자산 경로로 변환합니다. OCI 빌드는 Sites 원본 파일 경로를 보존합니다.
+- 최초 배포 전 PR #6의 원본 이미지, PDF, 다운로드 파일이 모두 추가됐는지 검토합니다. 배포 시 \`main\`의 현재 HEAD를 기준으로 이전 이미지로 롤백할 수 있도록 기존 릴리스와 Docker 이미지를 삭제하지 않습니다.
+- **서버 재부팅 후 방화벽 규칙 검증이 아직 필요합니다.** 현재 OCI 인스턴스는 직접 추가한 iptables FORWARD 예외를 사용하고 있어 규칙 지속성 확보가 별도 후속 작업입니다.
+

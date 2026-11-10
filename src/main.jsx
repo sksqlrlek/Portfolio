@@ -1,172 +1,158 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { crewRoleSummary, email, noblackSummary, projects } from './data';
+import { email, projects } from './data';
 import { NoblackReader, PortfolioReader } from './portfolio-reader';
-import { PortfolioContent } from './portfolio-content';
 import { chapters, pageTitles } from './portfolio-pages';
+import { cards, cases, proofs, skills, stages } from './home-data';
 import './style.css';
+import './home.css';
 
 const github = 'https://github.com/sksqlrlek';
-function ExternalLink({ href, children, className }) {
+const asset = (p) => `/assets/${p}`;
+
+function Ext({ href, children, className }) {
   return <a href={href} className={className} target="_blank" rel="noreferrer">{children} <span aria-hidden="true">↗</span></a>;
 }
 
+// 상단 고정 메뉴: 왼쪽 사이드바 대신 가로 메뉴로 바꿔 본문 폭을 넓혔습니다.
 function Header() {
   return (
-    <header className="site-rail">
-      <div className="rail-inner">
-        <a className="brand" href="#home" aria-label="한재훈 포트폴리오 첫 화면"><span className="brand-symbol">jh<span>.</span></span><span className="brand-word">HAN JAEHUN</span></a>
-        <nav className="site-nav" aria-label="주 메뉴">
-          <p className="rail-label">INDEX</p>
-          <a href="#home"><span aria-hidden="true">00</span> 첫 화면</a>
-          <a href="#projects" data-tone="fern"><span aria-hidden="true">01</span> 프로젝트</a>
-          <a href="#about" data-tone="coral"><span aria-hidden="true">02</span> 소개</a>
-          <a href="#skills" data-tone="gold"><span aria-hidden="true">03</span> 기술·과정</a>
-          <a href="#portfolio" data-tone="lavender" className="rail-original"><span aria-hidden="true">04</span> 원본 전체</a>
-          <a href="#contact" className="rail-contact"><span aria-hidden="true">05</span> 연락처</a>
+    <header className="topbar">
+      <div className="topbar-inner">
+        <a className="topbar-brand" href="#home">한재훈</a>
+        <nav className="topbar-nav" aria-label="주 메뉴">
+          <a href="#process">개발 과정</a><a href="#projects">프로젝트</a><a href="#cases">문제 해결</a>
+          <a href="#about">소개</a><a href="#contact">연락처</a>
         </nav>
-        <div className="rail-footer">
-          <div className="rail-profile"><img src="/assets/profile.png" alt="" width="35" height="35" /><span><span aria-hidden="true">$ </span>whoami<strong>Han Jaehun</strong></span></div>
-          <a className="top-resume" href="/resume.html">이력서 <span aria-hidden="true">↗</span></a>
-        </div>
+        <a className="topbar-resume" href="/resume.html">이력서</a>
       </div>
     </header>
   );
 }
 
+// 첫 화면: 이름보다 "어떤 개발자인지"를 가장 크게 보여줍니다.
 function Hero() {
   return (
-    <section className="hero" id="home" aria-labelledby="name">
-      <div className="frame hero-inner">
-        <div className="cover-meta eyebrow">
-          <p className="hero-label"><i aria-hidden="true" /> JAVA · SPRING / DEVELOPER PORTFOLIO</p>
-          <span>한재훈 · 대전</span>
+    <section className="h-hero" id="home" aria-labelledby="hero-title">
+      <div className="h-wrap">
+        <p className="h-hero-name">신입 풀스택 개발자 한재훈</p>
+        <h1 id="hero-title">문제의 원인을 끝까지 파고들고, 분석·설계부터 직접 하는 개발자</h1>
+        <p className="h-hero-sub">요구사항 분석, ERD·화면 설계, 구현, 테스트, 배포까지 한 사이클을 직접 해 봤습니다.</p>
+        <div className="h-hero-actions">
+          <Ext className="h-btn h-btn-main" href={projects[2].liveUrl}>NO.BLACK 라이브 보기</Ext>
+          <a className="h-btn h-btn-line" href="#project/crew">MyCrewSoft 설계·구현</a>
+          <a className="h-btn h-btn-line" href="/resume.html">이력서</a>
         </div>
-        <h1 id="name" aria-label="한재훈, Han Jaehun">
-          <span className="masthead-line">Han</span>{' '}
-          <span className="masthead-line">Jaehun<span className="masthead-period">.</span></span>
-        </h1>
-        <div className="cover-summary">
-          <div className="hero-intro">
-            <p className="hero-role"><span>화면에서 서버까지,</span> 서비스의 흐름을 설계합니다.</p>
-            <p className="hero-description">Java·Spring 기반 백엔드 / 풀스택 개발자</p>
-            <div className="hero-actions">
-              <a className="button button-dark" href="#projects">대표 작업 <span aria-hidden="true">↓</span></a>
-              <a className="button cover-resume" href="#portfolio">원본 27쪽 보기</a>
-              <ExternalLink className="text-link" href={github}>GitHub</ExternalLink>
-            </div>
+        <ul className="h-proofs" aria-label="핵심 근거">
+          {proofs.map(([t, d]) => <li key={t}><strong>{t}</strong><span>{d}</span></li>)}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// 개발 전 과정: 단계를 고르면 그 단계에서 실제로 만든 산출물을 보여줍니다.
+function Process() {
+  const [active, setActive] = useState(1);
+  const [zoom, setZoom] = useState(null);
+  const stage = stages[active];
+
+  useEffect(() => {
+    if (!zoom) return undefined;
+    const onKey = (e) => e.key === 'Escape' && setZoom(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [zoom]);
+
+  return (
+    <section className="h-section" id="process" aria-labelledby="process-title">
+      <div className="h-wrap">
+        <h2 id="process-title">분석부터 배포까지, 직접 해 본 과정</h2>
+        <p className="h-lead">단계를 눌러 그 단계에서 만든 결과물을 확인하세요. 그림을 누르면 크게 볼 수 있습니다.</p>
+        <div className="h-stagebar" role="group" aria-label="개발 단계">
+          {stages.map((s, i) => (
+            <button key={s.id} type="button" data-tone={s.tone} aria-pressed={i === active} onClick={() => setActive(i)}>
+              <span aria-hidden="true">{i + 1}</span>{s.name}
+            </button>
+          ))}
+        </div>
+        <div className="h-stagepanel" data-tone={stage.tone}>
+          <div className="h-stagetext">
+            <h3>{stage.name}</h3>
+            <p>{stage.lead}</p>
+            <ul>{stage.outputs.map((o) => <li key={o}>{o}</li>)}</ul>
           </div>
-          <dl className="profile-facts" aria-label="프로필 요약">
-            <div><dt>주력 기술</dt><dd>Java · Spring Boot</dd></div>
-            <div><dt>팀 프로젝트</dt><dd>MyCrewSoft · 그룹웨어 AA</dd></div>
-            <div><dt>개인 프로젝트</dt><dd>NO.BLACK · 브랜드 웹사이트</dd></div>
-            <div><dt>학력·자격</dt><dd>한밭대학교 산업경영공학과 · SQLD · 정보처리기능사</dd></div>
-          </dl>
+          <div className="h-shots">
+            {stage.shots.length === 0 && <p className="h-empty">테스트 코드는 GitHub 저장소에서 확인할 수 있습니다.</p>}
+            {stage.shots.map(([label, path]) => (
+              <button key={path} type="button" className="h-shot" onClick={() => setZoom([label, path])}>
+                <img src={asset(path)} alt={label} loading="lazy" /><span>{label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      {zoom && (
+        <div className="h-lightbox" role="dialog" aria-modal="true" aria-label={zoom[0]} onClick={() => setZoom(null)}>
+          <button type="button" className="h-lightbox-close" autoFocus onClick={() => setZoom(null)}>닫기</button>
+          <img src={asset(zoom[1])} alt={zoom[0]} onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
+    </section>
+  );
+}
+
+// 프로젝트 3개를 같은 틀로 통일: 한 일 → 결과 → 참여 단계 → 링크
+function Projects() {
+  return (
+    <section className="h-section h-alt" id="projects" aria-labelledby="projects-title">
+      <div className="h-wrap">
+        <h2 id="projects-title">프로젝트</h2>
+        <div className="h-cards">
+          {cards.map((c) => (
+            <article key={c.id} className="h-card" data-tone={c.tone}>
+              <img src={asset(c.image)} alt={c.alt} loading="lazy" />
+              <div className="h-card-body">
+                <p className="h-kind">{c.kind}</p>
+                <h3>{c.name}</h3>
+                <p>{c.role}</p>
+                <p className="h-result">{c.result}</p>
+                <p className="h-done" aria-label="참여한 단계">{['분석', '설계', '개발', '테스트', '배포'].map((n) => <span key={n} data-on={c.done.includes(n)}>{n}</span>)}</p>
+                <ul className="h-tags" aria-label="사용 기술">{c.tags.map((t) => <li key={t}>{t}</li>)}</ul>
+                <div className="h-actions">
+                  {c.live && <Ext className="h-btn h-btn-main" href={c.live}>배포 사이트</Ext>}
+                  {c.room && <Ext className="h-btn h-btn-line" href={c.room}>MY ROOM 체험</Ext>}
+                  <a className="h-btn h-btn-line" href={c.detail}>설계·개발 내용</a>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function WindowDots() {
-  return <span className="window-dots" aria-hidden="true"><i /><i /><i /></span>;
-}
-
-function ProjectTags({ tags }) {
-  return <ul className="project-tags" aria-label="사용 기술">{tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>;
-}
-
-function ProjectImage({ image, alt, label, caption }) {
+// 문제 해결 기록: 문제 → 원인 → 해결 → 결과 순서로 같은 틀에 담았습니다.
+function Cases() {
   return (
-    <figure className="project-media">
-      <div className="project-media-frame">
-        <div className="project-media-bar"><WindowDots /><span>{label}</span></div>
-        <img src={`/assets/${image}`} alt={alt} loading="lazy" />
-      </div>
-      <figcaption>{caption}</figcaption>
-    </figure>
-  );
-}
-
-function WorkIndex() {
-  const [cinema, crew, noblack] = projects;
-
-  return (
-    <section className="frame section work-section" id="projects" data-tone="fern" aria-labelledby="work-title">
-      <div className="section-heading work-heading">
-        <div><p className="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">대표 작업</h2></div>
-      </div>
-
-      <article className="featured-work work-crew" data-tone="fern" id="work-crew" aria-labelledby="crew-title">
-        <header className="case-header">
-          <div className="featured-copy">
-            <p className="eyebrow project-kicker"><span>팀 프로젝트</span> 그룹웨어 · 2026.05–06</p>
-            <h3 id="crew-title">{crew.name}</h3>
-            <p className="case-lead">{crewRoleSummary}</p>
-          </div>
-          <div className="project-actions">
-            <a className="button button-dark" href="#project/crew">설계·구현 보기 <span aria-hidden="true">→</span></a>
-            <ExternalLink className="text-link" href={crew.repo}>GitHub</ExternalLink>
-          </div>
-        </header>
-        <dl className="case-metrics" aria-label="MyCrewSoft 협업 및 구현 범위">
-          <div><dt>팀 개발</dt><dd>4<span>인</span></dd></div>
-          <div><dt>대시보드 위젯</dt><dd>12<span>종</span></dd></div>
-          <div><dt>통합검색 도메인</dt><dd>6<span>개</span></dd></div>
-        </dl>
-        <div className="case-preview">
-          <ProjectImage image={crew.image} alt="MyCrewSoft 그룹웨어의 실제 대시보드" label="MyCrewSoft / Dashboard" caption="MyCrewSoft 실제 대시보드" />
+    <section className="h-section" id="cases" aria-labelledby="cases-title">
+      <div className="h-wrap">
+        <h2 id="cases-title">원인을 끝까지 파고든 기록</h2>
+        <div className="h-casegrid">
+          {cases.map((c) => (
+            <article key={c.title} className="h-case" data-tone={c.tone}>
+              <p className="h-kind">{c.where}</p>
+              <h3>{c.title}</h3>
+              <dl>
+                <div><dt>문제</dt><dd>{c.problem}</dd></div>
+                <div><dt>원인</dt><dd>{c.cause}</dd></div>
+                <div><dt>해결</dt><dd>{c.fix}</dd></div>
+                <div><dt>결과</dt><dd>{c.result}</dd></div>
+              </dl>
+            </article>
+          ))}
         </div>
-        <dl className="case-notes" aria-label="MyCrewSoft 주요 작업">
-          <div><dt>공통 설계</dt><dd>백엔드 공통 아키텍처와 팀 협업 가이드</dd></div>
-          <div><dt>회의 자동화</dt><dd>LiveKit 녹취부터 AI 회의록·전자결재 기안까지</dd></div>
-          <div><dt>실시간 기능</dt><dd>이벤트 기반 SSE 알림과 WebSocket 메신저</dd></div>
-        </dl>
-        <ProjectTags tags={crew.tags} />
-      </article>
-
-      <article className="featured-work work-noblack" data-tone="copper" id="work-noblack" aria-labelledby="noblack-title">
-        <div className="noblack-feature">
-          <header className="featured-copy noblack-heading">
-            <p className="eyebrow project-kicker"><span>실제 의뢰</span> 브랜드 웹사이트 · 1인 개발</p>
-            <h3 id="noblack-title">{noblack.name}</h3>
-          </header>
-          <ProjectImage image={noblack.image} alt="NO.BLACK의 실제 픽셀룸. 침구가 놓인 방과 게임 인터페이스" label="NO.BLACK / MY ROOM" caption={<ExternalLink className="text-link" href={noblack.roomUrl}>실제 MY ROOM 체험</ExternalLink>} />
-          <div className="noblack-copy">
-            <div className="project-actions">
-              <ExternalLink className="button button-accent" href={noblack.liveUrl}>배포 사이트 열기</ExternalLink>
-              <a className="text-link" href="#project/noblack">개발 내용 보기 <span aria-hidden="true">→</span></a>
-            </div>
-            <p className="project-summary">{noblackSummary}</p>
-            <ProjectTags tags={noblack.tags} />
-          </div>
-        </div>
-      </article>
-
-      <article className="featured-work work-cinema" data-tone="lavender" id="work-cinema" aria-labelledby="cinema-title">
-        <div className="featured-grid">
-          <div className="featured-copy">
-            <p className="eyebrow project-kicker"><span>팀 프로젝트</span> 영화 커뮤니티</p>
-            <h3 id="cinema-title">{cinema.name}</h3>
-            <p className="project-role">풀스택 / TA · 2026.02–2026.03</p>
-            <p className="project-summary">FrontController와 Action 인터페이스로 MVC 패턴 직접 구현</p>
-            <ProjectTags tags={cinema.tags} />
-            <div className="project-actions"><a className="button button-dark" href="#project/cinema">Cinema Talk 자료 보기 <span aria-hidden="true">→</span></a></div>
-          </div>
-          <ProjectImage image={cinema.image} alt="Cinema Talk 영화 커뮤니티 화면" label="Cinema Talk" caption="Cinema Talk 실제 화면" />
-        </div>
-      </article>
-    </section>
-  );
-}
-
-function Skills() {
-  return (
-    <section className="section skills-section" id="skills" data-tone="gold" aria-labelledby="skills-title">
-      <div className="frame">
-        <div className="section-heading"><div><p className="eyebrow">03 / TECH STACK &amp; PROCESS</p><h2 id="skills-title">기술 스택과 개발 과정</h2></div></div>
-        <PortfolioContent page={4} />
-        <PortfolioContent page={5} />
       </div>
     </section>
   );
@@ -174,9 +160,18 @@ function Skills() {
 
 function About() {
   return (
-    <section className="frame section about-section" id="about" data-tone="coral" aria-labelledby="about-title">
-      <div className="section-heading"><div><p className="eyebrow">02 / ABOUT ME</p><h2 id="about-title">소개</h2></div><a className="text-link" href="/resume.html">이력서 보기 <span aria-hidden="true">↗</span></a></div>
-      <PortfolioContent page={3} />
+    <section className="h-section h-alt" id="about" aria-labelledby="about-title">
+      <div className="h-wrap h-about">
+        <img src={asset('profile.png')} alt="한재훈 프로필 사진" width="220" height="280" loading="lazy" />
+        <div>
+          <h2 id="about-title">소개</h2>
+          <p className="h-lead">6년간 비영리 단체에서 기획과 행정을 하며, 반복되는 불편은 시스템으로 풀 수 있다고 느껴 개발자가 되었습니다. Java·Spring부터 JSP·React까지 서버와 화면을 함께 다룹니다.</p>
+          <dl className="h-skills">
+            {skills.map(([g, items]) => <div key={g}><dt>{g}</dt><dd>{items.join(' · ')}</dd></div>)}
+          </dl>
+          <p className="h-cert">SQL 개발자(SQLD) · 정보처리기사 필기 합격 · 대덕인재개발원 풀스택 과정 수료</p>
+        </div>
+      </div>
     </section>
   );
 }
@@ -184,25 +179,19 @@ function About() {
 function Contact() {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
-    if (!copied) return;
-    const timer = setTimeout(() => setCopied(false), 2200);
-    return () => clearTimeout(timer);
+    if (!copied) return undefined;
+    const t = setTimeout(() => setCopied(false), 2200);
+    return () => clearTimeout(t);
   }, [copied]);
-
   async function copyEmail() {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-    } catch {
-      window.location.href = `mailto:${email}`;
-    }
+    try { await navigator.clipboard.writeText(email); setCopied(true); } catch { window.location.href = `mailto:${email}`; }
   }
-
   return (
-    <footer id="contact" className="contact-section">
-      <div className="frame contact-inner">
-        <div><p className="eyebrow">05 / CONTACT</p><h2>연락처</h2><a className="email" href={`mailto:${email}`}>{email}</a> <button className="copy-button" type="button" onClick={copyEmail}>{copied ? '복사 완료' : '복사'}</button><span className="sr-only" role="status">{copied ? '이메일 주소를 복사했습니다.' : ''}</span></div>
-        <div className="contact-links"><ExternalLink href={github}>GitHub</ExternalLink><a href="/resume.html">이력서 ↗</a><a href="#home">맨 위로 ↑</a></div>
+    <footer id="contact" className="h-contact">
+      <div className="h-wrap">
+        <h2>함께 일하고 싶으시면 연락 주세요</h2>
+        <p><a className="h-email" href={`mailto:${email}`}>{email}</a> <button type="button" className="h-copy" onClick={copyEmail}>{copied ? '복사 완료' : '복사'}</button><span className="sr-only" role="status">{copied ? '이메일 주소를 복사했습니다.' : ''}</span></p>
+        <p className="h-links"><Ext href={github}>GitHub</Ext><a href="/resume.html">이력서</a><a href="#home">맨 위로</a></p>
       </div>
     </footer>
   );
@@ -251,7 +240,7 @@ function App() {
         <Header />
         <div className="portfolio-content">
           <main id="main" tabIndex={-1}>
-            {view === 'home' && <><Hero /><WorkIndex /><About /><Skills /></>}
+            {view === 'home' && <><Hero /><Process /><Projects /><Cases /><About /></>}
             {view === 'portfolio' && <PortfolioReader key="portfolio" full />}
             {view === 'noblack' && <NoblackReader project={project} />}
             {project && view !== 'noblack' && <PortfolioReader key={project.id} project={project} />}

@@ -47,7 +47,19 @@ jobs:
           set -euo pipefail
           docker run --detach --name portfolio-ci-test -p 127.0.0.1:18781:80 "${IMAGE}:${GITHUB_SHA}"
           trap 'docker rm --force portfolio-ci-test >/dev/null 2>&1 || true' EXIT
-          curl --fail --silent --show-error --retry 8 --retry-connrefused --retry-delay 2 http://127.0.0.1:18781/ -o "$RUNNER_TEMP/index.html"
+          ready=false
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent --output "$RUNNER_TEMP/index.html" http://127.0.0.1:18781/; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then
+            docker logs portfolio-ci-test || true
+            echo '::error::Container did not become HTTP-ready'
+            exit 1
+          fi
           grep -q 'Han Jaehun' "$RUNNER_TEMP/index.html"
           docker exec portfolio-ci-test sh -c 'find /usr/share/nginx/html/assets -name "*.js" | grep -q ".js"'
           docker exec portfolio-ci-test wget -q -O /dev/null http://127.0.0.1/

@@ -180,7 +180,7 @@ function Projects() {
           <p className="project-lead">침구 브랜드의 정체성을 게임처럼 탐험하는 웹사이트.</p>
           <p className="project-desc">이커머스 브랜드 대표의 의뢰를 받아 브랜드 소개와 제품 홍보를 위한 웹사이트를 제작했습니다. 구매는 오늘의집 판매 페이지로 연결하고, 홈페이지는 브랜드 경험과 제품 탐색에 집중하도록 설계했습니다.</p>
           <div className="noblack-actions">
-            <a className="button button-cream" href="https://numberblack.kr/" target="_blank" rel="noopener noreferrer">배포 사이트 열기 <OutArrow /></a>
+            <a className="button button-cream" href="https://oooooo.kr/" target="_blank" rel="noopener noreferrer">배포 사이트 열기 <OutArrow /></a>
             <a className="button button-outline" href="https://github.com/sksqlrlek/noblack" target="_blank" rel="noopener noreferrer">GitHub <OutArrow /></a>
           </div>
           <div className="tags"><Tag muted>React / TypeScript</Tag><Tag muted>Spring Boot</Tag><Tag muted>PostgreSQL</Tag><Tag muted>Docker / OCI</Tag></div>

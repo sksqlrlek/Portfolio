@@ -42,6 +42,7 @@ http://localhost:8781 에서 확인합니다. OCI 서버에 실제 자동배포�
 - .github/workflows/pages.yml: GitHub Pages 배포
 
 ## 검토 사항
-- NO.BLACK 실제 배포 사이트 주소와 스크린샷으로 교체
+- NO.BLACK 실 운영 주소: https://oooooo.kr/ (사용자 제공 주소; 외부 접속 확인 전)
+- NO.BLACK 현재 픽셀룸 컨셉 이미지는 실제 운영 스크린샷으로 교체
 - NO.BLACK GitHub 저장소가 비공개라면 외부에서 접근할 수 없음
 - 모든 프로젝트 문구와 실제 구현 범위 대조

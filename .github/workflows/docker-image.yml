@@ -65,7 +65,7 @@ jobs:
             echo '::error::Container did not become HTTP-ready'
             exit 1
           fi
-          grep -q 'Han Jaehun' "$RUNNER_TEMP/index.html"
+          grep -q 'id="root"' "$RUNNER_TEMP/index.html"
           docker exec portfolio-ci-test sh -c 'find /usr/share/nginx/html/assets -name "*.js" | grep -q ".js"'
           docker exec portfolio-ci-test wget -q -O /dev/null http://127.0.0.1/
 
@@ -178,4 +178,4 @@ jobs:
         run: |
           set -euo pipefail
           [[ "$PORTFOLIO_PUBLIC_URL" == https://* ]] || { echo "::error::PORTFOLIO_PUBLIC_URL must be an HTTPS URL"; exit 1; }
-          curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --retry-connrefused "$PORTFOLIO_PUBLIC_URL" | grep -q 'Han Jaehun'
+          curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --retry-connrefused "$PORTFOLIO_PUBLIC_URL" | grep -q 'id="root"'

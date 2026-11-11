@@ -124,25 +124,42 @@ return origin
     .doFinally(signalType -> apiSupportManager.clear(requestId));
 // LLM 응답을 SSE로 스트리밍하고, 중단 요청 시 안전하게 종료` },
         { t: 'h3', text: '이벤트 기반 연동' },
-        { t: 'p', html: '프로젝트를 만들면 DB 커밋이 끝난 뒤 전용 메신저 채팅방이 자동으로 생기고, 방 ID가 프로젝트에 기록됩니다. <code>AFTER_COMMIT</code>으로 분리해 롤백 때 채팅방만 남는 문제를 막고, 프로젝트 서비스는 이벤트 발행만 맡겨 도메인 간 결합을 낮췄습니다. 같은 방식으로 SSE 실시간 알림을 만들었습니다.' },
-        { t: 'code', file: 'MessengerEventListener.java', code: `@Component
+        { t: 'p', html: '프로젝트를 만들면 DB 커밋이 끝난 뒤 전용 메신저 채팅방이 자동으로 생기고, 방 ID가 프로젝트에 기록됩니다. 참여자를 추가·제외할 때도 이벤트로 채팅방 참여자를 맞춥니다. <code>AFTER_COMMIT</code>으로 분리해 롤백 때 채팅방만 남는 문제를 막고, 프로젝트 서비스는 이벤트 발행만 맡겨 도메인 간 결합을 낮췄습니다. 같은 방식으로 SSE 실시간 알림을 만들었습니다.' },
+        { t: 'code', file: 'MessengerEventListener.java', code: `@Slf4j
+@Component
 @RequiredArgsConstructor
 public class MessengerEventListener {
+
     private final MsngrService msngrService;
     private final ProjectService projectService;
 
-    @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void MessengerEventListener(ProjectCreatedEvent event) {
+    public void handleProjectCreated(ProjectCreatedEvent event) {
         try {
-            // 메신저 방 자동 생성
-            Long chtrmId = msngrService.createProjectChtrm(...);
-            // 생성된 방 ID를 프로젝트 테이블에 업데이트
-            projectService.updateProjectChtrmId(event.getProjId(), chtrmId);
+            Long chtrmId = msngrService.createProjectChtrm(
+                event.getProjId(),
+                event.getProjNm(),
+                event.getCrtrId(),
+                event.getEmpIds()
+            );
+
+            projectService.updateProjectChtrmId(
+                event.getProjId(),
+                chtrmId
+            );
+
         } catch (Exception e) {
-            log.error("메신저 채팅방 자동 생성 실패", e);
+            log.error(
+                "프로젝트 메신저 채팅방 자동 생성 실패. projId={}, projNm={}",
+                event.getProjId(),
+                event.getProjNm(),
+                e
+            );
         }
     }
+
+    // (생략) handleProjectMembersAdded · handleProjectMemberRemoved
+    // 참여자 추가·제외도 AFTER_COMMIT 이후 채팅방 참여자에 반영
 }` },
         { t: 'fold', title: 'WebSocket 인증', sub: 'HTTP 보안 필터가 닿지 않는 STOMP 연결에 별도 인증 흐름 설계', blocks: [
           { t: 'p', html: 'STOMP 연결(CONNECT) 시점에 Authorization 헤더의 JWT를 검증하고 사원 ID를 Principal로 등록합니다. 이후 SEND·SUBSCRIBE에서는 다시 인증하지 않고 사원 ID를 씁니다. <code>StompHeaderAccessor.wrap()</code>은 새 객체를 만들어 원본 메시지에 반영되지 않아, 기존 객체를 돌려주는 <code>MessageHeaderAccessor.getAccessor()</code>를 썼습니다.' },

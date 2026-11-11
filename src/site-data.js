@@ -49,7 +49,7 @@ export const projects = [
     lead: '<b>AA로 공통 API 응답·전역 예외 처리·계층 규칙을 설계</b>하고, 협업 가이드를 배포해 4인 팀의 개발 기준을 세웠습니다.',
     points: [
       '화상회의 녹취 → STT → LLM 회의록 → 전자결재 기안까지 자동 연결',
-      'Spring Event·AFTER_COMMIT·@Async로 알림·메신저를 느슨하게 연결',
+      'Spring Event·AFTER_COMMIT으로 메신저·알림을 느슨하게 연결',
       '대시보드 12종 위젯, 6개 도메인 통합검색, WebSocket 메신저',
     ],
     stages: ['an', 'de', 'dv', 'te'],

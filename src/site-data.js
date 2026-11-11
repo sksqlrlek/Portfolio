@@ -50,6 +50,7 @@ export const projects = [
     points: [
       '화상회의 녹취 → STT → LLM 회의록 → 전자결재 기안까지 자동 연결',
       'Spring Event·AFTER_COMMIT으로 메신저·알림을 느슨하게 연결',
+      '알림·AI 회의록은 @Async로 메인 트랜잭션과 분리',
       '대시보드 12종 위젯, 6개 도메인 통합검색, WebSocket 메신저',
     ],
     stages: ['an', 'de', 'dv', 'te'],

@@ -124,7 +124,7 @@ return origin
     .doFinally(signalType -> apiSupportManager.clear(requestId));
 // LLM 응답을 SSE로 스트리밍하고, 중단 요청 시 안전하게 종료` },
         { t: 'h3', text: '이벤트 기반 연동' },
-        { t: 'p', html: '프로젝트를 만들면 DB 커밋이 끝난 뒤 전용 메신저 채팅방이 자동으로 생기고, 방 ID가 프로젝트에 기록됩니다. 참여자를 추가·제외할 때도 이벤트로 채팅방 참여자를 맞춥니다. <code>AFTER_COMMIT</code>으로 분리해 롤백 때 채팅방만 남는 문제를 막고, 프로젝트 서비스는 이벤트 발행만 맡겨 도메인 간 결합을 낮췄습니다. 같은 방식으로 SSE 실시간 알림을 만들었습니다.' },
+        { t: 'p', html: '프로젝트를 만들면 DB 커밋이 끝난 뒤 전용 메신저 채팅방이 자동으로 생기고, 방 ID가 프로젝트에 기록됩니다. 참여자를 추가·제외할 때도 이벤트로 채팅방 참여자를 맞춥니다. <code>AFTER_COMMIT</code>으로 분리해 롤백 때 채팅방만 남는 문제를 막고, 프로젝트 서비스는 이벤트 발행만 맡겨 도메인 간 결합을 낮췄습니다. 같은 방식으로 SSE 실시간 알림을 만들었고, 알림 리스너는 <code>@Async</code>를 더해 커밋 후 별도 스레드에서 처리합니다.' },
         { t: 'code', file: 'MessengerEventListener.java', code: `@Slf4j
 @Component
 @RequiredArgsConstructor

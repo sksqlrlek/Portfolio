@@ -1,4 +1,6 @@
-import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+// Pretendard 정적 글꼴 동적 서브셋(페이지에 나온 글자 조각만 내려받음).
+// 가변 글꼴은 윈도에서 본문이 가늘고 흐리게 보여 정적 글꼴을 씁니다. 쓰는 굵기(500~900)만 남기는 처리는 vite.config.js에 있습니다.
+import 'pretendard/dist/web/static/pretendard-dynamic-subset.css';
 import './site.css';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';

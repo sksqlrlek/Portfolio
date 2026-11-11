@@ -1,7 +1,11 @@
 import React from 'react';
-import { career, certs, hero, mainSkills, profile, projects, skillGroups, stageOrder, stages, troubles } from './site-data';
+import * as siteData from './site-data';
+import { keepDots } from './text';
 import { Ext, Icon, Rich, StageDots, TechChip, TechList, useCopy } from './ui';
 import { SectionLink } from './nav';
+
+// 가운뎃점에서 어색하게 줄이 바뀌지 않도록 정리한 문구를 씁니다(text.js).
+const { career, certs, hero, mainSkills, profile, projects, skillGroups, stageOrder, stages, troubles } = keepDots(siteData);
 
 function Hero() {
   return (

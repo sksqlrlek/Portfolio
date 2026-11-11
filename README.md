@@ -35,7 +35,7 @@ npm.cmd run dev
 
 - 주소: `#projects`처럼 홈 섹션, `#project/crew`처럼 상세, `#project/crew/design`·`#project/crew/case-03`처럼 상세 안의 단계·사례로 바로 갈 수 있습니다. 접힌 사례도 자동으로 펼쳐집니다. 예전 주소(`#project/crew/16` 같은 PDF 쪽 번호)는 해당 단계로 연결합니다.
 - 같은 화면 안의 메뉴·목차 이동은 방문 기록을 쌓지 않아, 뒤로가기 한 번이면 이전 화면으로 돌아가고 홈의 스크롤 위치도 복원됩니다.
-- 글꼴은 Pretendard 동적 서브셋(`pretendard` 패키지)이라 페이지에 쓰인 글자 조각만 내려받습니다.
+- 글꼴은 Pretendard 정적 글꼴 동적 서브셋(`pretendard` 패키지, 굵기 500~900)이라 페이지에 쓰인 글자 조각만 내려받습니다. 가변 글꼴은 윈도에서 본문이 가늘고 흐리게 보여 쓰지 않고, 본문 굵기는 500입니다. 쓰지 않는 굵기와 옛 형식(woff) 파일은 `vite.config.js`에서 빌드할 때 뺍니다.
 - 브라우저 점검: `npm run build && npm run preview` 후 `PORTFOLIO_URL=http://127.0.0.1:4173 node scripts/smoke-portfolio-ui.mjs` (Playwright 필요. CI에서는 Docker 이미지에 대해 자동 실행)
 
 ## 빌드
@@ -47,7 +47,7 @@ npm.cmd run preview
 
 `dist`가 완성된 정적 사이트입니다. Spring/DB/Node 상시 프로세스는 필요 없습니다.
 
-코드와 함께 제공하는 이미지·PDF는 사용자 프로젝트 자료이며, 원본 권리는 각 권리자에게 있습니다. 한글 본문 글꼴은 `pretendard` 패키지의 Pretendard Variable 동적 서브셋으로, 빌드 결과에 함께 들어가 외부 CDN 없이 제공됩니다. 글꼴 라이선스는 `public/assets/fonts/Pretendard-LICENSE.txt`에서 확인할 수 있습니다.
+코드와 함께 제공하는 이미지·PDF는 사용자 프로젝트 자료이며, 원본 권리는 각 권리자에게 있습니다. 한글 본문 글꼴은 `pretendard` 패키지의 Pretendard 정적 글꼴 동적 서브셋으로, 빌드 결과에 함께 들어가 외부 CDN 없이 제공됩니다. 글꼴 라이선스는 `public/assets/fonts/Pretendard-LICENSE.txt`에서 확인할 수 있습니다.
 
 ## ChatGPT Sites 운영 버전 10 내보내기
 

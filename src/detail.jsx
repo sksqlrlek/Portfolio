@@ -1,8 +1,12 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { details, detailOrder } from './project-details';
+import { details as rawDetails, detailOrder } from './project-details';
 import { stageOrder, stages } from './site-data';
+import { keepDots } from './text';
 import { CodeBlock, Ext, Icon, Rich, StageDots, TechChip } from './ui';
 import { settleScroll } from './nav';
+
+// 가운뎃점에서 어색하게 줄이 바뀌지 않도록 정리한 본문을 씁니다(text.js). 코드 블록은 그대로 둡니다.
+const details = keepDots(rawDetails);
 
 const stageNo = (key) => String(stageOrder.indexOf(key) + 1).padStart(2, '0');
 

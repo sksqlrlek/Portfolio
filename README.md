@@ -74,3 +74,10 @@ docker compose up -d --build
 `npm ci`와 `npm run build`를 실행했습니다. 생성된 HTML·CSS·JavaScript 및 정적 리소스 77개를 운영 사이트의 파일과 SHA-256으로 비교해 모두 일치함을 확인했습니다. 빌드 결과를 별도 로컬 주소에서 열어 첫 화면, MyCrewSoft 상세와 ERD 목차 이동, 도면 확대, 이력서 링크와 인쇄 버튼 표시도 확인했습니다.
 
 [외부 서비스와 ChatGPT Sites 의존성](docs/EXTERNAL-DEPENDENCIES.md)에 CDN 글꼴, 외부 링크, 플랫폼 설정과 선택적 글꼴 자체 호스팅 방법을 정리했습니다.
+
+
+## 동일 저장소에서 OCI와 GitHub Pages를 서로 다른 화면으로 운영
+
+- [OCI 개발자 소개 사이트](https://jaehoon93.duckdns.org/): 기존 React/Vite 코드와 Docker CI/CD로 배포
+- [GitHub Pages PDF 포트폴리오](https://sksqlrlek.github.io/Portfolio/): `legacy-pdf/index.html` 및 `portfolio.pdf`를 정적 게시
+- 자세한 구성 및 PDF 교체 방법은 [두 사이트 배포 가이드](docs/DUAL-DEPLOYMENT.md)를 참고하세요.

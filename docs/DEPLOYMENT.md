@@ -36,8 +36,8 @@ Dockerfile은 이미 빌드된 dist를 복사합니다. 서버에서 npm 빌드�
 
 ## 공개 전 확인
 
-- 이메일은 최신 첨부 이력서의 sksqlrlek@kakao.com을 사용합니다. 기존 PDF에는 Gmail 주소가 있어 통일 여부를 확인하세요.
+- 이메일은 포트폴리오 PDF와 같은 sksqlrlek@gmail.com으로 통일했습니다.
 - 원본 포트폴리오 PDF는 기존 자료 그대로이며 NO.BLACK이 포함되지 않습니다.
-- NO.BLACK은 운영 홈(https://oooooo.kr/)과 MY ROOM(https://oooooo.kr/room), GitHub 저장소를 연결했습니다.
+- NO.BLACK은 운영 사이트(https://oooooo.kr/)를 연결했습니다. 저장소는 비공개라 링크 대신 안내 문구를 둡니다.
 - 정보처리기사는 이력서에 적힌 필기 합격만 반영했습니다.
 - NO.BLACK CMS 내용은 첨부 README 기준입니다. 실제 운영 배포 여부와 본인이 설명 가능한 기여 범위를 최종 확인하세요.

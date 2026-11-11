@@ -20,7 +20,7 @@ export const stages = [
   { id: 'test', name: '테스트', tone: 'sage', lead: '만든 기능이 맞게 동작하는지 확인합니다.',
     outputs: ['단위 테스트 코드', '통합 테스트 코드', '버그 리포트 · 수정 내역'], shots: [] },
   { id: 'deploy', name: '배포', tone: 'lavender', lead: '직접 배포하고 운영합니다.',
-    outputs: ['Docker · nginx 배포 구성', 'NO.BLACK 실서비스 운영', '이 포트폴리오 사이트도 직접 배포'],
+    outputs: ['Docker Compose · Caddy(HTTPS) 배포 구성', 'GitHub Actions 검사 후 GHCR·OCI 자동 배포', 'NO.BLACK 실서비스 운영', '이 포트폴리오 사이트도 직접 배포'],
     shots: [['NO.BLACK 배포 구성', 'noblack-diagrams/deployment.svg'], ['NO.BLACK 픽셀룸', 'noblack-room.webp']] },
 ];
 

@@ -141,7 +141,7 @@ export function NoblackReader({ project }) {
           {noblackSections.map(({ id, title, html }) => (
             <section className="readme-section" key={id} id={`noblack-section-${id}`} tabIndex={-1} aria-labelledby={`noblack-title-${id}`}>
               <h2 id={`noblack-title-${id}`}>{title}</h2>
-              <div className="readme-prose" dangerouslySetInnerHTML={{ __html: html }} />
+              <div className="readme-prose chapter-prose" dangerouslySetInnerHTML={{ __html: html }} />
             </section>
           ))}
         </div>

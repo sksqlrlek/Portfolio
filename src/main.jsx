@@ -21,8 +21,8 @@ function Header() {
       <div className="topbar-inner">
         <a className="topbar-brand" href="#home">한재훈</a>
         <nav className="topbar-nav" aria-label="주 메뉴">
-          <a href="#process">개발 과정</a><a href="#projects">프로젝트</a><a href="#cases">문제 해결</a>
-          <a href="#about">소개</a><a href="#contact">연락처</a>
+          <a href="#about">소개</a><a href="#process">개발 과정</a><a href="#projects">프로젝트</a>
+          <a href="#cases">문제 해결</a><a href="#contact">연락처</a>
         </nav>
         <a className="topbar-resume" href="/resume.html">이력서</a>
       </div>
@@ -85,8 +85,8 @@ function Process() {
           <div className="h-shots">
             {stage.shots.length === 0 && <p className="h-empty">테스트 코드는 GitHub 저장소에서 확인할 수 있습니다.</p>}
             {stage.shots.map(([label, path]) => (
-              <button key={path} type="button" className="h-shot" onClick={() => setZoom([label, path])}>
-                <img src={asset(path)} alt={label} loading="lazy" /><span>{label}</span>
+              <button key={path} type="button" className={`h-shot${path.endsWith('.svg') ? ' h-shot-wide' : ''}`} onClick={() => setZoom([label, path])}>
+                <img src={asset(path)} alt={label} loading="lazy" /><span>{label}<em>확대 보기</em></span>
               </button>
             ))}
           </div>
@@ -240,7 +240,7 @@ function App() {
         <Header />
         <div className="portfolio-content">
           <main id="main" tabIndex={-1}>
-            {view === 'home' && <><Hero /><Process /><Projects /><Cases /><About /></>}
+            {view === 'home' && <><Hero /><About /><Process /><Projects /><Cases /></>}
             {view === 'portfolio' && <PortfolioReader key="portfolio" full />}
             {view === 'noblack' && <NoblackReader project={project} />}
             {project && view !== 'noblack' && <PortfolioReader key={project.id} project={project} />}

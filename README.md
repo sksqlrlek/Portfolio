@@ -1,6 +1,11 @@
 # 한재훈 개발자 포트폴리오
 
-React + Vite 정적 포트폴리오. 첫 화면에는 이름과 개발자 소개를 담고, 대표 작업은 MyCrewSoft, NO.BLACK, Cinema Talk 순서로 배치했습니다. 색상과 분위기는 원본 PDF를 기준으로 했습니다. 데스크톱은 왼쪽 목차와 표지형 소개를 사용하고, 모바일에서는 상단 메뉴와 한 열 구성을 사용합니다.
+React + Vite 정적 포트폴리오(OCI: https://jaehoon93.duckdns.org/). 홈은 실제 개발자 소개 사이트의 구도(첫 화면 이름·소개 | 오른쪽 경험 목록, 프로젝트 카드 → 상세 페이지)를 따르고, 색과 흐름은 원본 PDF에서 가져왔습니다.
+
+- 색은 개발 단계에만 씁니다: 분석 coral · 설계 gold · 개발 green · 테스트 blue · 배포 lavender
+- 홈 순서: 소개 → 프로젝트(MyCrewSoft 메인, NO.BLACK, Cinema Talk) → 문제 해결 → 기술 → 경력·자격증 → 연락
+- 프로젝트 상세는 모두 같은 순서입니다: 한눈에 보기 → 01 분석 → 02 설계 → 03 개발 → 04 테스트 → 05 배포 → 트러블슈팅 → 회고
+- 휴대폰에서는 홈 상단에 섹션 탭, 상세 상단에 단계 바가 고정됩니다.
 
 ## VS Code에서 시작
 
@@ -15,21 +20,23 @@ npm.cmd run dev
 
 ## 수정 위치
 
-- `src/data.js`: 프로젝트 소개, 역할, 기술과 링크
-- `src/main.jsx`: 첫 화면과 해시 주소 처리
-- `src/portfolio-reader.jsx`: 프로젝트별 목차, 상세 읽기 화면과 원본 PDF 뷰어
-- `src/portfolio-content.jsx`와 `src/content/`: 원본 내용을 옮긴 웹 본문. HTML 파일 이름은 PDF 쪽 번호입니다.
-- `src/portfolio-pages.js`: 원본 PDF 쪽수와 개별 자료 연결
-- `src/noblack-readme.js`: NO.BLACK README의 웹 표시용 내용
-- `src/style.css`: 색상·폰트·반응형 레이아웃
-- `public/resume.html`: 공개용 이력서와 인쇄/PDF 저장
-- `public/assets/`: 프로필·프로젝트 원본 이미지·포트폴리오 PDF
-- `docs/CONTENT.md`: 자료 출처와 확인할 사항
+- `src/site-data.js`: 홈 문구 — 첫 화면, 프로젝트 카드, 문제 해결 목록, 기술, 경력, 자격증, 연락처
+- `src/project-details.js`: 프로젝트 상세 본문(MyCrewSoft·NO.BLACK·Cinema Talk). 단계별 블록(문단·그림·표·코드·접기 등)으로 적습니다.
+- `src/home.jsx`, `src/detail.jsx`: 홈과 상세 화면
+- `src/nav.jsx`: 헤더 메뉴, 휴대폰 탭, 연락하기 메뉴, 섹션 이동
+- `src/main.jsx`: 해시 주소 처리와 뒤로가기 시 스크롤 복원
+- `src/site.css`: 색상·글꼴·반응형 레이아웃
+- `public/assets/`: 사진·프로젝트 이미지·설계 자료, `public/assets/tech/`: 기술 로고(devicon, MIT)
+- `public/og-image.png`: 링크 미리보기 이미지(1200×630). 메타 태그는 `index.html`에 있습니다.
+- `docs/CONTENT.md`: 자료 출처
 - `docs/DEPLOYMENT.md`: OCI 배포 가이드
 
 ## 기능
 
-각 프로젝트 카드에서 상세 페이지로 이동합니다. 설명은 웹 본문, API 명세는 표, 코드 예시는 복사 가능한 코드 블록으로 읽을 수 있습니다. 목차에서 특정 항목으로 이동한 주소(예: `#project/crew/16`)를 공유할 수 있습니다. 원본 27쪽은 `#portfolio`에서 읽고 확대할 수 있습니다.
+- 주소: `#projects`처럼 홈 섹션, `#project/crew`처럼 상세, `#project/crew/design`·`#project/crew/case-03`처럼 상세 안의 단계·사례로 바로 갈 수 있습니다. 접힌 사례도 자동으로 펼쳐집니다. 예전 주소(`#project/crew/16` 같은 PDF 쪽 번호)는 해당 단계로 연결합니다.
+- 같은 화면 안의 메뉴·목차 이동은 방문 기록을 쌓지 않아, 뒤로가기 한 번이면 이전 화면으로 돌아가고 홈의 스크롤 위치도 복원됩니다.
+- 글꼴은 Pretendard 동적 서브셋(`pretendard` 패키지)이라 페이지에 쓰인 글자 조각만 내려받습니다.
+- 브라우저 점검: `npm run build && npm run preview` 후 `PORTFOLIO_URL=http://127.0.0.1:4173 node scripts/smoke-portfolio-ui.mjs` (Playwright 필요. CI에서는 Docker 이미지에 대해 자동 실행)
 
 ## 빌드
 
@@ -38,11 +45,9 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-`dist`가 완성된 정적 사이트입니다. Spring/DB/Node 상시 프로세스는 필요 없습니다. 이력서의 인쇄 버튼은 브라우저 인쇄창에서 PDF로 저장할 수 있게 합니다.
+`dist`가 완성된 정적 사이트입니다. Spring/DB/Node 상시 프로세스는 필요 없습니다.
 
-`PortfolioContent`는 PDF 쪽 번호에 대응하는 웹 본문과 원본 PDF 링크를 표시합니다. `PortfolioSheet`는 원본 자료 화면의 확대와 고해상도 이미지를 처리합니다. NO.BLACK은 README의 문서 순서와 본문을 사용합니다.
-
-코드와 함께 제공하는 이미지·PDF는 사용자 프로젝트 자료이며, 원본 권리는 각 권리자에게 있습니다. 포트폴리오의 한글 본문은 로컬에 포함한 Pretendard Variable을 사용합니다. 글꼴 라이선스는 `public/assets/fonts/Pretendard-LICENSE.txt`에서 확인할 수 있습니다.
+코드와 함께 제공하는 이미지·PDF는 사용자 프로젝트 자료이며, 원본 권리는 각 권리자에게 있습니다. 한글 본문 글꼴은 `pretendard` 패키지의 Pretendard Variable 동적 서브셋으로, 빌드 결과에 함께 들어가 외부 CDN 없이 제공됩니다. 글꼴 라이선스는 `public/assets/fonts/Pretendard-LICENSE.txt`에서 확인할 수 있습니다.
 
 ## ChatGPT Sites 운영 버전 10 내보내기
 

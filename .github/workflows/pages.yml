@@ -16,25 +16,26 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    name: Publish original PDF portfolio
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Check out Portfolio
+        uses: actions/checkout@v4
         with:
-          node-version: '22'
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
-      - name: Build Vite app for the GitHub Pages subpath
-        run: npm run build -- --base /Portfolio/
-      - name: Rewrite absolute public asset URLs only in Pages build
-        run: node scripts/rewrite-pages-dist.mjs
+          persist-credentials: false
+
+      - name: Prepare original PDF viewer (not React)
+        run: bash scripts/build-pages-pdf.sh
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-      - name: Deploy
+
+      - name: Deploy PDF portfolio to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

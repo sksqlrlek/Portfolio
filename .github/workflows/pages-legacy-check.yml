@@ -1,0 +1,23 @@
+name: Portfolio PDF Pages Check
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate original PDF viewer
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out Portfolio
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Build and validate PDF Pages artifact
+        run: bash scripts/build-pages-pdf.sh

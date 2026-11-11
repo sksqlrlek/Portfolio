@@ -104,3 +104,30 @@ body { font-size: 17px; }
   .h-about img { width: 160px; }
 }
 @media (prefers-reduced-motion: reduce) { .h-btn:hover { transform: none; } }
+
+/* 점검 후 보완: 긴 영문이 카드를 밀어내지 않게 하고, 제목 줄바꿈을 균형 있게 */
+.h-casegrid, .h-cards, .h-stagepanel, .h-card, .h-about { min-width: 0; }
+.h-casegrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.h-case, .h-case dl > div { min-width: 0; }
+.h-case dd, .h-result, .h-card-body p { overflow-wrap: anywhere; }
+.h-hero h1, .h-hero-sub, .h-section h2 { text-wrap: balance; }
+@media (max-width: 820px) {
+  .h-casegrid { grid-template-columns: minmax(0, 1fr); }
+  .h-case dl > div { grid-template-columns: 1fr; gap: 2px; }
+}
+.topbar-brand, .topbar-resume { flex-shrink: 0; white-space: nowrap; }
+.topbar-nav { min-width: 0; }
+
+/* 상세 페이지 보완 */
+/* 주소 이동 때 코드가 자동으로 포커스를 주는 영역에는 빨간 테두리를 숨깁니다. (키보드 Tab 이동 표시는 유지) */
+main:focus, [tabindex="-1"]:focus, [tabindex="-1"]:focus-visible { outline: none; }
+/* 상단 고정 메뉴에 제목이 가려지지 않게 이동 위치를 아래로 조금 내립니다. */
+html { scroll-padding-top: 72px; }
+[id] { scroll-margin-top: 72px; }
+@media (max-width: 560px) {
+  .topbar-inner { gap: 8px; }
+  .topbar-nav { margin-left: 0; }
+  .topbar-nav a { padding: 12px 7px; font-size: 14px; }
+  .topbar-nav a:nth-child(n+4) { display: none; }
+  .topbar-resume { padding: 7px 10px; }
+}

@@ -131,3 +131,47 @@ html { scroll-padding-top: 72px; }
   .topbar-nav a:nth-child(n+4) { display: none; }
   .topbar-resume { padding: 7px 10px; }
 }
+
+/* 읽기 편하게: 본문 글자 정리 */
+/* 인라인 코드: 한글이 섞여도 글자 간격이 벌어지지 않도록 고정폭 글꼴 뒤에 한글용 글꼴을 둡니다. */
+.chapter-prose code, .readme-prose code, .content-code figcaption {
+  font-family: var(--mono), "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  letter-spacing: 0;
+}
+.chapter-prose code, .readme-prose code { font-size: .9em; padding: 1px 6px; border-radius: 4px; background: var(--tone-wash, #efe6d4); color: var(--tone-ink, #4a3a2a); }
+.content-code pre code { padding: 0; background: none; color: inherit; }
+/* 굵은 글씨는 검은색 대신 형광펜 느낌으로 은은하게 */
+.chapter-prose strong { font-weight: 700; background: linear-gradient(transparent 62%, var(--tone-wash, #efe6d4) 62%); }
+.chapter-prose { line-height: 1.8; }
+.chapter-prose p, .chapter-prose li { word-break: keep-all; overflow-wrap: break-word; }
+.point-lead { font-size: 1.04em; }
+.point-list { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 8px; }
+.point-list li::marker { color: var(--tone-bright, #c85042); }
+.point-steps { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 0; margin: 14px 0 0; }
+.point-steps li { padding: 6px 14px; border-radius: 999px; background: var(--tone-wash, #efe6d4); border: 1px solid var(--tone-line, #d8c9b0); font-weight: 700; font-size: 15px; }
+.point-steps li + li::before { content: "→"; margin-right: 8px; color: var(--soft-ink); font-weight: 400; }
+
+/* 개발 과정 도면: 글자가 작은 가로형 도면은 2칸 너비로 크게 보여줍니다. */
+.h-shots { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.h-shot-wide { grid-column: span 2; }
+.h-shot-wide img { aspect-ratio: 16 / 7; }
+.h-shot span { display: flex; justify-content: space-between; gap: 8px; }
+.h-shot em { font-style: normal; color: var(--soft-ink); font-weight: 500; font-size: 13px; }
+.h-lightbox img { width: min(1280px, 100%); height: auto; max-height: 90vh; object-fit: contain; }
+@media (max-width: 820px) { .h-shot-wide { grid-column: auto; } }
+
+/* 코드 블록: 한글 주석이 벌어지거나 굵게 보이지 않도록 글꼴 정리 */
+.content-code pre, .content-code pre code {
+  font-family: var(--mono), "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-weight: 400; letter-spacing: 0; font-size: 14.5px; line-height: 1.75; font-synthesis: none;
+}
+.content-code pre { padding: 18px 20px; }
+.content-code figcaption { font-weight: 600; letter-spacing: 0; }
+
+/* NO.BLACK 상세의 문제 해결 카드와 표 */
+.readme-prose .h-casegrid { margin-top: 0; }
+.readme-prose .h-case h3 { font-size: 19px; }
+.readme-prose table { margin-top: 14px; }
+.h-shot-wide img { aspect-ratio: auto; height: auto; max-height: 300px; padding: 10px; background: #fff; }
+.readme-prose .content-point h4 { margin-top: 0; }
+.readme-prose .h-casegrid { margin-top: 16px; }

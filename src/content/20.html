@@ -18,13 +18,20 @@
 </ol>
 <div class="content-point">
 <h4>근거 기반 회의록 생성 구조</h4>
-<p>AI 회의록 생성 시 <strong>실제 회의에서 발화되지 않은 내용을 임의로 보완하는 환각 문제</strong>가 발생할 수 있다고 판단했습니다. 이를 방지하기 위해 프롬프트를 <code>[ROLE]·[RULES]·[REFERENCE]·[OUTPUT FORMAT]</code> 구조로 분리하고, <strong>회의 대화 로그만 근거로 사용</strong>하도록 제한했습니다.</p>
-<p>특히 <code>REFERENCE</code> 정보는 참고용으로만 사용하고, 회의록 본문에는 <strong>발화 로그에 존재하는 내용만 반영</strong>하도록 설계했습니다. 또한 결과 형식을 <code>HTML</code> 구조와 <code>{SIGN:N}</code> 서명 토큰으로 고정하여 전자결재 문서로 바로 전달할 수 있도록 했습니다.</p>
+<p class="point-lead">AI가 회의에서 말하지 않은 내용을 지어내는 <strong>환각 문제</strong>를 막도록 설계했습니다.</p>
+<ul class="point-list">
+<li>프롬프트를 <code>[ROLE]</code> <code>[RULES]</code> <code>[REFERENCE]</code> <code>[OUTPUT FORMAT]</code> 네 부분으로 나눴습니다.</li>
+<li>회의 대화 로그만 근거로 쓰고, <code>REFERENCE</code>는 참고용으로만 씁니다.</li>
+<li>결과를 <code>HTML</code> 구조와 <code>{SIGN:N}</code> 서명 토큰으로 고정해 전자결재 문서로 바로 넘깁니다.</li>
+</ul>
 </div>
 <div class="content-point">
-<h4>AI 초안 → 전자결재 연동 → 회의 후속 업무 자동화</h4>
-<p>회의 종료 후 생성된 AI 회의록 초안은 <strong>담당자 검토 단계</strong>를 거쳐 전자결재 기안 문서로 전환되도록 설계했습니다. 초안 상태는 <code>01. AI초안 → 02. 편집중 → 03. 결재요청</code> 흐름으로 관리하여, <strong>AI가 생성한 결과를 그대로 확정하지 않고 사람이 검토한 뒤</strong> 결재 프로세스로 넘기도록 했습니다.</p>
-<p>이를 통해 회의 녹취, <code>STT</code> 변환, <code>LLM</code> 회의록 생성, 담당자 검토, 전자결재 기안까지 이어지는 후속 업무를 <strong>하나의 자동화 파이프라인으로 연결</strong>했습니다.</p>
+<h4>AI 초안에서 전자결재까지 이어지는 자동화</h4>
+<p class="point-lead">AI 초안은 그대로 확정하지 않고, <strong>담당자가 검토한 뒤</strong> 결재로 넘어갑니다.</p>
+<ol class="point-steps" aria-label="초안 상태 흐름"><li>AI초안</li><li>편집중</li><li>결재요청</li></ol>
+<ul class="point-list">
+<li>녹취, <code>STT</code> 변환, <code>LLM</code> 회의록 생성, 담당자 검토, 기안 작성이 하나의 파이프라인으로 연결됩니다.</li>
+</ul>
 </div>
 <figure class="content-code"><figcaption>ChatGptController.java · LLM 회의록 스트리밍 제어</figcaption><pre tabindex="0" aria-label="ChatGptController.java · LLM 회의록 스트리밍 제어 코드"><code>Flux&lt;String&gt; origin = chatClient.prompt()
         .user(aiMessage)

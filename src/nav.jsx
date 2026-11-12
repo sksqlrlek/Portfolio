@@ -76,7 +76,7 @@ function ContactMenu() {
         <Icon name="mail" size={18} /> 연락하기
       </button>
       <div className="cm-panel" id={panelId} hidden={!open}>
-        <p className="cm-label" lang="en">EMAIL</p>
+        <p className="cm-label">이메일</p>
         <p className="cm-mail">{profile.email}</p>
         <div className="cm-row">
           <button type="button" onClick={copy}><Icon name="copy" size={16} /> {copied ? '복사됨' : '주소 복사'}</button>

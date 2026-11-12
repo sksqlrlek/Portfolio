@@ -5,27 +5,33 @@
 // 블록 종류(t): p, h3, point, figure, gallery, table, bullets, steps, code, fold, reqs, feats, scenario, note
 
 const prList = (repo) => `https://github.com/${repo}/pulls?q=is%3Apr+author%3Asksqlrlek`;
+// 저장소가 여러 개인 조직은 조직 전체 PR 검색으로 연결합니다(로그인 없이 열림).
+const orgPrs = (org) => `https://github.com/search?q=org%3A${org}+author%3Asksqlrlek+is%3Apr&type=pullrequests`;
 
 const crew = {
   id: 'crew',
   name: 'MyCrewSoft',
   badge: { type: 'main', text: '메인 프로젝트' },
   meta: ['2026.05 — 2026.06 · 8주', '4인 팀 · 교육과정 프로젝트'],
-  lead: '<b>AA(애플리케이션 아키텍트)</b>로 공통 API 응답·전역 예외 처리·계층 규칙을 설계하고 협업 가이드를 배포해, 4인 팀의 개발 기준을 세운 통합 그룹웨어입니다.',
+  lead: '<b>AA(애플리케이션 아키텍트)</b>로 공통 API 응답·전역 예외 처리·계층 규칙을 설계하고 협업 가이드를 배포해, 4인 팀의 개발 기준을 세운 통합 그룹웨어입니다. 직접 올린 PR은 <b>백엔드 72개 · 프론트엔드 64개</b>입니다.',
   actions: [
-    { label: 'GitHub 저장소', href: 'https://github.com/myCrewSoft' },
-    { label: '백엔드 PR 72', href: prList('myCrewSoft/mycrew-backend'), title: '내가 작성한 백엔드 PR' },
-    { label: '프론트엔드 PR 64', href: prList('myCrewSoft/mycrew-frontend'), title: '내가 작성한 프론트엔드 PR' },
+    { label: '내 PR 136개', href: orgPrs('myCrewSoft'), title: '내가 작성한 PR (백엔드 72 · 프론트엔드 64)' },
   ],
   shot: { src: '/assets/crew-dashboard.webp', w: 1090, h: 726, url: 'mycrewsoft / dashboard', alt: 'MyCrewSoft 대시보드 화면', caption: '대시보드 · 직원별로 배치를 저장하는 12종 위젯' },
-  quote: '통합 그룹웨어 — 대덕인재개발원 풀스택 과정 팀 프로젝트, 10개 이상 도메인',
+  screens: [
+    { src: '/assets/portfolio-files/crew-wireframe-1.png', w: 1149, h: 842, url: 'mycrewsoft / meetings', alt: 'MyCrewSoft 회의 목록 화면', caption: '회의 목록' },
+    { src: '/assets/portfolio-files/crew-wireframe-2.png', w: 942, h: 851, url: 'mycrewsoft / calendar', alt: 'MyCrewSoft 일정 캘린더 화면', caption: '일정 캘린더' },
+    { src: '/assets/portfolio-files/crew-wireframe-3.png', w: 1099, h: 855, url: 'mycrewsoft / admin / holidays', alt: 'MyCrewSoft 관리자 공휴일 API 연동 화면', caption: '관리자 · 공휴일 API 연동' },
+    { src: '/assets/portfolio-files/crew-wireframe-4.png', w: 960, h: 747, url: 'mycrewsoft / admin / schedule-categories', alt: 'MyCrewSoft 관리자 일정 분류 관리 화면', caption: '관리자 · 일정 분류 관리' },
+  ],
+  quote: '통합 그룹웨어 — 대덕인재개발원 풀스택 과정 팀 프로젝트',
   stages: ['an', 'de', 'dv', 'te'],
   glance: {
     tiles: [
       { label: '기간', value: '2026.05 – 06', sub: '8주' },
       { label: '인원', value: '4인 팀', sub: '교육과정 프로젝트' },
       { label: '내 역할', value: 'AA · 풀스택', sub: '공통 아키텍처 설계', strong: true },
-      { label: '규모', value: '10개+ 도메인', sub: '회의·결재·메신저 등' },
+      { label: '맡은 도메인', value: '11개', sub: '회의·메신저·일정·대시보드 등' },
     ],
     chainLabel: '핵심 결과',
     chain: ['화상회의 녹취', 'Whisper STT', 'LLM 회의록', '전자결재 기안'],
@@ -37,9 +43,9 @@ const crew = {
       { stage: 'dv', mark: '03', text: '대시보드 12종 위젯, 6개 도메인 통합검색' },
     ],
     stack: [
-      ['Frontend', [['react', 'React'], ['typescript', 'TypeScript'], ['tailwindcss', 'Tailwind CSS'], ['vitejs', 'Vite']]],
-      ['Backend', [['java', 'Java 21'], ['spring', 'Spring Boot'], ['spring', 'Spring Security'], ['', 'MyBatis'], ['', 'JWT']]],
-      ['Data', [['oracle', 'Oracle'], ['redis', 'Redis']]],
+      ['프론트엔드', [['react', 'React'], ['typescript', 'TypeScript'], ['tailwindcss', 'Tailwind CSS'], ['vitejs', 'Vite']]],
+      ['백엔드', [['java', 'Java 21'], ['spring', 'Spring Boot'], ['spring', 'Spring Security'], ['', 'MyBatis'], ['', 'JWT']]],
+      ['데이터', [['oracle', 'Oracle'], ['redis', 'Redis']]],
       ['실시간', [['', 'WebSocket(STOMP)'], ['', 'SSE'], ['', 'LiveKit']]],
       ['협업', [['github', 'GitHub'], ['', 'Redmine']]],
     ],
@@ -56,7 +62,7 @@ const crew = {
       id: 'design', stage: 'de', title: '구조와 데이터를 먼저 그렸습니다',
       blocks: [
         { t: 'p', html: 'React SPA → Spring Boot → Oracle·Redis의 3계층으로 나누고, 도메인끼리 강하게 묶이지 않도록 Spring Event 기반 비동기 구조를 택했습니다. HTTP와 WebSocket 모두에 JWT 인증을 적용했습니다.' },
-        { t: 'figure', src: '/assets/portfolio-content/crew-architecture.svg', w: 1040, h: 660, alt: 'MyCrewSoft 시스템 아키텍처', caption: '시스템 아키텍처' },
+        { t: 'figure', src: '/assets/portfolio-content/crew-architecture.png', w: 1323, h: 839, alt: 'MyCrewSoft 시스템 아키텍처', caption: '시스템 아키텍처' },
         { t: 'table', rows: [
           ['클라이언트', 'React · TypeScript — LiveKit Client SDK, EventSource, Axios'],
           ['서버', 'Spring Boot · Java 21 — Controller → Service → MyBatis Mapper, Spring Security, Spring Event'],
@@ -74,13 +80,12 @@ const crew = {
           ['TB_VIDEO_CONF', '화상회의 관리'],
           ['TB_VIDEO_RCRDG', '화상회의 녹취록'],
         ] },
-        { t: 'fold', title: '설계 산출물 더 보기', sub: '시퀀스 다이어그램 · 화면설계서 4장 · API 명세', blocks: [
+        { t: 'fold', title: '설계 산출물 더 보기', sub: '시퀀스 다이어그램 · 화면 정의서 · 요구사항 정의서 · 용어 사전 · API 명세', blocks: [
           { t: 'gallery', items: [
             { src: '/assets/portfolio-files/crew-sequence.png', w: 1279, h: 569, alt: '화상회의 생성 시퀀스 다이어그램', caption: '시퀀스 · 화상회의 생성' },
-            { src: '/assets/portfolio-files/crew-wireframe-1.png', w: 1149, h: 842, alt: '화면설계서 1', caption: '화면설계서 1' },
-            { src: '/assets/portfolio-files/crew-wireframe-2.png', w: 942, h: 851, alt: '화면설계서 2', caption: '화면설계서 2' },
-            { src: '/assets/portfolio-files/crew-wireframe-3.png', w: 1099, h: 855, alt: '화면설계서 3', caption: '화면설계서 3' },
-            { src: '/assets/portfolio-files/crew-wireframe-4.png', w: 960, h: 747, alt: '화면설계서 4', caption: '화면설계서 4' },
+            { src: '/assets/portfolio-files/crew-screen-definition.png', w: 1795, h: 876, alt: 'MyCrewSoft 메신저 화면 정의서', caption: '화면 정의서' },
+            { src: '/assets/portfolio-files/crew-requirements-definition.png', w: 1659, h: 948, alt: 'MyCrewSoft 로그인·로그아웃 요구사항 정의서', caption: '요구사항 정의서' },
+            { src: '/assets/portfolio-files/crew-glossary.png', w: 1659, h: 948, alt: 'MyCrewSoft 직책·직급 및 등록·수정 정보 용어 사전', caption: '용어 사전' },
           ] },
           { t: 'table', head: ['Method', 'Endpoint', '설명'], rows: [
             ['POST', '<code>/api/meetings</code>', '회의 생성'],
@@ -97,10 +102,35 @@ const crew = {
     {
       id: 'build', stage: 'dv', title: 'AA로 공통 기준을 세우고, 회의록 자동화를 구현했습니다',
       blocks: [
-        { t: 'h3', text: '팀 공통 아키텍처' },
+        { t: 'p', html: '맡은 도메인: 회의·화상회의·회의실·예약, 메신저·알림, 일정·공휴일·업무(업무를 만들면 일정에 자동 추가), 대시보드·통합검색' },
+        { t: 'h3', text: '팀 공통 아키텍처 — AA 협업 가이드' },
         { t: 'bullets', items: [
-          '<b>공통 API 응답 형식</b>과 <b>전역 예외 처리</b>를 먼저 정해 4명이 같은 형태로 응답·에러를 다루게 했습니다.',
-          'DTO·VO·Mapper 계층 기준과 feature 브랜치·커밋 규칙을 <b>AA 협업 가이드</b>로 정리해 배포했습니다.',
+          '개발을 시작하기 전, 4명이 같은 방식으로 코드를 쓰도록 <b>19개 장의 AA 협업 가이드</b>를 만들어 노션으로 배포했습니다.',
+          '규칙만 적지 않고, 팀원이 그대로 가져다 쓸 <b>공통 코드와 사용 예</b>를 함께 담았습니다.',
+          '<a href="https://app.notion.com/p/AA-35c7a001faab80e6b56fe82e9d0f0e16" target="_blank" rel="noreferrer">AA 협업 가이드 원문 보기 ↗</a>',
+        ] },
+        { t: 'table', head: ['구분', '가이드로 정한 기준'], rows: [
+          ['응답 형식', '모든 API는 <code>ApiResponse&lt;T&gt;</code>로 반환합니다. 성공 여부·메시지·데이터·에러 코드·페이지 정보를 같은 모양으로 담고, 실패 응답은 전역 예외 처리에서만 만듭니다.'],
+          ['예외 처리', 'Service는 <code>throw new CustomException(ErrorCode.XXX)</code>만 하고, Controller의 try-catch는 금지했습니다. 에러 코드는 <code>{도메인}_{번호}</code>(예: <code>USER_001</code>)로 이름을 붙입니다.'],
+          ['계층 규칙', 'Controller는 요청 검증과 응답, Service는 비즈니스 로직과 트랜잭션, Mapper는 SQL만 맡습니다. 계층마다 <b>하면 안 되는 일</b>도 함께 적었습니다.'],
+          ['VO ↔ DTO', 'MapStruct 변환기는 <code>~DtoMapper</code>로 이름 붙여, MyBatis Mapper(SQL)와 헷갈리지 않게 했습니다.'],
+          ['협업 규칙', '<code>feature/*</code> → <code>develop</code>으로만 PR을 올리고, 2명 이상 승인 후 PL·AA가 병합합니다. 커밋은 <code>feat:</code>·<code>fix:</code> 같은 타입으로 시작합니다.'],
+        ] },
+        { t: 'code', file: '팀원 사용법 — 가이드에 실은 예시', code: `// Controller: 응답은 항상 ApiResponse로 감쌉니다
+return ResponseEntity.ok(ApiResponse.success(userService.getUser(id)));
+
+// Service: 규칙에 어긋나면 ErrorCode로 던지기만 합니다
+if (user == null) throw new CustomException(ErrorCode.USER_NOT_FOUND);
+
+// → 전역 예외 처리가 모든 API에서 같은 모양으로 응답합니다
+// { "success": false, "message": "존재하지 않는 사용자입니다.", "errorCode": "USER_001" }` },
+        { t: 'fold', title: '가이드 목차 19장', sub: '백엔드 공통 · 보안 · 프론트엔드 · 협업', blocks: [
+          { t: 'table', rows: [
+            ['백엔드 공통', '기술 스택, 패키지 구조, 공통 설정, 공통 컴포넌트, 유틸리티 클래스, 커스텀 검증 어노테이션, MapStruct(VO ↔ DTO), 도메인 서비스 레이어 작성'],
+            ['보안', 'Security & JWT, 인터셉터 & CORS, <code>@PreAuthorize</code> 사용 기준'],
+            ['프론트엔드', '프론트엔드 공통, OpenAPI TypeScript 타입 자동 생성, React Router & Layout'],
+            ['협업', '코드 컨벤션, Git 브랜치 전략, API 명세서, Swagger, 완성 체크리스트'],
+          ] },
         ] },
         { t: 'h3', text: 'AI 회의록 → 전자결재 파이프라인' },
         { t: 'steps', items: [
@@ -110,59 +140,74 @@ const crew = {
           { title: 'LLM 회의록', desc: '로그 근거 HTML 생성' },
           { title: '@Async 후처리', desc: '저장 후 알림 전송' },
         ] },
-        { t: 'p', html: 'AI가 회의에서 나오지 않은 내용을 지어내지 않도록 프롬프트를 <code>[ROLE]</code> <code>[RULES]</code> <code>[REFERENCE]</code> <code>[OUTPUT FORMAT]</code>으로 나누고 대화 로그만 근거로 쓰게 했습니다. 결과는 HTML과 서명 토큰으로 고정해 전자결재 문서로 바로 넘기고, AI 초안은 담당자가 검토한 뒤 결재로 넘어갑니다.' },
-        { t: 'code', file: 'ChatGptController.java · LLM 회의록 스트리밍', code: `Flux<String> origin = chatClient.prompt()
-    .user(aiMessage)
-    .stream()
-    .content()
-    .delayElements(Duration.ofMillis(20));
-return origin
-    .takeUntil(chunk -> apiSupportManager.shouldStop(requestId))
-    .onErrorResume(ex -> {
-        log.warn("Stream aborted: {}", ex.getMessage());
-        return Flux.empty(); })
-    .doFinally(signalType -> apiSupportManager.clear(requestId));
-// LLM 응답을 SSE로 스트리밍하고, 중단 요청 시 안전하게 종료` },
-        { t: 'h3', text: '이벤트 기반 연동' },
-        { t: 'p', html: '프로젝트를 만들면 DB 커밋이 끝난 뒤 전용 메신저 채팅방이 자동으로 생기고, 방 ID가 프로젝트에 기록됩니다. 참여자를 추가·제외할 때도 이벤트로 채팅방 참여자를 맞춥니다. <code>AFTER_COMMIT</code>으로 분리해 롤백 때 채팅방만 남는 문제를 막고, 프로젝트 서비스는 이벤트 발행만 맡겨 도메인 간 결합을 낮췄습니다. 같은 방식으로 SSE 실시간 알림을 만들었고, 알림 리스너는 <code>@Async</code>를 더해 커밋 후 별도 스레드에서 처리합니다.' },
-        { t: 'code', file: 'MessengerEventListener.java', code: `@Slf4j
-@Component
-@RequiredArgsConstructor
-public class MessengerEventListener {
+        { t: 'bullets', items: [
+          'AI가 회의에서 나오지 않은 내용을 지어내지 않도록 프롬프트를 <code>[ROLE]</code> <code>[RULES]</code> <code>[REFERENCE]</code> <code>[OUTPUT FORMAT]</code>으로 나누고 대화 로그만 근거로 쓰게 했습니다.',
+          '결과는 HTML과 서명 토큰으로 고정해 전자결재 문서로 바로 넘기고, AI 초안은 담당자가 검토한 뒤 결재로 넘어갑니다.',
+        ] },
+        { t: 'fold', title: '코드 보기 · LLM 회의록 스트리밍', sub: '중단 요청 시 스트림을 안전하게 끝내는 처리', blocks: [
+          { t: 'code', file: 'ChatGptController.java · LLM 회의록 스트리밍', code: `Flux<String> origin = chatClient.prompt()
+      .user(aiMessage)
+      .stream()
+      .content()
+      .delayElements(Duration.ofMillis(20));
+  return origin
+      .takeUntil(chunk -> apiSupportManager.shouldStop(requestId))
+      .onErrorResume(ex -> {
+          log.warn("Stream aborted: {}", ex.getMessage());
+          return Flux.empty(); })
+      .doFinally(signalType -> apiSupportManager.clear(requestId));
+  // LLM 응답을 SSE로 스트리밍하고, 중단 요청 시 안전하게 종료` },
+        ] },
+        { t: 'fold', title: '이벤트 기반 연동', sub: 'AFTER_COMMIT으로 채팅방 자동 생성 · 참여자 동기화 · 실시간 알림', blocks: [
+          { t: 'bullets', items: [
+            '프로젝트를 만들면 DB 커밋이 끝난 뒤 전용 메신저 채팅방이 자동으로 생기고, 방 ID가 프로젝트에 기록됩니다.',
+            '참여자를 추가·제외할 때도 이벤트로 채팅방 참여자를 맞춥니다.',
+            '<code>AFTER_COMMIT</code>으로 분리해 롤백 때 채팅방만 남는 문제를 막고, 프로젝트 서비스는 이벤트 발행만 맡겨 도메인 간 결합을 낮췄습니다.',
+            '같은 방식으로 SSE 실시간 알림을 만들었고, 알림 리스너는 <code>@Async</code>를 더해 커밋 후 별도 스레드에서 처리합니다.',
+          ] },
+          { t: 'code', file: 'MessengerEventListener.java', code: `@Slf4j
+  @Component
+  @RequiredArgsConstructor
+  public class MessengerEventListener {
 
-    private final MsngrService msngrService;
-    private final ProjectService projectService;
+      private final MsngrService msngrService;
+      private final ProjectService projectService;
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleProjectCreated(ProjectCreatedEvent event) {
-        try {
-            Long chtrmId = msngrService.createProjectChtrm(
-                event.getProjId(),
-                event.getProjNm(),
-                event.getCrtrId(),
-                event.getEmpIds()
-            );
+      @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+      public void handleProjectCreated(ProjectCreatedEvent event) {
+          try {
+              Long chtrmId = msngrService.createProjectChtrm(
+                  event.getProjId(),
+                  event.getProjNm(),
+                  event.getCrtrId(),
+                  event.getEmpIds()
+              );
 
-            projectService.updateProjectChtrmId(
-                event.getProjId(),
-                chtrmId
-            );
+              projectService.updateProjectChtrmId(
+                  event.getProjId(),
+                  chtrmId
+              );
 
-        } catch (Exception e) {
-            log.error(
-                "프로젝트 메신저 채팅방 자동 생성 실패. projId={}, projNm={}",
-                event.getProjId(),
-                event.getProjNm(),
-                e
-            );
-        }
-    }
+          } catch (Exception e) {
+              log.error(
+                  "프로젝트 메신저 채팅방 자동 생성 실패. projId={}, projNm={}",
+                  event.getProjId(),
+                  event.getProjNm(),
+                  e
+              );
+          }
+      }
 
-    // (생략) handleProjectMembersAdded · handleProjectMemberRemoved
-    // 참여자 추가·제외도 AFTER_COMMIT 이후 채팅방 참여자에 반영
-}` },
+      // (생략) handleProjectMembersAdded · handleProjectMemberRemoved
+      // 참여자 추가·제외도 AFTER_COMMIT 이후 채팅방 참여자에 반영
+  }` },
+        ] },
         { t: 'fold', title: 'WebSocket 인증', sub: 'HTTP 보안 필터가 닿지 않는 STOMP 연결에 별도 인증 흐름 설계', blocks: [
-          { t: 'p', html: 'STOMP 연결(CONNECT) 시점에 Authorization 헤더의 JWT를 검증하고 사원 ID를 Principal로 등록합니다. 이후 SEND·SUBSCRIBE에서는 다시 인증하지 않고 사원 ID를 씁니다. <code>StompHeaderAccessor.wrap()</code>은 새 객체를 만들어 원본 메시지에 반영되지 않아, 기존 객체를 돌려주는 <code>MessageHeaderAccessor.getAccessor()</code>를 썼습니다.' },
+          { t: 'bullets', items: [
+            'STOMP 연결(CONNECT) 시점에 Authorization 헤더의 JWT를 검증하고 사원 ID를 Principal로 등록합니다.',
+            '이후 SEND·SUBSCRIBE에서는 다시 인증하지 않고 사원 ID를 씁니다.',
+            '<code>StompHeaderAccessor.wrap()</code>은 새 객체를 만들어 원본 메시지에 반영되지 않아, 기존 객체를 돌려주는 <code>MessageHeaderAccessor.getAccessor()</code>를 썼습니다.',
+          ] },
           { t: 'code', file: 'StompChannelInterceptor.java', code: `@Override
 public Message<?> preSend(Message<?> message, MessageChannel channel) {
     StompHeaderAccessor accessor =
@@ -190,11 +235,15 @@ public Message<?> preSend(Message<?> message, MessageChannel channel) {
           ] },
         ] },
         { t: 'fold', title: '화면 ↔ 코드 · 회의실 중복 예약 차단', sub: 'Client → Controller → Service → Mapper → DB', blocks: [
-          { t: 'p', html: '같은 회의실의 같은 시간대 예약을 쿼리 단계에서 막습니다. <code>BEGIN_DT &lt; 요청종료 AND END_DT &gt; 요청시작</code>으로 구간 겹침을 판정하되 등호를 빼서 9~10시, 10~11시처럼 맞붙는 예약은 허용하고, 수정할 때는 본인 예약을 제외합니다. 겹치면 INSERT 없이 바로 예외를 돌려 화면에 안내합니다.' },
+          { t: 'bullets', items: [
+            '같은 회의실의 같은 시간대 예약을 쿼리 단계에서 막습니다.',
+            '<code>BEGIN_DT &lt; 요청종료 AND END_DT &gt; 요청시작</code>으로 구간 겹침을 판정하되 등호를 빼서 9~10시, 10~11시처럼 맞붙는 예약은 허용하고, 수정할 때는 본인 예약을 제외합니다.',
+            '겹치면 INSERT 없이 바로 예외를 돌려 화면에 안내합니다.',
+          ] },
           { t: 'gallery', items: [
-            { src: '/assets/portfolio-content/crew-reservation.webp', w: 824, h: 349, alt: '회의실 예약 화면', caption: '회의실 예약 화면' },
-            { src: '/assets/portfolio-content/crew-reservation-tsx.webp', w: 820, h: 501, alt: 'ReservationPage.tsx 코드', caption: 'ReservationPage.tsx' },
-            { src: '/assets/portfolio-content/crew-reservation-query.webp', w: 502, h: 144, alt: '중복 예약 확인 쿼리', caption: '중복 예약 확인 쿼리' },
+            { src: '/assets/portfolio-content/crew-reservation-tsx.webp', w: 820, h: 501, alt: '회의실별 시간대 예약 현황 화면', caption: '회의실 예약 화면' },
+            { src: '/assets/portfolio-content/crew-reservation.webp', w: 824, h: 349, alt: '겹치는 예약 수를 세는 MyBatis 쿼리 countOverlappingRsrv', caption: '중복 예약 확인 쿼리' },
+            { src: '/assets/portfolio-content/crew-reservation-query.webp', w: 502, h: 144, alt: '선택한 시간대에 이미 예약이 있다는 안내 문구', caption: '겹칠 때 화면 안내' },
           ] },
         ] },
       ],
@@ -203,17 +252,13 @@ public Message<?> preSend(Message<?> message, MessageChannel channel) {
       id: 'test', stage: 'te', title: '핵심 시나리오로 흐름을 확인했습니다',
       blocks: [
         { t: 'scenario', items: [
-          { title: '화상회의 입장', desc: '진행 방식(온라인·오프라인·혼합), 참여자, 회의실을 정하고 입장합니다.', img: { src: '/assets/portfolio-content/crew-step-1.webp', w: 619, h: 518, alt: '화상회의 입장 화면' } },
+          { title: '회의 예약', desc: '제목·일정과 진행 방식(화상회의·회의실 사용), 참여자를 정해 회의를 예약합니다.', img: { src: '/assets/portfolio-content/crew-step-1.webp', w: 619, h: 518, alt: '회의 예약 화면' } },
           { title: '회의 진행', desc: '발언이 5초 단위로 Whisper STT를 거쳐 자막이 되고 대화 로그로 쌓입니다.', img: { src: '/assets/portfolio-content/crew-step-2.webp', w: 1476, h: 864, alt: '화상회의 진행 화면' } },
           { title: '회의록 자동 생성', desc: '회의를 끝내면 쌓인 대화 로그를 근거로 LLM이 회의록을 비동기로 만듭니다.', img: { src: '/assets/portfolio-content/crew-step-3.webp', w: 1007, h: 733, alt: '회의록 자동 생성 화면' } },
           { title: '전자결재 상신', desc: '참여자가 검토 후 결재를 요청하면 기안이 만들어지고, 승인되면 회의록이 확정됩니다.', img: { src: '/assets/portfolio-content/crew-step-4.webp', w: 1172, h: 667, alt: '전자결재 상신 화면' } },
         ] },
-        { t: 'note', html: '프론트엔드 연동 테스트 중 통합검색 요청이 폭주하는 것을 발견해 <a href="#project/crew/case-02">트러블슈팅 CASE 02</a>에서 해결했습니다.' },
+        { t: 'note', html: '프론트엔드 연동 테스트 중 통합검색 요청이 폭주하는 것을 발견해 <a href="#project/crew/case-02">트러블슈팅 사례 02</a>에서 해결했습니다.' },
       ],
-    },
-    {
-      id: 'deploy', stage: 'dp',
-      handoff: { html: '배포와 운영 과정은 실제 운영 중인 <b>NO.BLACK</b> 상세에 정리했습니다.', label: 'NO.BLACK 배포 과정 보기 →', href: '#project/noblack/deploy' },
     },
   ],
   cases: [
@@ -266,7 +311,7 @@ const noblack = {
   id: 'noblack',
   name: 'NO.BLACK',
   badge: { type: 'live', text: '운영 중인 실서비스' },
-  meta: ['2026.08 —', '1인 개발 · 실제 브랜드 의뢰'],
+  meta: ['2026.08 — 2026.11', '1인 개발 · 실제 브랜드 의뢰'],
   lead: '<b>실제 브랜드 의뢰</b>로, 더플라에서 NO.BLACK으로 바뀌는 침구 브랜드의 쇼케이스 사이트와 관리자 CMS를 요구사항 정리부터 배포·운영까지 혼자 맡았습니다.',
   actions: [{ label: '배포 사이트 열기', href: 'https://oooooo.kr/', primary: true }],
   repoNote: '고객 의뢰 프로젝트라 저장소는 비공개입니다.',
@@ -275,7 +320,7 @@ const noblack = {
   stages: ['an', 'de', 'dv', 'te', 'dp'],
   glance: {
     tiles: [
-      { label: '기간', value: '2026.08 —', sub: '현재 운영 중' },
+      { label: '기간', value: '2026.08 — 2026.11', sub: '현재 운영 중' },
       { label: '인원', value: '1인', sub: 'AI 도구 활용' },
       { label: '내 역할', value: '1인 풀스택', sub: '요구사항 정리 → 운영', strong: true },
       { label: '서비스', value: 'oooooo.kr', sub: '실서비스 배포' },
@@ -290,11 +335,11 @@ const noblack = {
       { stage: 'te', mark: '04', text: 'Playwright·JUnit 자동 검사와 CI/CD 배포·운영' },
     ],
     stack: [
-      ['Frontend', [['react', 'React 19'], ['typescript', 'TypeScript'], ['vitejs', 'Vite'], ['', 'Canvas API']]],
-      ['Backend', [['java', 'Java 21'], ['spring', 'Spring Boot'], ['spring', 'Spring Security'], ['', 'JPA'], ['maven', 'Maven']]],
-      ['Data', [['postgresql', 'PostgreSQL'], ['', 'Flyway']]],
-      ['Test', [['playwright', 'Playwright'], ['junit', 'JUnit'], ['', 'MockMvc']]],
-      ['Deploy', [['docker', 'Docker'], ['githubactions', 'GitHub Actions'], ['', 'GHCR'], ['', 'OCI'], ['', 'Caddy']]],
+      ['프론트엔드', [['react', 'React 19'], ['typescript', 'TypeScript'], ['vitejs', 'Vite'], ['', 'Canvas API']]],
+      ['백엔드', [['java', 'Java 21'], ['spring', 'Spring Boot'], ['spring', 'Spring Security'], ['', 'JPA'], ['maven', 'Maven']]],
+      ['데이터', [['postgresql', 'PostgreSQL'], ['', 'Flyway']]],
+      ['테스트', [['playwright', 'Playwright'], ['junit', 'JUnit'], ['', 'MockMvc']]],
+      ['배포', [['docker', 'Docker'], ['githubactions', 'GitHub Actions'], ['', 'GHCR'], ['', 'OCI'], ['', 'Caddy']]],
     ],
   },
   sections: [
@@ -317,9 +362,9 @@ const noblack = {
           '<b>백엔드</b> — Controller(HTTP 입출력) → Service(업무 규칙·트랜잭션) → Repository(DB 접근) 계층과 생성자 주입을 씁니다.',
           '<b>운영 구조</b> — Caddy가 화면 파일과 HTTPS를 맡고, 공개 API는 게시된 콘텐츠만 조회합니다.',
         ] },
-        { t: 'figure', src: '/assets/noblack-diagrams/architecture.svg', w: 2206, h: 198, alt: 'NO.BLACK 전체 구조', caption: '전체 구조' },
+        { t: 'figure', src: '/assets/noblack-diagrams/architecture.png', w: 1656, h: 960, alt: '사용자가 React 화면과 Caddy를 거쳐 Spring Boot API(Spring Security, Controller, Service)에 요청하고, Service가 Repository·PostgreSQL과 MediaStorage를 쓰는 구조. 개발 중에는 Vite가 API 요청을 프록시', caption: '서비스 구조' },
         { t: 'h3', text: '데이터 설계' },
-        { t: 'figure', src: '/assets/noblack-diagrams/erd.svg', w: 1544, h: 670, alt: 'NO.BLACK ERD', caption: 'ERD · 버전 관리 구조' },
+        { t: 'figure', src: '/assets/noblack-diagrams/erd.png', w: 1656, h: 1216, alt: '제품·안내 글은 여러 버전(product_revision, guide_article_revision)을 갖고, 버전별 이미지·디자인 이미지·첨부는 공용 파일 media_file을 참조하는 관계도', caption: 'ERD · 콘텐츠 · 버전 · 파일 관계' },
         { t: 'table', rows: [
           ['product · guide_article', '고유 코드, 상태, 공개 리비전 ID, 동시 수정 버전'],
           ['*_revision', '제목·분류·검색 정보와 JSONB 본문을 버전별로 저장'],
@@ -328,7 +373,7 @@ const noblack = {
         ] },
         { t: 'h3', text: 'CMS 게시 흐름' },
         { t: 'p', html: '제품을 저장할 때마다 고객 화면이 바뀌면 작성 중인 문구가 노출될 수 있어, 초안과 게시본을 나눴습니다. 고객은 <code>published_revision_id</code>가 가리키는 게시본만 읽습니다.' },
-        { t: 'figure', src: '/assets/noblack-diagrams/cms-publish.svg', w: 1562, h: 174, alt: 'CMS 초안에서 게시까지의 흐름', caption: '초안 → 게시 흐름' },
+        { t: 'figure', src: '/assets/noblack-diagrams/cms-publish.png', w: 1656, h: 1036, alt: '관리자 편집이나 과거 버전 복원은 초안으로 저장되고, 미리보기 뒤 게시 검증·리비전 확정·공개 포인터 전환을 하나의 트랜잭션으로 처리해 고객 API는 게시된 버전만 반환하는 흐름', caption: '초안에서 고객 공개까지' },
         { t: 'fold', title: '설계 패턴 검토', sub: '쓸 곳과 쓰지 않을 곳을 나눈 근거', blocks: [
           { t: 'table', rows: [
             ['싱글톤', 'Spring Bean 기본 scope로 서비스·저장소를 관리. 직접 만든 전역 싱글톤은 없음'],
@@ -361,21 +406,46 @@ const noblack = {
       ],
     },
     {
-      id: 'test', stage: 'te', title: '검사 범위를 정하고 자동으로 확인합니다',
+      id: 'test', stage: 'te', title: '콘텐츠 공개·동시 수정·파일 삭제의 안전성을 검증했습니다',
       blocks: [
-        { t: 'table', rows: [
-          ['Playwright', '게임·방·메뉴 조작, URL·포커스 복귀, PC·모바일 배치, 관리자 편집·게시·파일 관리'],
-          ['백엔드 단위', '계정·비밀번호 정책, 판매 URL 정책, 파일 검증'],
-          ['DB 통합', 'PostgreSQL 제약·트랜잭션, 인증·CSRF·세션, CMS 게시·동시 수정, 파일 참조'],
-          ['정적 검사 · CI', 'TypeScript strict 검사, 프로덕션 빌드, 민감 파일·의존성 취약점 검사'],
+        { t: 'p', html: '운영하며 생길 수 있는 문제를 먼저 정하고, 그 문제가 다시 생기지 않는지 자동 검사로 확인합니다. 대표 검사는 실제 PostgreSQL 테스트 DB에서 돌아갑니다.' },
+        { t: 'checks', items: [
+          {
+            title: '수정 중인 내용이 고객에게 먼저 보이지 않는다',
+            situation: '제품을 게시한 뒤, 관리자가 초안을 고쳐 저장합니다.',
+            expect: '고객용 API는 계속 기존 게시 내용을 돌려주고, 다시 게시해야 바뀐 내용이 보입니다.',
+            how: '게시 → 초안 수정 → 고객 API 조회 → 재게시 → 다시 조회 순서로 응답을 비교합니다.',
+            proof: '초안과 공개 버전을 나눈 설계가 실제로 지켜짐',
+          },
+          {
+            title: '같은 버전으로 동시에 게시하면 하나만 성공한다',
+            situation: '두 관리자가 같은 버전을 보고 동시에 게시합니다.',
+            expect: '한 요청은 <code>200</code>, 다른 요청은 <code>409 Conflict</code>를 받고, 게시 버전은 하나만 생깁니다.',
+            how: '두 스레드에서 게시 요청을 동시에 보내 응답 코드를 확인하고, DB에 생긴 게시 버전 수를 셉니다.',
+            proof: '동시 요청의 중복 처리와 수정 충돌까지 고려함',
+          },
+          {
+            title: '제품이 쓰는 이미지는 지울 수 없다',
+            situation: '관리자가 파일 관리에서 이미지를 삭제합니다.',
+            expect: '제품이 참조 중인 파일은 삭제가 거부되고, 어디에서도 쓰지 않는 파일만 지워집니다.',
+            how: '참조 중인 파일과 쓰지 않는 파일에 각각 삭제를 요청해 결과와 남은 파일을 확인합니다.',
+            proof: '파일 삭제로 고객 화면의 제품 이미지가 깨지는 상황을 막음',
+          },
         ] },
-        { t: 'note', html: '이 검사만으로 운영 데이터, 외부 주문·결제, 실제 모바일 기기, 서버 부하까지 확인한 것은 아니어서 범위를 따로 적어 두었습니다.' },
+        { t: 'h3', text: '검사 종류와 지키는 것' },
+        { t: 'table', head: ['검사', '확인하는 것', '이걸로 지키는 것'], rows: [
+          ['Playwright', '메뉴 이동·뒤로가기·화면 크기 변경, 관리자 편집·게시·파일 관리', '사용자의 실제 조작 흐름이 깨지지 않음'],
+          ['백엔드 단위', '판매 URL·비밀번호·업로드 파일의 허용 기준', '잘못된 입력을 서버에서 막음'],
+          ['DB 통합', '실제 PostgreSQL에서 공개 상태·데이터 일관성·동시 요청, 인증·CSRF·세션', '초안 노출·중복 게시·파일 참조 오류를 막음'],
+          ['정적 검사 · CI', 'TypeScript strict, 프로덕션 빌드, 민감 파일·의존성 검사', '변경마다 같은 검사를 반복하고, 실패하면 이미지 빌드·배포를 멈춤'],
+        ] },
+        { t: 'note', html: 'Playwright 화면 검사 일부는 API 응답을 모의해 화면만 확인합니다. 운영 데이터·외부 결제·실제 모바일 기기·서버 부하는 이 검사 범위에 들어 있지 않습니다.' },
       ],
     },
     {
       id: 'deploy', stage: 'dp', title: '검사를 통과하면 자동으로 배포됩니다',
       blocks: [
-        { t: 'figure', src: '/assets/noblack-diagrams/deployment.svg', w: 1372, h: 94, alt: 'GitHub Actions에서 GHCR을 거쳐 OCI로 배포하는 흐름', caption: 'GitHub Actions → GHCR → OCI' },
+        { t: 'figure', src: '/assets/noblack-diagrams/deployment.png', w: 1656, h: 768, alt: 'Pull Request와 main push를 GitHub Actions가 민감 파일·프론트엔드·백엔드로 검사하고, main push가 통과하면 Docker 이미지를 GHCR에 올려 OCI에서 컨테이너를 교체하고 Caddy가 제공하는 흐름', caption: 'GitHub Actions 검사 → GHCR → OCI' },
         { t: 'bullets', items: [
           'PR과 <code>main</code> push마다 검사하고, 통과하면 프론트·백엔드 이미지를 커밋 SHA 태그로 GHCR에 올린 뒤 OCI 서버의 컨테이너를 교체합니다.',
           'DB와 백엔드는 외부 포트를 열지 않고, Caddy가 웹 포트와 HTTPS 인증서를 맡습니다.',
@@ -421,10 +491,10 @@ const cinema = {
       { stage: 'dv', mark: '04', text: '관리자 통계 기능' },
     ],
     stack: [
-      ['Backend', [['java', 'Java 21'], ['', 'Servlet/JSP'], ['', 'MyBatis 3.5'], ['maven', 'Maven']]],
-      ['Frontend', [['', 'JSTL'], ['jquery', 'jQuery'], ['', 'Chart.js']]],
-      ['Data', [['oracle', 'Oracle']]],
-      ['Server', [['', 'Tomcat 10']]],
+      ['백엔드', [['java', 'Java 21'], ['', 'Servlet/JSP'], ['', 'MyBatis 3.5'], ['maven', 'Maven']]],
+      ['프론트엔드', [['', 'JSTL'], ['jquery', 'jQuery'], ['', 'Chart.js']]],
+      ['데이터', [['oracle', 'Oracle']]],
+      ['서버', [['', 'Tomcat 10']]],
     ],
   },
   sections: [
@@ -443,8 +513,12 @@ const cinema = {
     {
       id: 'design', stage: 'de', title: 'MVC 흐름과 데이터를 먼저 그렸습니다',
       blocks: [
-        { t: 'p', html: 'JSP · Servlet · MyBatis 3계층입니다. FrontController가 모든 요청을 받아 Properties 파일로 커맨드를 찾고, Action 구현체를 Reflection으로 실행합니다. Spring MVC 없이 MVC를 직접 구현해 프레임워크가 내부에서 하는 일을 이해하는 데 목적을 뒀습니다.' },
-        { t: 'figure', src: '/assets/portfolio-content/cinema-architecture.svg', w: 1040, h: 660, alt: 'Cinema Talk 시스템 아키텍처', caption: '시스템 아키텍처' },
+        { t: 'bullets', items: [
+          'JSP · Servlet · MyBatis 3계층입니다.',
+          'FrontController가 모든 요청을 받아 Properties 파일로 커맨드를 찾고, Action 구현체를 Reflection으로 실행합니다.',
+          'Spring MVC 없이 MVC를 직접 구현해 프레임워크가 내부에서 하는 일을 이해하는 데 목적을 뒀습니다.',
+        ] },
+        { t: 'figure', src: '/assets/portfolio-content/cinema-architecture.png', w: 1308, h: 831, alt: 'Cinema Talk 시스템 아키텍처', caption: '시스템 아키텍처' },
         { t: 'table', rows: [
           ['클라이언트', 'Browser(JSP) — JSTL, jQuery, 세션 인증, AJAX'],
           ['서버', 'Java 21 · Servlet MVC — FrontController, Action, Service, MyBatis DAO'],
@@ -462,7 +536,7 @@ const cinema = {
           ['MEMBER_GENRE', '회원 선호 장르 관리'],
           ['MEMBER_MOVIE_RECOMMEND', '좋아요 관리'],
         ] },
-        { t: 'fold', title: 'URL 명세 · 화면설계서', sub: '.do 방식 URL 7개 · 화면설계서 4장', blocks: [
+        { t: 'fold', title: 'URL 명세 · 구현 화면', sub: '.do 방식 URL 7개 · 구현 화면 4장', blocks: [
           { t: 'table', head: ['Method', 'Endpoint', '설명'], rows: [
             ['GET', '<code>/movieRec.do</code>', '영화 추천 목록 조회'],
             ['GET', '<code>/movieDetail.do?movieId={id}</code>', '영화 상세 조회'],
@@ -473,10 +547,10 @@ const cinema = {
             ['POST', '<code>/pwdFindOk.do</code>', '임시 비밀번호 발급'],
           ] },
           { t: 'gallery', items: [
-            { src: '/assets/portfolio-files/cinema-wireframe-1.png', w: 402, h: 403, alt: '화면설계서 1', caption: '화면설계서 1' },
-            { src: '/assets/portfolio-files/cinema-wireframe-2.png', w: 1283, h: 888, alt: '화면설계서 2', caption: '화면설계서 2' },
-            { src: '/assets/portfolio-files/cinema-wireframe-3.png', w: 1210, h: 898, alt: '화면설계서 3', caption: '화면설계서 3' },
-            { src: '/assets/portfolio-files/cinema-wireframe-4.png', w: 576, h: 484, alt: '화면설계서 4', caption: '화면설계서 4' },
+            { src: '/assets/portfolio-files/cinema-wireframe-1.png', w: 402, h: 403, alt: 'Cinema Talk 로그인 화면', caption: '로그인' },
+            { src: '/assets/portfolio-files/cinema-wireframe-2.png', w: 1283, h: 888, alt: 'Cinema Talk 관리자 통계 대시보드 화면', caption: '관리자 · 통계 대시보드' },
+            { src: '/assets/portfolio-files/cinema-wireframe-3.png', w: 1210, h: 898, alt: 'Cinema Talk 관리자 영화 정보 관리 화면', caption: '관리자 · 영화 정보 관리' },
+            { src: '/assets/portfolio-files/cinema-wireframe-4.png', w: 576, h: 484, alt: 'Cinema Talk 게시글 상세 화면', caption: '게시글 상세' },
           ] },
         ] },
       ],
@@ -485,7 +559,11 @@ const cinema = {
       id: 'build', stage: 'dv', title: 'MVC를 직접 구현하고 추천을 만들었습니다',
       blocks: [
         { t: 'h3', text: 'FrontController로 요청 흐름 구현' },
-        { t: 'p', html: '모든 <code>.do</code> 요청을 하나의 서블릿이 받아 Properties 파일에서 클래스명을 찾고, Reflection으로 인스턴스를 만들어 실행합니다. 새 기능을 추가할 때 Java 코드를 고치지 않고 properties 파일에 한 줄만 더하면 됩니다. Spring의 DispatcherServlet이 하는 일을 직접 구현한 구조입니다.' },
+        { t: 'bullets', items: [
+          '모든 <code>.do</code> 요청을 하나의 서블릿이 받아 Properties 파일에서 클래스명을 찾고, Reflection으로 인스턴스를 만들어 실행합니다.',
+          '새 기능을 추가할 때 Java 코드를 고치지 않고 properties 파일에 한 줄만 더하면 됩니다.',
+          'Spring의 DispatcherServlet이 하는 일을 직접 구현한 구조입니다.',
+        ] },
         { t: 'code', file: 'FrontController.java', code: `public class FrontController extends HttpServlet {
   @Override
   protected void service(HttpServletRequest request,
@@ -519,8 +597,11 @@ const cinema = {
           ] },
         ] },
         { t: 'fold', title: '화면 ↔ 코드 · 카드 뒤집기와 장르 색상', sub: 'Client → Controller → Service → Mapper → DB', blocks: [
-          { t: 'p', html: '추천 화면을 요청하면 Controller가 <code>likeRecList</code>, <code>popularRecList</code>, <code>genreSections</code>를 request scope에 담아 JSP로 넘깁니다. <code>movieCard.jsp</code>를 <code>jsp:include</code>로 분리해 카드를 재사용했고, 마우스를 올리면 카드가 뒤집히며 장르별 색상 pill이 붙습니다.' },
-          { t: 'figure', src: '/assets/portfolio-content/cinema-code-screen.webp', w: 1077, h: 289, alt: '추천 결과 화면', caption: '추천 결과 화면' },
+          { t: 'bullets', items: [
+            '추천 화면을 요청하면 Controller가 <code>likeRecList</code>, <code>popularRecList</code>, <code>genreSections</code>를 request scope에 담아 JSP로 넘깁니다.',
+            '<code>movieCard.jsp</code>를 <code>jsp:include</code>로 분리해 카드를 재사용했고, 마우스를 올리면 카드가 뒤집히며 장르별 색상 pill이 붙습니다.',
+          ] },
+          { t: 'figure', src: '/assets/portfolio-content/cinema-code-screen.webp', w: 1077, h: 289, alt: '추천 목록에서 카드 하나가 뒤집혀 영화 정보가 보이는 화면', caption: '카드 뒤집기 · 마우스를 올리면 영화 정보 표시' },
           { t: 'code', file: 'list.jsp', code: `<%-- 카드 0.5초 호버 시 3D flip --%>
 .card-inner {
   transition: transform .65s cubic-bezier(.2,.8,.2,1);
@@ -546,10 +627,6 @@ const cinema = {
           { title: '영화 상세', desc: '출연진·감독과 줄거리를 보고, 좋아요를 누르면 MEMBER_MOVIE_RECOMMEND에 이력이 남습니다.', img: { src: '/assets/portfolio-content/cinema-step-4.webp', w: 879, h: 746, alt: '영화 상세 화면' } },
         ] },
       ],
-    },
-    {
-      id: 'deploy', stage: 'dp',
-      handoff: { html: '배포와 운영 과정은 실제 운영 중인 <b>NO.BLACK</b> 상세에 정리했습니다.', label: 'NO.BLACK 배포 과정 보기 →', href: '#project/noblack/deploy' },
     },
   ],
   cases: [],

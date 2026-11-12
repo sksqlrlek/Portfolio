@@ -4,6 +4,7 @@ import { stageOrder, stages } from './site-data';
 import { keepDots } from './text';
 import { CodeBlock, Ext, Icon, Rich, StageDots, TechChip } from './ui';
 import { settleScroll } from './nav';
+import { ProjectScreens } from './project-screens';
 
 // 가운뎃점에서 어색하게 줄이 바뀌지 않도록 정리한 본문을 씁니다(text.js). 코드 블록은 그대로 둡니다.
 const details = keepDots(rawDetails);
@@ -104,11 +105,27 @@ function Block({ b, onZoom }) {
         {b.items.map((f, i) => <li key={f.title}><span className="no">{String(i + 1).padStart(2, '0')}</span><div><b>{f.title}</b><Rich as="p" html={f.html} /></div></li>)}
       </ol>
     );
+    // 대표 테스트: 상황 → 기대 결과 → 검증 방법, 그리고 이 테스트가 보여 주는 것
+    case 'checks': return (
+      <ol className="d-checks">
+        {b.items.map((c, i) => (
+          <li key={c.title}>
+            <p className="ck-h"><span className="no">검증 {i + 1}</span><b>{c.title}</b></p>
+            <dl>
+              <div><dt>상황</dt><dd><Rich html={c.situation} /></dd></div>
+              <div><dt>기대 결과</dt><dd><Rich html={c.expect} /></dd></div>
+              <div><dt>검증 방법</dt><dd><Rich html={c.how} /></dd></div>
+            </dl>
+            <p className="ck-proof"><span>보여 주는 것</span><Rich html={c.proof} /></p>
+          </li>
+        ))}
+      </ol>
+    );
     case 'scenario': return (
       <ol className="d-scen">
         {b.items.map((s, i) => (
           <li key={s.title}>
-            <div><span className="no">STEP {i + 1}</span><b>{s.title}</b><p>{s.desc}</p></div>
+            <div><span className="no">{i + 1}단계</span><b>{s.title}</b><p>{s.desc}</p></div>
             {s.img && <Zoomable img={s.img} onZoom={onZoom} className="scen-img" />}
           </li>
         ))}
@@ -133,7 +150,7 @@ function Glance({ g }) {
       <div className="g-cols">
         <div className="g-block">
           <span className="g-label">내가 맡은 일</span>
-          <ul className="did">{g.did.map((d) => <li key={d.text} className={`s-${d.stage}`}><span aria-hidden="true">{d.mark}</span>{d.text}</li>)}</ul>
+          <ul className="did">{g.did.map((d) => <li key={d.text} className={`s-${d.stage}`}><span aria-hidden="true">{d.mark}</span><span>{d.text}</span></li>)}</ul>
         </div>
         <div className="g-block">
           <span className="g-label">사용 기술</span>
@@ -152,7 +169,7 @@ function CaseCard({ c, index, onZoom }) {
   const fix = Array.isArray(c.fix) ? <ul>{c.fix.map((f) => <Rich key={f} as="li" html={f} />)}</ul> : <Rich html={c.fix} />;
   return (
     <article className={`case s-${c.stage}`} id={c.id} tabIndex={-1} aria-labelledby={`${c.id}-title`}>
-      <div className="case-h"><span className="case-n">CASE {String(index + 1).padStart(2, '0')}</span><span className="case-st">{c.stageText}</span></div>
+      <div className="case-h"><span className="case-n">사례 {String(index + 1).padStart(2, '0')}</span><span className="case-st">{c.stageText}</span></div>
       <h4 id={`${c.id}-title`}>{c.title}</h4>
       <dl>
         {c.found && <div><dt>발견 계기</dt><dd>{c.found}</dd></div>}
@@ -161,7 +178,7 @@ function CaseCard({ c, index, onZoom }) {
         {c.check && <div><dt>확인</dt><dd><Rich html={c.check} /></dd></div>}
         {c.learned && <div><dt>배운 점</dt><dd>{c.learned}</dd></div>}
       </dl>
-      {c.result && <p className="res"><span>RESULT</span><b>{c.result}</b>{c.resultNote && <small>{c.resultNote}</small>}</p>}
+      {c.result && <p className="res"><span>결과</span><b>{c.result}</b>{c.resultNote && <small>{c.resultNote}</small>}</p>}
       {c.image && <figure className="case-fig"><Zoomable img={c.image} onZoom={onZoom} /><figcaption>{c.image.caption}</figcaption></figure>}
     </article>
   );
@@ -176,7 +193,7 @@ export function ProjectDetail({ id, anchor, onBack }) {
 
   const toc = useMemo(() => {
     const items = [{ id: 'overview', label: '한눈에 보기', stage: 'ink' }];
-    p.sections.forEach((s) => items.push({ id: s.id, label: `${stageNo(s.stage)} ${stages[s.stage].label}`, stage: s.stage, handoff: !!s.handoff }));
+    p.sections.forEach((s) => items.push({ id: s.id, label: `${stageNo(s.stage)} ${stages[s.stage].label}`, stage: s.stage }));
     if (p.cases.length) items.push({ id: 'trouble', label: '트러블슈팅', stage: 'ink' });
     if (p.retro) items.push({ id: 'retro', label: '회고', stage: 'ink' });
     return items;
@@ -225,9 +242,9 @@ export function ProjectDetail({ id, anchor, onBack }) {
 
   const tocLinks = (cls) => toc.map((t) => (
     <li key={t.id}>
-      <a href={`#project/${id}/${t.id}`} className={`${cls} s-${t.stage}${t.handoff ? ' dim' : ''}`} aria-current={active === t.id ? 'location' : undefined}
+      <a href={`#project/${id}/${t.id}`} className={`${cls} s-${t.stage}`} aria-current={active === t.id ? 'location' : undefined}
         onClick={(e) => { e.preventDefault(); jumpTo(t.id); }}>
-        {t.label}{t.handoff && <small>NO.BLACK</small>}
+        {t.label}
       </a>
     </li>
   ));
@@ -254,11 +271,11 @@ export function ProjectDetail({ id, anchor, onBack }) {
             {p.actions.map((a) => <Ext key={a.label} href={a.href} title={a.title} className={`btn ${a.primary ? 'btn-coral' : 'btn-line'}`}>{a.label}</Ext>)}
             {p.repoNote && <p className="repo-note">{p.repoNote}</p>}
           </div>
-          <figure className="d-shot">
+          {p.screens ? <ProjectScreens items={[p.shot, ...p.screens]} name={p.name} onZoom={openZoom} /> : <figure className="d-shot">
             <div className="browser"><div className="browser-bar" aria-hidden="true"><i /><i /><i /><span>{p.shot.url}</span></div>
               <img src={p.shot.src} alt={p.shot.alt} width={p.shot.w} height={p.shot.h} /></div>
             <figcaption>{p.shot.caption}</figcaption>
-          </figure>
+          </figure>}
           <blockquote>{p.quote}</blockquote>
           <StageDots done={p.stages} className="fd-box" />
 
@@ -270,17 +287,8 @@ export function ProjectDetail({ id, anchor, onBack }) {
           {p.sections.map((s) => (
             <section key={s.id} className={`d-sec s-${s.stage}`} id={s.id} tabIndex={-1} aria-labelledby={`${s.id}-title`}>
               <p className="stage-tag">{stageNo(s.stage)} {stages[s.stage].label}</p>
-              {s.handoff ? (
-                <div className="handoff">
-                  <Rich as="p" html={s.handoff.html} id={`${s.id}-title`} />
-                  <a href={s.handoff.href}>{s.handoff.label}</a>
-                </div>
-              ) : (
-                <>
-                  <h2 id={`${s.id}-title`}>{s.title}</h2>
-                  {s.blocks.map((b, i) => <Block key={i} b={b} onZoom={openZoom} />)}
-                </>
-              )}
+              <h2 id={`${s.id}-title`}>{s.title}</h2>
+              {s.blocks.map((b, i) => <Block key={i} b={b} onZoom={openZoom} />)}
             </section>
           ))}
 

@@ -3,20 +3,20 @@
 
 export const profile = {
   name: '한재훈',
-  role: 'Full-stack Developer · Java·Spring + React',
+  role: '풀스택 개발자 · Java·Spring + React',
   email: 'sksqlrlek@gmail.com',
   github: 'https://github.com/sksqlrlek',
   photo: '/assets/profile-photo.jpg',
 };
 
-// 개발 단계와 색. 사이트 전체에서 같은 의미로만 씁니다.
+// 개발 단계와 색. 사이트 전체에서 label의 한글 단계명을 공통으로 씁니다.
 export const stageOrder = ['an', 'de', 'dv', 'te', 'dp'];
 export const stages = {
-  an: { label: '분석', en: 'ANALYZE' },
-  de: { label: '설계', en: 'DESIGN' },
-  dv: { label: '개발', en: 'BUILD' },
-  te: { label: '테스트', en: 'TEST' },
-  dp: { label: '배포', en: 'DEPLOY' },
+  an: { label: '분석' },
+  de: { label: '설계' },
+  dv: { label: '개발' },
+  te: { label: '테스트' },
+  dp: { label: '배포' },
 };
 
 export const hero = {
@@ -24,8 +24,8 @@ export const hero = {
   intro: '6년간 비영리 단체 팀장으로 일하며 <b>반복되는 불편을 시스템으로 풀고 싶어</b> 개발자가 되었습니다. Java·Spring을 중심으로 요구사항 분석부터 배포까지 경험했고, 트랜잭션 경계·인증 흐름·외부 API 예외까지 함께 고민합니다.',
   // 첫 화면 오른쪽 목록: 흐름 순서의 근거. 누르면 해당 프로젝트 상세의 그 단계로 이동합니다.
   proofs: [
-    { stage: 'an', icon: 'doc', title: '문서와 ERD를 먼저 씁니다', stageText: '분석 · 설계', project: 'MyCrewSoft', desc: '요구사항 정의·유스케이스부터 ERD 3종, 화면설계서 8장까지 직접 작성', href: '#project/crew/analysis' },
-    { stage: 'dv', icon: 'code', title: '팀의 공통 구조를 설계합니다', stageText: '개발', project: 'MyCrewSoft', desc: 'AA로 공통 API 응답·전역 예외 처리·계층 규칙과 Git 협업 가이드 정리', href: '#project/crew/build' },
+    { stage: 'an', icon: 'doc', title: '문서와 ERD를 먼저 씁니다', stageText: '분석 · 설계', project: 'MyCrewSoft', desc: '요구사항 정의·유스케이스부터 ERD 3종, 시퀀스 다이어그램까지 직접 작성', href: '#project/crew/analysis' },
+    { stage: 'dv', icon: 'code', title: '팀의 공통 구조를 설계합니다', stageText: '개발', project: 'MyCrewSoft', desc: 'AA로 19개 장의 협업 가이드 작성 — 공통 응답·전역 예외 처리·계층·Git 규칙', href: '#project/crew/build' },
     { stage: 'te', icon: 'check', title: '근거로 완료를 확인합니다', stageText: '테스트', project: 'NO.BLACK', desc: 'Playwright·JUnit·MockMvc로 화면 조작부터 트랜잭션·CSRF까지 검사', href: '#project/noblack/test' },
     { stage: 'dp', icon: 'cloud', title: '실서비스를 운영합니다', stageText: '배포 · 운영', project: 'NO.BLACK', desc: 'GitHub Actions 검사를 통과하면 GHCR → OCI 자동 배포, NO.BLACK 운영 중', href: '#project/noblack/deploy' },
   ],
@@ -66,7 +66,7 @@ export const projects = [
     reverse: true,
     badge: { type: 'live', text: '운영 중인 실서비스' },
     meta: '실제 브랜드 의뢰 · 1인',
-    period: '2026.08 —',
+    period: '2026.08 — 2026.11',
     name: 'NO.BLACK',
     sub: '침구 브랜드 쇼케이스 + 관리자 CMS',
     image: { src: '/assets/noblack-room.webp', w: 1319, h: 774, alt: 'NO.BLACK 나만의 방 운영 화면', url: 'oooooo.kr/room' },
@@ -117,11 +117,11 @@ export const mainSkills = [
 ];
 
 export const skillGroups = [
-  ['BACKEND', [['spring', 'Spring Security'], ['', 'JPA'], ['', 'Servlet/JSP'], ['', 'JWT']]],
-  ['FRONTEND', [['javascript', 'JavaScript'], ['html5', 'HTML5'], ['css3', 'CSS3'], ['jquery', 'jQuery'], ['tailwindcss', 'Tailwind']]],
-  ['DATA', [['postgresql', 'PostgreSQL'], ['redis', 'Redis'], ['', 'Flyway']]],
-  ['DEVOPS · TEST', [['docker', 'Docker'], ['githubactions', 'GitHub Actions'], ['', 'OCI'], ['playwright', 'Playwright'], ['junit', 'JUnit']]],
-  ['설계 · 협업', [['', 'ERD'], ['', '유스케이스'], ['', '화면설계서'], ['git', 'Git'], ['notion', 'Notion'], ['figma', 'Figma']]],
+  ['백엔드', [['spring', 'Spring Security'], ['', 'JPA'], ['', 'Servlet/JSP'], ['', 'JWT']]],
+  ['프론트엔드', [['javascript', 'JavaScript'], ['html5', 'HTML5'], ['css3', 'CSS3'], ['jquery', 'jQuery'], ['tailwindcss', 'Tailwind']]],
+  ['데이터', [['postgresql', 'PostgreSQL'], ['redis', 'Redis'], ['', 'Flyway']]],
+  ['배포 · 운영 · 테스트', [['docker', 'Docker'], ['githubactions', 'GitHub Actions'], ['', 'OCI'], ['playwright', 'Playwright'], ['junit', 'JUnit']]],
+  ['설계 · 협업', [['', 'ERD'], ['', '유스케이스'], ['', '시퀀스 다이어그램'], ['git', 'Git'], ['notion', 'Notion'], ['figma', 'Figma']]],
 ];
 
 export const career = [

@@ -28,7 +28,7 @@ function Hero() {
             </div>
           </div>
           <div className="hero-proof">
-            <p className="proof-label">분석부터 배포까지, 직접 해 본 일 <span lang="en">EXPERIENCE IN PRACTICE</span></p>
+            <p className="proof-label">분석부터 배포까지, 직접 해 본 일</p>
             <ul className="proofs">
               {hero.proofs.map((item) => (
                 <li key={item.title} className={`s-${item.stage}`}>
@@ -48,7 +48,7 @@ function Hero() {
         </div>
         <div className="hero-bar">
           <ul className="legend" aria-label="개발 단계 색">
-            {stageOrder.map((key) => <li key={key} className={`s-${key}`} lang="en">{stages[key].en}</li>)}
+            {stageOrder.map((key) => <li key={key} className={`s-${key}`}>{stages[key].label}</li>)}
           </ul>
           <SectionLink to="contact" className="hero-contact">연락하기 <span aria-hidden="true">↓</span></SectionLink>
         </div>
@@ -119,9 +119,9 @@ function Projects() {
     <section className="sec sec-cream" id="projects" aria-labelledby="projects-title">
       <div className="wrap">
         <div className="sec-h">
-          <p className="kicker" lang="en">PROJECTS</p>
-          <h2 id="projects-title">대표 프로젝트</h2>
-          <p>메인 프로젝트부터 정리했습니다. 상세 보기를 누르면 분석 → 설계 → 개발 → 테스트 → 배포 순서로 정리한 페이지가 열립니다.</p>
+          <p className="kicker">프로젝트</p>
+          <h2 id="projects-title">직접 설계하고 만든 프로젝트</h2>
+          <p>팀 프로젝트에서는 공통 구조를 정하는 AA·TA를, 실제 의뢰에서는 분석부터 운영까지 혼자 맡았습니다.</p>
         </div>
         {projects.map((p) => (p.layout === 'feature' ? <FeatureCard key={p.id} p={p} /> : <CompactCard key={p.id} p={p} />))}
       </div>
@@ -134,7 +134,7 @@ function Troubles() {
     <section className="sec" id="trouble" aria-labelledby="trouble-title">
       <div className="wrap">
         <div className="sec-h">
-          <p className="kicker" lang="en">TROUBLESHOOTING</p>
+          <p className="kicker">문제 해결</p>
           <h2 id="trouble-title">원인을 끝까지 추적한 기록</h2>
           <p>증상에서 멈추지 않고 원인을 찾아, 같은 문제가 다시 생기지 않게 바꾼 사례입니다. 어느 단계의 문제였는지도 함께 적었습니다.</p>
         </div>
@@ -160,7 +160,7 @@ function Skills() {
       <div className="wrap">
         <div className="stack-top">
           <div>
-            <p className="kicker" lang="en">TECH STACK</p>
+            <p className="kicker">사용 기술</p>
             <h2 id="skills-title">주력 기술</h2>
             <p>세 프로젝트에서 직접 쓴 기술입니다. 아래 기술은 프로젝트에 따라 함께 썼습니다.</p>
           </div>
@@ -190,7 +190,7 @@ function Career() {
   return (
     <section className="sec sec-cream" id="career" aria-labelledby="career-title">
       <div className="wrap">
-        <div className="sec-h"><p className="kicker" lang="en">CAREER &amp; EDUCATION</p><h2 id="career-title">개발 전과 후, 쌓아 온 경험</h2></div>
+        <div className="sec-h"><p className="kicker">경력 · 교육</p><h2 id="career-title">개발 전과 후, 쌓아 온 경험</h2></div>
         <ol className="tl">
           {career.map((c) => (
             <li key={c.title}>
@@ -200,7 +200,7 @@ function Career() {
           ))}
         </ol>
         <div className="certs">
-          <h3>자격증 <span lang="en">CERTIFICATES · {certs.length}</span></h3>
+          <h3>자격증 <span>{certs.length}개</span></h3>
           <ul>
             {certs.map((c) => (
               <li key={c.name}>
@@ -224,12 +224,12 @@ export function Contact() {
         <div className="contact-in">
           <div><h2 id="contact-title">함께 일할 기회를<br />기다리고 있습니다</h2><p className="sub">메일이나 GitHub로 편하게 연락 주세요.</p></div>
           <div>
-            <div className="crow"><span lang="en">EMAIL</span><a href={`mailto:${profile.email}`}>{profile.email}</a><button type="button" onClick={copy}>{copied ? '복사됨' : '복사'}</button></div>
-            <div className="crow"><span lang="en">GITHUB</span><Ext href={profile.github}>github.com/sksqlrlek</Ext></div>
+            <div className="crow"><span>이메일</span><a href={`mailto:${profile.email}`}>{profile.email}</a><button type="button" onClick={copy}>{copied ? '복사됨' : '복사'}</button></div>
+            <div className="crow"><span>깃허브</span><Ext href={profile.github}>github.com/sksqlrlek</Ext></div>
             <p className="sr-only" role="status">{copied ? '이메일 주소를 복사했습니다.' : ''}</p>
           </div>
         </div>
-        <div className="foot"><span><i className="bar" aria-hidden="true" />© 2026 {profile.name}</span><span>React + Vite로 만들고 GitHub Actions로 배포</span></div>
+        <div className="foot"><span><i className="bar" aria-hidden="true" />{profile.name} · 풀스택 개발자 포트폴리오</span></div>
       </div>
     </footer>
   );

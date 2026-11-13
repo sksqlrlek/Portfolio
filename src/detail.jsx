@@ -271,7 +271,11 @@ export function ProjectDetail({ id, anchor, onBack }) {
             {p.badge && <span className={`badge badge-${p.badge.type}`}>{p.badge.text}</span>}
             {p.meta.map((m) => <span key={m}>{m}</span>)}
           </div>
-          <h1 id="detail-title" tabIndex={-1}>{p.name}</h1>
+          <div className="d-title">
+            <h1 id="detail-title" tabIndex={-1}>{p.name}</h1>
+            <StageDots done={p.stages} className="d-stages" />
+          </div>
+          <p className="d-quote">{p.quote}</p>
           <Rich as="p" className="d-lead" html={p.lead} />
           <div className="d-actions">
             {p.actions.map((a) => <Ext key={a.label} href={a.href} title={a.title} className={`btn ${a.primary ? 'btn-coral' : 'btn-line'}`}>{a.label}</Ext>)}
@@ -282,8 +286,6 @@ export function ProjectDetail({ id, anchor, onBack }) {
               <img src={p.shot.src} alt={p.shot.alt} width={p.shot.w} height={p.shot.h} /></div>
             <figcaption>{p.shot.caption}</figcaption>
           </figure>}
-          <blockquote>{p.quote}</blockquote>
-          <StageDots done={p.stages} className="fd-box" />
 
           <section className="d-sec" id="overview" tabIndex={-1} aria-labelledby="overview-title">
             <h2 id="overview-title">한눈에 보기</h2>

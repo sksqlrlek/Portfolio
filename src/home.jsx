@@ -121,7 +121,7 @@ function Projects() {
         <div className="sec-h">
           <p className="kicker">프로젝트</p>
           <h2 id="projects-title">직접 설계하고 만든 프로젝트</h2>
-          <p>팀 프로젝트에서는 공통 구조를 정하는 AA·TA를, 실제 의뢰에서는 분석부터 운영까지 혼자 맡았습니다.</p>
+          <p>팀 프로젝트에서는 공통 구조를 정하는 AA를, 실제 의뢰에서는 분석부터 운영까지 혼자 맡았습니다.</p>
         </div>
         {projects.map((p) => (p.layout === 'feature' ? <FeatureCard key={p.id} p={p} /> : <CompactCard key={p.id} p={p} />))}
       </div>
@@ -190,7 +190,7 @@ function Career() {
   return (
     <section className="sec sec-cream" id="career" aria-labelledby="career-title">
       <div className="wrap">
-        <div className="sec-h"><p className="kicker">경력 · 교육</p><h2 id="career-title">개발 전과 후, 쌓아 온 경험</h2></div>
+        <div className="sec-h"><p className="kicker">경력 · 교육</p><h2 id="career-title">배우고 일하며 쌓아 온 경험</h2></div>
         <ol className="tl">
           {career.map((c) => (
             <li key={c.title}>

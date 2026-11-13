@@ -26,7 +26,7 @@ try {
     throw new Error('MyCrewSoft must be the first (main) project');
   }
   const certCount = await page.locator('.certs li').count();
-  if (certCount !== 7) throw new Error('Expected 7 certificates; received ' + certCount);
+  if (certCount !== 3) throw new Error('Expected 3 certificates; received ' + certCount);
 
   // The header contact menu opens and closes.
   await page.locator('.cm .hbtn').click();
@@ -53,7 +53,7 @@ try {
   await page.goto(url + '/#project/crew/case-03', { waitUntil: 'domcontentloaded' });
   await page.locator('#case-03').waitFor({ state: 'visible' });
 
-  for (const [id, name] of [['noblack', 'NO.BLACK'], ['cinema', 'Cinema Talk']]) {
+  for (const [id, name] of [['noblack', 'N°BLACK'], ['cinema', 'Cinema Talk']]) {
     await page.goto(url + '/#project/' + id, { waitUntil: 'domcontentloaded' });
     await page.locator('#detail-title').waitFor({ state: 'visible' });
     if (!(await page.locator('#detail-title').innerText()).includes(name)) throw new Error(name + ' detail did not render');
@@ -72,7 +72,7 @@ try {
   }
 
   if (errors.length) throw new Error('Browser JavaScript errors: ' + errors.join(' | '));
-  console.log('Portfolio smoke passed: home sections, 3 projects, 7 certificates, contact menu, crew/noblack/cinema details, TOC history, case deep link, mobile tabs and stage bar, assets');
+  console.log('Portfolio smoke passed: home sections, 3 projects, 3 certificates, contact menu, crew/noblack/cinema details, TOC history, case deep link, mobile tabs and stage bar, assets');
 } finally {
   await browser.close();
 }

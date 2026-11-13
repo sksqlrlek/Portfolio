@@ -3,8 +3,8 @@
 React + Vite 정적 포트폴리오(OCI: https://jaehoon93.duckdns.org/). 홈은 실제 개발자 소개 사이트의 구도(첫 화면 이름·소개 | 오른쪽 경험 목록, 프로젝트 카드 → 상세 페이지)를 따르고, 색과 흐름은 원본 PDF에서 가져왔습니다.
 
 - 색은 개발 단계에만 씁니다: 분석 coral · 설계 gold · 개발 green · 테스트 blue · 배포 lavender
-- 홈 순서: 소개 → 프로젝트(MyCrewSoft 메인, NO.BLACK, Cinema Talk) → 문제 해결 → 기술 → 경력·자격증 → 연락
-- 프로젝트 상세는 한눈에 보기 → 01 분석 → 02 설계 → 03 개발 → 04 테스트 순서입니다. NO.BLACK에는 05 배포를 추가하고, 프로젝트별로 트러블슈팅과 회고를 이어 붙입니다.
+- 홈 순서: 소개 → 프로젝트(MyCrewSoft 메인, N°BLACK, Cinema Talk) → 문제 해결 → 기술 → 경력·자격증 → 연락
+- 프로젝트 상세는 한눈에 보기 → 01 분석 → 02 설계 → 03 개발 → 04 테스트 순서입니다. N°BLACK에는 05 배포를 추가하고, 프로젝트별로 트러블슈팅과 회고를 이어 붙입니다.
 - 휴대폰에서는 홈 상단에 섹션 탭, 상세 상단에 단계 바가 고정됩니다.
 
 ## VS Code에서 시작
@@ -21,7 +21,7 @@ npm.cmd run dev
 ## 수정 위치
 
 - `src/site-data.js`: 홈 문구 — 첫 화면, 프로젝트 카드, 문제 해결 목록, 기술, 경력, 자격증, 연락처
-- `src/project-details.js`: 프로젝트 상세 본문(MyCrewSoft·NO.BLACK·Cinema Talk). 단계별 블록(문단·그림·표·코드·접기 등)으로 적습니다.
+- `src/project-details.js`: 프로젝트 상세 본문(MyCrewSoft·N°BLACK·Cinema Talk). 단계별 블록(문단·그림·표·코드·접기 등)으로 적습니다.
 - `src/home.jsx`, `src/detail.jsx`: 홈과 상세 화면
 - `src/project-screens.jsx`: 프로젝트 구현 화면 슬라이더 — 버튼·방향키·마우스 드래그·터치 전환과 확대 보기
 - `src/nav.jsx`: 헤더 메뉴, 휴대폰 탭, 연락하기 메뉴, 섹션 이동

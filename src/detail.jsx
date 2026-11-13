@@ -145,12 +145,18 @@ function Glance({ g }) {
       <div className="g-block">
         <span className="g-label">{g.chainLabel}</span>
         <ol className="chain">{g.chain.map((c) => <li key={c}>{c}</li>)}</ol>
-        <p>{g.chainNote}</p>
+        {g.chainNote && <p>{g.chainNote}</p>}
       </div>
       <div className="g-cols">
         <div className="g-block">
           <span className="g-label">내가 맡은 일</span>
           <ul className="did">{g.did.map((d) => <li key={d.text} className={`s-${d.stage}`}><span aria-hidden="true">{d.mark}</span><span>{d.text}</span></li>)}</ul>
+          {g.credits && (
+            <div className="credits">
+              <span className="g-label">역할 구분</span>
+              <dl>{g.credits.map(([who, what]) => <div key={who}><dt>{who}</dt><dd>{what}</dd></div>)}</dl>
+            </div>
+          )}
         </div>
         <div className="g-block">
           <span className="g-label">사용 기술</span>

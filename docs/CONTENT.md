@@ -30,4 +30,4 @@ MyCrewSoft의 구현 화면 네 장은 설계 산출물 목록에서 상세 상�
 - '내 PR' 링크의 개수(백엔드 72 · 프론트엔드 64 · Cinema Talk 19)는 2026-11-11 GitHub 기준입니다.
 - NO.BLACK 저장소는 비공개라 상세에 '비공개' 안내만 둡니다.
 - 연락처 이메일은 PDF와 같은 `sksqlrlek@gmail.com`으로 통일했습니다.
-- 예전 화면에서 쓰던 `public/assets/portfolio-pages/`(PDF 쪽 이미지), `public/resume.html`, `public/assets/noblack-readme.md`는 지금 사이트에서 링크하지 않지만 지우지 않고 남겨 두었습니다.
+- 예전 화면에서 쓰던 `public/resume.html`, `public/assets/noblack-readme.md`는 지금 사이트에서 링크하지 않지만 지우지 않고 남겨 두었습니다. PDF 쪽 이미지(`public/assets/portfolio-pages/`)는 쓰지 않아 지웠습니다(git 기록에 남아 있음).

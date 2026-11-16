@@ -12,6 +12,8 @@
 | 사용자 제공 용어 사전 | MyCrewSoft 상세 — 02 설계의 '설계 산출물 더 보기' 네 번째 이미지 |
 | N°BLACK 저장소 `README.md` | N°BLACK 상세 — 01 분석 ~ 05 배포, 트러블슈팅 |
 
+위 표의 쪽 번호는 웹 사이트를 만들 때 쓴 예전 PDF 기준입니다. 2026-11-17에 `portfolio.pdf`(GitHub Pages)와 `public/assets/portfolio.pdf`를 N°BLACK을 넣은 새 PDF(28쪽: MyCrewSoft 6–18쪽, N°BLACK 19–26쪽, Cinema Talk 요약 27쪽)로 바꿨습니다.
+
 상세 페이지는 PDF 쪽 순서가 아니라 개발 단계 순서로 다시 묶었습니다. ERD, 유스케이스, 시퀀스, 화면설계서, 아키텍처 그림은 `public/assets/`의 원본을 쓰고, 누르면 크게 열립니다.
 
 MyCrewSoft의 구현 화면 네 장은 설계 산출물 목록에서 상세 상단으로 옮겼습니다. `src/project-details.js`의 `shot`과 `screens`가 화면 목록을 정의하고, `src/project-screens.jsx`가 전환·드래그·확대 버튼을 담당합니다. 설계 산출물에는 시퀀스 다이어그램·화면 정의서·요구사항 정의서·용어 사전과 API 명세를 표시합니다.

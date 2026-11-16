@@ -121,6 +121,8 @@ section[id], article[id] { scroll-margin-top: var(--anchor); }
 .proof-label span { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; color: var(--muted); }
 .proofs a { display: grid; grid-template-columns: 44px 1fr 20px; gap: 14px; align-items: start; padding: 16px 6px 16px 0; border-bottom: 1px solid var(--line); transition: background .15s; }
 .proofs a:hover { background: rgba(255, 255, 255, .6); }
+/* 마지막 항목의 선은 바로 아래 전체 구분선(.hero-bar)이 대신합니다 */
+.proofs li:last-child a { border-bottom: 0; }
 .proofs .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--w); color: var(--ci); }
 .pf-body { display: flex; flex-direction: column; min-width: 0; }
 .pf-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 16.5px; font-weight: 800; letter-spacing: -.025em; }
@@ -130,7 +132,7 @@ section[id], article[id] { scroll-margin-top: var(--anchor); }
 .pf-project::before { content: '→ '; color: var(--ci); }
 .proofs .go { align-self: center; color: #B5AA99; font-weight: 700; transition: transform .15s, color .15s; }
 .proofs a:hover .go { color: var(--ink); transform: translateX(3px); }
-.hero-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 48px; padding: 18px 0 22px; border-top: 1px solid var(--line); }
+.hero-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 0; padding: 18px 0 22px; border-top: 1px solid var(--line); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; color: var(--muted); }
 .legend li { display: inline-flex; align-items: center; gap: 7px; }
 .legend li::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
@@ -485,7 +487,6 @@ a.browser:hover { transform: translateY(-3px); }
   .pf-title { font-size: 15.5px; }
   .pf-desc { display: none; }
   .pf-project { margin-top: 2px; }
-  .hero-bar { margin-top: 32px; }
   .legend { font-size: 12.5px; gap: 6px 12px; }
   .points li:nth-child(n+3) { display: none; } /* 휴대폰 홈 카드는 요점 2개만 */
   .sec { padding: 56px 0; }

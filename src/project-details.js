@@ -395,7 +395,7 @@ const noblack = {
         { t: 'figure', src: '/assets/noblack-screens/pc-mobile.webp', w: 2474, h: 900, alt: '같은 차렵이불 상세 화면 세 장. 왼쪽 PC는 아케이드 프레임 안에 정보 표와 큰 제품 이미지가 나란히 있고, 가운데 모바일은 게임 뷰(픽셀 연출 이미지), 오른쪽 모바일은 사용 뷰(침실 사진)로 같은 자리에서 이미지만 바뀜', caption: 'PC 아케이드 화면(왼쪽)과 모바일 전용 화면 · 게임 뷰(가운데)와 사용 뷰(오른쪽) — 운영 사이트 캡처' },
         { t: 'h3', text: '백엔드 — 운영 CMS' },
         { t: 'feats', items: [
-          { title: '초안과 게시본을 분리한 CMS', html: '편집·복원은 항상 새 초안 리비전으로 저장합니다. 게시하면 그 리비전을 확정(<code>is_draft = false</code>)하고 <code>published_revision_id</code>를 바꾼 뒤, 변경 내역을 <code>admin_audit_log</code>에 남깁니다.' },
+          { title: '공개 전에 바뀌는 내용 보여 주기', html: '공개하기를 누르면 지금 공개된 버전과 임시저장본을 비교해, 바뀌는 항목을 편집 화면의 칸 이름으로 보여 주고 고친 글은 이전 값과 함께 표시합니다. 목록형 항목은 "2개 → 3개", "순서를 바꿨어요"처럼 요약하고, 줄 ID·키 순서·빈 값 차이는 무시해 실제로 바뀐 것만 나오게 했습니다. 고객 화면 미리보기는 고객 API와 같은 변환(<code>productView</code>)으로 만든 응답을 실제 사이트와 같은 상세 화면 컴포넌트로 그립니다.' },
           { title: '동시 수정 충돌 방지', html: '<code>SELECT … FOR UPDATE</code>로 행을 잠근 뒤 요청에 담긴 버전과 비교하고, 갱신도 <code>WHERE version = :version</code> 조건으로 한 번 더 확인합니다. 관리자가 읽은 버전이 이미 바뀌었으면 <code>409 Conflict</code>를 돌려줘, 오래된 편집이 최신 내용을 덮지 못하게 했습니다.' },
           { title: '관리자 보안과 파일 검증', html: 'Spring Security 세션 인증, Argon2id 비밀번호 해시, CSRF 토큰, 연속 실패 잠금을 적용했습니다. 업로드 파일은 실제 형식과 크기를 검사하고, 사용 중인 파일은 지울 수 없게 했습니다.' },
         ] },

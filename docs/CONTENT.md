@@ -34,4 +34,5 @@ MyCrewSoft의 구현 화면 네 장은 설계 산출물 목록에서 상세 상�
 - `admin-before-after.webp`의 왼쪽(개선 전 콘텐츠 탭)은 개선 전 코드(N°BLACK `3bfa741`)의 프론트엔드를 로컬에서 띄워 2026-11-16에 캡처했습니다. 같은 제품의 운영 공개 API 값(KEY POINT·사이즈·소재·사진)을 예전 관리자 응답 형식으로 넣었고, 운영 서버에는 공개 조회 요청만 보냈습니다. V11에서 지워진 제품 이야기·태그는 이 탭에 보이지 않아 빈 값으로 두었습니다.
 - N°BLACK 테스트 수(Playwright 750 · JUnit 152)는 2026-11-15 main CI 실행 기록, 메모리 한도는 `docker-compose.prod.yml`, 운영 제품 9개의 MY ROOM 자리(침대 5 · 소파 4)는 2026-11-16 공개 제품 API 기준입니다.
 - 연락처 이메일은 PDF와 같은 `sksqlrlek@gmail.com`으로 통일했습니다.
-- 예전 화면에서 쓰던 `public/resume.html`, `public/assets/noblack-readme.md`는 지금 사이트에서 링크하지 않지만 지우지 않고 남겨 두었습니다. PDF 쪽 이미지(`public/assets/portfolio-pages/`)는 쓰지 않아 지웠습니다(git 기록에 남아 있음).
+- 예전 화면에서 쓰던 `public/resume.html`은 지금 사이트에서 링크하지 않지만 지우지 않고 남겨 두었습니다. PDF 쪽 이미지(`public/assets/portfolio-pages/`)는 쓰지 않아 지웠습니다(git 기록에 남아 있음).
+- `public/assets/noblack-readme.md`는 링크가 없어도 주소로 열리고 비공개 저장소의 관리자 API 경로가 적혀 있어 지웠습니다.

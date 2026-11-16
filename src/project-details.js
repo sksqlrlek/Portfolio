@@ -401,7 +401,7 @@ const noblack = {
           { title: '관리자 보안과 파일 검증', html: 'Spring Security 세션 인증, Argon2id 비밀번호 해시, CSRF 토큰, 연속 실패 잠금을 적용했습니다. 업로드 파일은 실제 형식과 크기를 검사하고, 사용 중인 파일은 지울 수 없게 했습니다.' },
         ] },
         { t: 'figure', src: '/assets/noblack-screens/admin-edit.webp', w: 1190, h: 834, alt: '밝은 관리자 제품 편집 화면. 위쪽에 공개에 필요한 내용을 모두 채웠다는 안내와 이름·소개, 사진, 판매 주소 같은 바로가기 버튼이 있고, 아래에 필수 표시가 붙은 제품명 입력 칸이 있음. 제품명 칸을 누르자 오른쪽 고객 화면 미리보기의 제품명 자리에 주황색 테두리가 생김', caption: '제품 편집 — 입력 칸을 누르면 미리보기에서 그 값이 나오는 자리가 강조됨 · 운영 화면 캡처' },
-        { t: 'figure', src: '/assets/noblack-screens/admin-publish.webp', w: 1198, h: 783, alt: '공개 전 확인 창. 판매 상태·제품명·추천 제품 수를 요약하고, 그 아래에 공개하면 고객에게 보일 휴대폰 화면을 미리 보여 줌', caption: '공개 전 확인 — 바뀌는 내용과 고객에게 보일 화면을 확인한 뒤 공개 · 운영 화면 캡처' },
+        { t: 'figure', src: '/assets/noblack-screens/admin-publish.webp', w: 1200, h: 871, alt: '공개 전 확인 창. 왼쪽에 판매 중으로 공개된다는 안내와 이번에 바뀌는 것 4가지(제품 소개·핵심 특징·사이즈 안내·추천 제품)를 이전 값과 함께 보여 주고, 오른쪽에 공개하면 고객에게 보일 휴대폰 화면을 미리 보여 줌', caption: '공개 전 확인 — 바뀌는 내용과 고객에게 보일 화면을 확인한 뒤 공개 · 운영 화면 캡처' },
         { t: 'fold', title: '주요 API', sub: '공개 조회 · 관리자 · 판매 링크', blocks: [
           { t: 'table', head: ['구분', '경로', '역할'], rows: [
             ['공개 조회', '<code>GET /api/products/**</code>, <code>/api/guides/**</code>', '게시된 제품·안내 조회'],

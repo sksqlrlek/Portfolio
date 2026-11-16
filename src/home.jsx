@@ -24,6 +24,7 @@ function Hero() {
             <Rich as="p" className="intro" html={hero.intro} />
             <div className="cta">
               <SectionLink to="projects" className="btn btn-dark">프로젝트 살펴보기 <span aria-hidden="true">↓</span></SectionLink>
+              <Ext href={profile.pdf} className="btn btn-line">PDF로 보기</Ext>
               <Ext href={profile.github} className="btn btn-line">GitHub</Ext>
             </div>
           </div>

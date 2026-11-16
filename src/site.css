@@ -481,6 +481,9 @@ a.browser:hover { transform: translateY(-3px); }
   .avatar { width: 80px; border-radius: 12px; border-width: 2px; }
   .headline { margin-top: 22px; }
   .hero-in { gap: 28px; }
+  /* 첫 줄은 '프로젝트 살펴보기', 둘째 줄은 PDF·GitHub를 반씩 나눠 한 버튼만 따로 떨어지지 않게 */
+  .cta .btn { flex: 1 1 0; }
+  .cta .btn-dark { flex-basis: 100%; }
   .proofs a { grid-template-columns: 36px 1fr 16px; gap: 12px; padding: 12px 4px 12px 0; }
   .proofs .ic { width: 36px; height: 36px; border-radius: 10px; }
   .proofs .ic svg { width: 18px; height: 18px; }

@@ -361,27 +361,13 @@ const noblack = {
           '<b>운영 구조</b> — 브라우저 요청은 Caddy가 받아 화면 파일을 주고, <code>/api</code> 요청만 Spring Boot로 넘깁니다. Vite는 개발 환경에서만 씁니다.',
         ] },
         { t: 'figure', src: '/assets/noblack-diagrams/architecture.png', w: 1656, h: 1000, alt: '운영 환경: 사용자 브라우저가 HTTPS로 Caddy에 요청하고, Caddy가 /api 요청을 Spring Boot API(Spring Security → Controller → Service)로 넘기며 Service가 Repository·PostgreSQL과 MediaStorage를 사용. 아래 점선 영역의 개발 환경에는 Vite가 따로 있고, 빌드한 정적 파일은 운영에서 Caddy가 제공', caption: '서비스 구조 · 운영 흐름과 개발 환경 분리' },
-        { t: 'p', html: '제품마다 상세 항목이 달라, 본문은 <b>JSONB</b>로 유연하게 저장하고 식별자·게시 상태·버전처럼 정합성이 중요한 값은 별도 컬럼으로 뒀습니다. JSONB는 요청 DTO의 <code>@Valid</code> 검증과 DB의 <code>CHECK (jsonb_typeof(payload) = \'object\')</code>로 두 번 검사합니다.' },
-        { t: 'fold', title: '핵심 데이터 관계', sub: '콘텐츠 · 버전 · 파일 테이블', blocks: [
-          { t: 'figure', src: '/assets/noblack-diagrams/erd.png', w: 1656, h: 1216, alt: '제품·안내 글은 여러 버전(product_revision, guide_article_revision)을 갖고, 버전별 이미지·디자인 이미지·첨부는 공용 파일 media_file을 참조하는 관계도', caption: '핵심 데이터 관계 · 콘텐츠 · 버전 · 파일' },
-          { t: 'table', rows: [
-            ['product · guide_article', '고유 코드, 상태, 공개 리비전 ID, 동시 수정 버전'],
-            ['*_revision', '제목·분류·검색 정보와 JSONB 본문을 버전별로 저장'],
-            ['media_file', '이미지·파일의 사용 위치를 버전에 연결'],
-            ['admin_audit_log', '관리자 변경 이력'],
-            ['outbound_click', '판매 링크 이동 API의 클릭 기록'],
-          ] },
-        ] },
+        { t: 'h3', text: '콘텐츠·버전·파일 ERD' },
+        { t: 'point', text: '설계 포인트 · 본문은 JSONB, 상태·버전은 컬럼 · 제품마다 초안 1개 · 공개 버전 포인터 · 공용 파일 참조' },
+        { t: 'figure', src: '/assets/noblack-diagrams/erd.png', w: 2102, h: 1388, alt: 'N°BLACK ERD. 제품(product)과 안내 글(guide_article)은 각각 여러 버전(product_revision, guide_article_revision)을 갖고, published_revision_id로 공개 중인 버전을 가리킴. 제품 분류(product_category)는 제품 버전이 참조함. 제품 버전의 이미지·디자인·디자인 이미지와 안내 글 버전의 첨부는 모두 공용 파일(media_file)을 참조함. 테이블마다 기본 키·외래 키·고유 키와 컬럼 타입, NULL 허용 여부가 표시됨', caption: 'ERD · 콘텐츠·버전·파일 주요 테이블' },
+        { t: 'p', html: '제품마다 보여 줄 정보(구성품 표, 사이즈 수, 디자인·레터링 옵션)의 모양이 달라, 화면에 보이는 본문은 버전마다 <b>JSONB</b> 한 덩어리로 저장했습니다. 그래서 항목이 늘거나 빠져도 테이블을 고칠 필요가 없고, 검색·정렬·공개 판단에 쓰는 값만 컬럼으로 뒀습니다.' },
         { t: 'h3', text: 'CMS 게시 흐름' },
         { t: 'p', html: '제품을 저장할 때마다 고객 화면이 바뀌면 작성 중인 문구가 노출될 수 있어, 초안과 게시본을 나눴습니다. 고객은 <code>published_revision_id</code>가 가리키는 게시본만 읽습니다.' },
         { t: 'figure', src: '/assets/noblack-diagrams/cms-publish.png', w: 1656, h: 1036, alt: '관리자 편집이나 과거 버전 복원은 초안으로 저장되고, 미리보기 뒤 게시 검증·리비전 확정·공개 포인터 전환을 하나의 트랜잭션으로 처리해 고객 API는 게시된 버전만 반환하는 흐름', caption: '초안에서 고객 공개까지' },
-        { t: 'fold', title: '설계 선택', sub: '필요한 곳에만 추상화를 뒀습니다', blocks: [
-          { t: 'table', rows: [
-            ['파일 저장', '<code>MediaStorage</code> 인터페이스와 <code>LocalMediaStorage</code> 구현을 나눠, 업무 로직이 저장 방식에 묶이지 않게 했습니다. 지금은 로컬 저장소만 씁니다.'],
-            ['화면 조작', '입력 처리(<code>useArcadeController</code>)와 화면별 동작(<code>SceneController</code> 인터페이스)을 나눠, 화면을 추가해도 조작 코드는 그대로 둡니다.'],
-            ['게시 처리', '제품·공지사항·QNA 글의 게시 검증·리비전 확정·공개 전환을 <code>ContentService.publish</code> 한 곳의 트랜잭션에서 처리해, 글 종류마다 규칙이 갈라지지 않게 했습니다.'],
-          ] },
-        ] },
       ],
     },
     {
@@ -390,13 +376,13 @@ const noblack = {
         { t: 'h3', text: '프론트엔드 — 게임형 화면' },
         { t: 'feats', items: [
           { title: '키보드·조이스틱·터치를 하나의 조작 흐름으로', html: '<code>useArcadeController</code>가 메뉴와 콘텐츠 영역을 나눠 방향 입력과 포커스를 관리하고, 화면 전환 뒤 이전 위치로 포커스를 되돌립니다. 동작 줄이기 설정이면 오프닝을 건너뜁니다.' },
-          { title: '화면 비율에 맞춘 방 카메라', html: '<code>roomCamera</code>가 화면 비율에 따라 넓은·좁은·세로 모드를 고르고 1~2배 확대를 지원합니다. 캐릭터가 안전 영역을 벗어날 때만 카메라가 따라갑니다. 계산은 React 밖 순수 함수로 분리해 테스트했습니다.' },
+          { title: '캐릭터를 따라가는 방 카메라', html: '캐릭터가 안전 영역을 벗어날 때만 카메라가 따라갑니다. <code>roomCamera</code>가 화면 비율에 따라 넓은·좁은·세로 모드를 고르고 1~2배 확대를 지원합니다. 계산은 React 밖 순수 함수로 분리해 테스트했습니다.' },
           { title: '모바일 전용 제품 화면', html: 'PC의 좌우 분할 화면을 휴대폰에 그대로 줄이면 제품 이미지와 정보가 작아져 읽기 어려웠습니다. 그래서 <code>useMobileViewport</code>로 좁은 화면을 판별해 이미지·정보·구매 버튼을 세로 흐름으로 다시 배치하고, 게임·실제·사용 이미지 전환은 그대로 유지했습니다.' },
         ] },
         { t: 'figure', src: '/assets/noblack-screens/pc-mobile.webp', w: 2474, h: 900, alt: '같은 차렵이불 상세 화면 세 장. 왼쪽 PC는 아케이드 프레임 안에 정보 표와 큰 제품 이미지가 나란히 있고, 가운데 모바일은 게임 뷰(픽셀 연출 이미지), 오른쪽 모바일은 사용 뷰(침실 사진)로 같은 자리에서 이미지만 바뀜', caption: 'PC 아케이드 화면(왼쪽)과 모바일 전용 화면 · 게임 뷰(가운데)와 사용 뷰(오른쪽) — 운영 사이트 캡처' },
         { t: 'h3', text: '백엔드 — 운영 CMS' },
         { t: 'feats', items: [
-          { title: '초안과 게시본을 분리한 CMS', html: '편집·복원은 항상 새 초안 리비전으로 저장합니다. 게시하면 그 리비전을 확정(<code>is_draft = false</code>)하고 <code>published_revision_id</code>를 바꾼 뒤, 변경 내역을 <code>admin_audit_log</code>에 남깁니다.' },
+          { title: '공개 전에 바뀌는 내용 보여 주기', html: '공개하기를 누르면 지금 공개된 버전과 임시저장본을 비교해, 바뀌는 항목을 편집 화면의 칸 이름으로 보여 주고 고친 글은 이전 값과 함께 표시합니다. 목록형 항목은 "2개 → 3개", "순서를 바꿨어요"처럼 요약하고, 줄 ID·키 순서·빈 값 차이는 무시해 실제로 바뀐 것만 나오게 했습니다. 고객 화면 미리보기는 고객 API와 같은 변환(<code>productView</code>)으로 만든 응답을 실제 사이트와 같은 상세 화면 컴포넌트로 그립니다.' },
           { title: '동시 수정 충돌 방지', html: '<code>SELECT … FOR UPDATE</code>로 행을 잠근 뒤 요청에 담긴 버전과 비교하고, 갱신도 <code>WHERE version = :version</code> 조건으로 한 번 더 확인합니다. 관리자가 읽은 버전이 이미 바뀌었으면 <code>409 Conflict</code>를 돌려줘, 오래된 편집이 최신 내용을 덮지 못하게 했습니다.' },
           { title: '관리자 보안과 파일 검증', html: 'Spring Security 세션 인증, Argon2id 비밀번호 해시, CSRF 토큰, 연속 실패 잠금을 적용했습니다. 업로드 파일은 실제 형식과 크기를 검사하고, 사용 중인 파일은 지울 수 없게 했습니다.' },
         ] },

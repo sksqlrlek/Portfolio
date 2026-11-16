@@ -331,7 +331,7 @@ const noblack = {
     credits: [
       ['대표', '브랜드 콘셉트 · 요구사항 · 원본 제품 사진'],
       ['직접', '대표와 요구사항 정리 · 화면과 데이터 방향 결정 · 결과 확인 · 배포와 운영'],
-      ['AI', '구현과 테스트 작성에 Claude Code 활용 · 방·게임 이미지는 원본 사진을 바탕으로 생성'],
+      ['AI', '구현과 테스트 작성에 Claude Code·Codex·ChatGPT 활용 · 방·게임 이미지는 원본 사진을 바탕으로 생성'],
     ],
     stack: [
       ['프론트엔드', [['react', 'React 19'], ['typescript', 'TypeScript'], ['vitejs', 'Vite'], ['', 'Canvas API']]],

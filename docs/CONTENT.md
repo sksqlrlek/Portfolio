@@ -33,7 +33,7 @@ MyCrewSoft의 구현 화면 네 장은 설계 산출물 목록에서 상세 상�
 - N°BLACK 관리자 화면(`admin-edit.webp`, `admin-before-after.webp`의 오른쪽)은 2026-11-16 운영 사이트에 로그인해 '슬릭 알러지케어 블랙 베개커버'로 캡처했습니다. 저장·공개 버튼은 누르지 않았습니다. 캡처 시점에 숨김·임시저장 제품은 없었습니다.
 - `admin-publish.webp`는 같은 제품의 공개 전 확인 창을 2026-11-16에 다시 캡처한 사용자 제공 화면에서 창 부분만 잘라 썼습니다. 바뀌는 내용 4가지가 이전 값과 함께 보이는 상태입니다.
 - `admin-before-after.webp`의 왼쪽(개선 전 '제품 추가' 첫 화면)은 개선 전 코드(N°BLACK `3bfa741`)의 프론트엔드를 로컬에서 띄워 2026-11-16에 캡처했습니다. 새 제품 화면이라 입력값은 비어 있고, 카테고리 목록만 운영 공개 API 값을 넣었습니다. 운영 서버에는 공개 조회 요청만 보냈습니다. 오른쪽과 같은 '제품 추가' 첫 화면끼리 비교합니다. 콘텐츠 탭은 개선 전후 입력 칸 수가 같아 비교 이미지로 쓰지 않았습니다. 두 화면 모두 입력 영역만 잘라 키우고, 차이를 번호 상자로 표시했습니다(오른쪽은 아래 저장 막대가 겹치지 않게 그 위까지만 자름).
-- N°BLACK 테스트 수(Playwright 750 · JUnit 152)는 2026-11-15 main CI 실행 기록, 메모리 한도는 `docker-compose.prod.yml`, 운영 제품 9개의 MY ROOM 자리(침대 5 · 소파 4)는 2026-11-16 공개 제품 API 기준입니다.
+- N°BLACK 테스트 수(Playwright 757 · JUnit 152)는 2026-11-16 main CI 실행 기록(브라우저 검사는 API를 흉내 낸 환경, 서버 테스트만 PostgreSQL 18 사용), 메모리 한도는 `docker-compose.prod.yml`, 운영 제품 9개의 MY ROOM 자리(침대 5 · 소파 4)는 2026-11-16 공개 제품 API 기준입니다.
 - 연락처 이메일은 PDF와 같은 `sksqlrlek@gmail.com`으로 통일했습니다.
 - 예전 화면에서 쓰던 `public/resume.html`은 지금 사이트에서 링크하지 않지만 지우지 않고 남겨 두었습니다. PDF 쪽 이미지(`public/assets/portfolio-pages/`)는 쓰지 않아 지웠습니다(git 기록에 남아 있음).
-- `public/assets/noblack-readme.md`는 링크가 없어도 주소로 열리고 비공개 저장소의 관리자 API 경로가 적혀 있어 지웠습니다.
+- `public/assets/noblack-readme.md`는 링크하지 않는 비공개 저장소 README 사본인데 주소로 열려서 지웠습니다.

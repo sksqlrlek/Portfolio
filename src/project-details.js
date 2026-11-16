@@ -364,23 +364,10 @@ const noblack = {
         { t: 'h3', text: '콘텐츠·버전·파일 ERD' },
         { t: 'point', text: '설계 포인트 · 본문은 JSONB, 상태·버전은 컬럼 · 제품마다 초안 1개 · 공개 버전 포인터 · 공용 파일 참조' },
         { t: 'figure', src: '/assets/noblack-diagrams/erd.png', w: 2102, h: 1388, alt: 'N°BLACK ERD. 제품(product)과 안내 글(guide_article)은 각각 여러 버전(product_revision, guide_article_revision)을 갖고, published_revision_id로 공개 중인 버전을 가리킴. 제품 분류(product_category)는 제품 버전이 참조함. 제품 버전의 이미지·디자인·디자인 이미지와 안내 글 버전의 첨부는 모두 공용 파일(media_file)을 참조함. 테이블마다 기본 키·외래 키·고유 키와 컬럼 타입, NULL 허용 여부가 표시됨', caption: 'ERD · 콘텐츠·버전·파일 주요 테이블' },
-        { t: 'table', rows: [
-          ['product · guide_article', '고유 코드, 공개 상태, 공개 중인 버전(<code>published_revision_id</code>), 동시 수정 버전'],
-          ['*_revision', '버전마다 제목·분류·검색어와 JSONB 본문을 저장하고, 초안은 제품(안내 글)마다 하나만 둠'],
-          ['*_image · *_design · *_attachment', '버전이 쓰는 이미지·디자인·첨부를 공용 파일(<code>media_file</code>)에 연결'],
-          ['그 밖의 테이블', '<code>admin_audit_log</code>(관리자 변경 이력), <code>outbound_click</code>(판매 링크 클릭 기록) 등'],
-        ] },
-        { t: 'p', html: '제품마다 상세 항목이 달라, 본문은 <b>JSONB</b>로 유연하게 저장하고 식별자·게시 상태·버전처럼 정합성이 중요한 값은 별도 컬럼으로 뒀습니다. JSONB는 요청 DTO의 <code>@Valid</code> 검증과 DB의 <code>CHECK (jsonb_typeof(payload) = \'object\')</code>로 두 번 검사합니다.' },
+        { t: 'p', html: '제품마다 보여 줄 정보(구성품 표, 사이즈 수, 디자인·레터링 옵션)의 모양이 달라, 화면에 보이는 본문은 버전마다 <b>JSONB</b> 한 덩어리로 저장했습니다. 그래서 항목이 늘거나 빠져도 테이블을 고칠 필요가 없고, 검색·정렬·공개 판단에 쓰는 값만 컬럼으로 뒀습니다.' },
         { t: 'h3', text: 'CMS 게시 흐름' },
         { t: 'p', html: '제품을 저장할 때마다 고객 화면이 바뀌면 작성 중인 문구가 노출될 수 있어, 초안과 게시본을 나눴습니다. 고객은 <code>published_revision_id</code>가 가리키는 게시본만 읽습니다.' },
         { t: 'figure', src: '/assets/noblack-diagrams/cms-publish.png', w: 1656, h: 1036, alt: '관리자 편집이나 과거 버전 복원은 초안으로 저장되고, 미리보기 뒤 게시 검증·리비전 확정·공개 포인터 전환을 하나의 트랜잭션으로 처리해 고객 API는 게시된 버전만 반환하는 흐름', caption: '초안에서 고객 공개까지' },
-        { t: 'fold', title: '설계 선택', sub: '필요한 곳에만 추상화를 뒀습니다', blocks: [
-          { t: 'table', rows: [
-            ['파일 저장', '<code>MediaStorage</code> 인터페이스와 <code>LocalMediaStorage</code> 구현을 나눠, 업무 로직이 저장 방식에 묶이지 않게 했습니다. 지금은 로컬 저장소만 씁니다.'],
-            ['화면 조작', '입력 처리(<code>useArcadeController</code>)와 화면별 동작(<code>SceneController</code> 인터페이스)을 나눠, 화면을 추가해도 조작 코드는 그대로 둡니다.'],
-            ['게시 처리', '제품·공지사항·QNA 글의 게시 검증·리비전 확정·공개 전환을 <code>ContentService.publish</code> 한 곳의 트랜잭션에서 처리해, 글 종류마다 규칙이 갈라지지 않게 했습니다.'],
-          ] },
-        ] },
       ],
     },
     {
@@ -389,7 +376,7 @@ const noblack = {
         { t: 'h3', text: '프론트엔드 — 게임형 화면' },
         { t: 'feats', items: [
           { title: '키보드·조이스틱·터치를 하나의 조작 흐름으로', html: '<code>useArcadeController</code>가 메뉴와 콘텐츠 영역을 나눠 방향 입력과 포커스를 관리하고, 화면 전환 뒤 이전 위치로 포커스를 되돌립니다. 동작 줄이기 설정이면 오프닝을 건너뜁니다.' },
-          { title: '화면 비율에 맞춘 방 카메라', html: '<code>roomCamera</code>가 화면 비율에 따라 넓은·좁은·세로 모드를 고르고 1~2배 확대를 지원합니다. 캐릭터가 안전 영역을 벗어날 때만 카메라가 따라갑니다. 계산은 React 밖 순수 함수로 분리해 테스트했습니다.' },
+          { title: '캐릭터를 따라가는 방 카메라', html: '캐릭터가 안전 영역을 벗어날 때만 카메라가 따라갑니다. <code>roomCamera</code>가 화면 비율에 따라 넓은·좁은·세로 모드를 고르고 1~2배 확대를 지원합니다. 계산은 React 밖 순수 함수로 분리해 테스트했습니다.' },
           { title: '모바일 전용 제품 화면', html: 'PC의 좌우 분할 화면을 휴대폰에 그대로 줄이면 제품 이미지와 정보가 작아져 읽기 어려웠습니다. 그래서 <code>useMobileViewport</code>로 좁은 화면을 판별해 이미지·정보·구매 버튼을 세로 흐름으로 다시 배치하고, 게임·실제·사용 이미지 전환은 그대로 유지했습니다.' },
         ] },
         { t: 'figure', src: '/assets/noblack-screens/pc-mobile.webp', w: 2474, h: 900, alt: '같은 차렵이불 상세 화면 세 장. 왼쪽 PC는 아케이드 프레임 안에 정보 표와 큰 제품 이미지가 나란히 있고, 가운데 모바일은 게임 뷰(픽셀 연출 이미지), 오른쪽 모바일은 사용 뷰(침실 사진)로 같은 자리에서 이미지만 바뀜', caption: 'PC 아케이드 화면(왼쪽)과 모바일 전용 화면 · 게임 뷰(가운데)와 사용 뷰(오른쪽) — 운영 사이트 캡처' },

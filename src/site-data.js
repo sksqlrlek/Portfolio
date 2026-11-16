@@ -104,7 +104,7 @@ export const troubles = [
   { project: 'MyCrewSoft', stage: 'de', stageText: '설계 단계 문제', title: '화상회의 중심으로 설계해, 오프라인 회의는 회의록·결재를 쓸 수 없었다', summary: "'회의' 상위 도메인이 빠진 것이 원인 → <code>TB_MTNG</code>를 신설해 <b>온라인·오프라인·혼합 회의를 하나의 흐름으로 통합</b>", href: '#project/crew/case-01' },
   { project: 'MyCrewSoft', stage: 'te', stageText: '테스트 중 발견', title: '검색어 한 단어에 대형 검색 쿼리가 10번 넘게 실행됐다', summary: '자모마다 API를 호출한 것이 원인 → 250ms 디바운싱으로 <b>API 호출 80% 이상 감소</b> (Network 탭 실측)', href: '#project/crew/case-02' },
   { project: 'MyCrewSoft', stage: 'dv', stageText: '개발 단계 문제', title: '화상회의를 끝내면 회의 종료 API가 타임아웃됐다', summary: '외부 AI API 호출이 트랜잭션 안에서 동기 실행 → <code>AFTER_COMMIT</code> + <code>@Async</code>로 <b>종료 처리와 후속 자동화 분리</b>', href: '#project/crew/case-03' },
-  { project: 'N°BLACK', stage: 'de', stageText: '설계 단계 문제', title: '게임형 첫 화면에 집중하다 보니, 제품을 고르고 사러 가는 길이 멀어졌다', summary: '브랜드 체험과 바로 구매하려는 목적을 나누지 않은 것이 원인 → MY ROOM과 ITEMS에서 <b>같은 제품 상세로 이어지는 두 동선 제공</b>', href: '#project/noblack/case-01' },
+  { project: 'N°BLACK', stage: 'dp', stageText: '운영 중 발견', title: '용량 제한 안의 정상 JPG가 업로드되지 않았다', summary: '용량이 아닌 해상도가 1,000만 픽셀 제한을 넘은 것이 원인 → \'줄여서 올리기\'로 <b>3.94MB → 1.04MB, 업로드 성공</b>', href: '#project/noblack/case-02' },
 ];
 
 // 기술: 로고 파일 이름(public/assets/tech/<이름>.svg), 표시 이름. 로고가 없으면 이름만 씁니다.

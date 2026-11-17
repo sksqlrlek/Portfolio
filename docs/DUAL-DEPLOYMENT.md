@@ -36,7 +36,8 @@ Portfolio/
 ## 변경과 배포
 
 - React 소개 사이트를 수정하려면 `src/`, `index.html`, `public/`을 수정해 PR을 만들고 `main`에 병합합니다.
-- PDF를 갱신하려면 저장소 최상위의 `portfolio.pdf`를 교체해 PR을 만들고 `main`에 병합합니다.
+- PDF를 갱신하려면 저장소 최상위의 `portfolio.pdf`와 OCI에서 직접 열 수 있는 사본 `public/assets/portfolio.pdf`를 같은 파일로 교체해 PR을 만들고 `main`에 병합합니다.
+- OCI 첫 화면의 'PDF로 보기' 버튼은 `src/site-data.js`의 `profile.pdf`에 지정한 GitHub Pages 주소(`https://sksqlrlek.github.io/Portfolio/`)를 새 탭으로 엽니다.
 - PDF 화면 자체를 수정하려면 `legacy-pdf/index.html`을 변경합니다.
 - `main` 병합 시 두 워크플로가 모두 실행되더라도, 각 주소는 위에서 정한 **자신의 파일**만 배포합니다. 따라서 React를 수정했다고 PDF 화면이 React로 바뀌지 않습니다.
 - PDF는 브라우저 내장 PDF 뷰어를 사용하므로 화면 표시 및 다운로드 방식은 브라우저에 따라 다를 수 있습니다.

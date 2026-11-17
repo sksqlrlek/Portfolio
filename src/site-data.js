@@ -6,8 +6,8 @@ export const profile = {
   role: '풀스택 개발자 · Java·Spring + React',
   email: 'sksqlrlek@gmail.com',
   github: 'https://github.com/sksqlrlek',
-  // GitHub Pages(portfolio.pdf)와 같은 포트폴리오 PDF 사본
-  pdf: '/assets/portfolio.pdf',
+  // GitHub Pages의 PDF 포트폴리오를 새 탭으로 엽니다.
+  pdf: 'https://sksqlrlek.github.io/Portfolio/',
   photo: '/assets/profile-photo.jpg',
 };
 

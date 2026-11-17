@@ -60,7 +60,7 @@ const crew = {
     {
       id: 'design', stage: 'de', title: '구조와 데이터를 먼저 그렸습니다',
       blocks: [
-        { t: 'p', html: 'React SPA → Spring Boot → Oracle·Redis의 3계층으로 나누고, 도메인끼리 강하게 묶이지 않도록 Spring Event 기반 비동기 구조를 택했습니다. HTTP와 WebSocket 모두에 JWT 인증을 적용했습니다.' },
+        { t: 'p', html: 'React SPA → Spring Boot → Oracle·Redis의 3계층으로 구성하고, Spring Event를 활용해 도메인 간 결합도를 낮췄습니다. 알림과 AI 회의록 생성은 트랜잭션 커밋 후 <code>@Async</code>로 비동기 처리해 핵심 업무와 후속 작업을 분리했습니다. HTTP와 WebSocket 모두에 JWT 인증을 적용했습니다.' },
         { t: 'figure', src: '/assets/portfolio-content/crew-architecture.png', w: 1323, h: 839, alt: 'MyCrewSoft 시스템 아키텍처', caption: '시스템 아키텍처' },
         { t: 'table', rows: [
           ['클라이언트', 'React · TypeScript — LiveKit Client SDK, EventSource, Axios'],

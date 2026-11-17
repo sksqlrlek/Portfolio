@@ -134,7 +134,7 @@ export const career = [
 ];
 
 export const certs = [
-  { date: '2026.03', name: 'SQL 개발자(SQLD)', result: '최종합격', by: '한국데이터베이스진흥센터' },
+  { date: '2026.03', name: 'SQL 개발자(SQLD)', result: '최종합격', by: '한국데이터산업진흥원' },
   { date: '2025.09', name: '정보처리기사', result: '필기합격', by: '한국산업인력공단' },
   { date: '2014.12', name: '정보처리기능사', result: '최종합격', by: '한국산업인력공단' },
 ];
